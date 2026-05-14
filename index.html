@@ -1,0 +1,5581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BIVA - Premium Virtual Assistance & Internet Services</title>
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
+
+
+  <style>
+/* ===== GLOBAL UI LAYER SYSTEM ===== */
+:root {
+  --z-base: 1;
+  --z-nav: 1000;
+  --z-dropdown: 5000;
+  --z-modal: 100000;
+  --z-loader: 500000;
+  --z-alert: 9999999; /* ALWAYS TOP */
+}
+
+
+
+
+.email-box{
+  display:inline-block;
+  background:#fff;
+  border:2px solid teal;
+  padding:8px 14px;
+  border-radius:10px;
+  font-size:18px;        /* bigger text */
+  font-weight:600;
+  color:teal;
+  width:auto;            /* auto resize */
+  max-width:100%;
+  white-space:nowrap;    /* keep in one line */
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+
+
+
+.wallet-card{
+  display:inline-block;
+  background:white;
+  border:3px white;
+  color:teal;
+  font-weight:bold;
+  font-size:22px;
+  padding:6px 14px;
+  border-radius:45px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+  transition:0.3s;
+  width:auto;              /* auto size */
+  white-space:nowrap;     /* prevent wrapping */
+}
+
+.wallet-card:hover{
+  transform:scale(1.05);
+}
+
+
+
+.loader-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 999999;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-box {
+  background: #111;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  width: 90%;
+  max-width: 320px;
+  color: #fff;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: fadeIn 0.4s ease;
+}
+
+/* LOGO PULSE */
+.logo-pulse {
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff1a1a, #8B0000);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #333;
+  border-radius: 10px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff1a1a, #ff4d4d);
+  transition: width 0.4s ease;
+}
+
+/* TEXT */
+.loader-box h3 {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.loader-box p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.main-header {
+  background: radial-gradient(circle at top, green, teal);
+  color: #fff;
+  text-align: center;
+  padding: 4px 2px 3px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 80px;
+  padding-top: 10px;
+}
+
+/* subtle glow effect */
+.main-header::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 65px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  top: -100px;
+  right: -100px;
+  filter: blur(80px);
+}
+
+.logo {
+  width: 90px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.main-header h1 {
+  font-size: 1.8rem;
+  margin: 3px 0;
+  letter-spacing: 0px;
+}
+
+.tagline {
+  opacity: 0.9;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+
+
+
+
+
+
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255,255,255,0.2);
+  border-top: 5px solid #ff1a1a;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+
+
+.menu-container{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+
+  margin-left:0;
+  margin-right:0;
+
+  flex:none;
+}
+
+
+.menu-icon{
+  background:#fff5f5;
+  color:#8B0000;
+  padding:10px 14px;
+  border-radius:25px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+  border:1px solid #ffd6d6;
+}
+
+.menu-icon:hover{
+  background:green;
+  color:#fff;
+}
+
+.dropdown{
+  display:none;
+  position:absolute;
+  top:45px;
+  left:0;
+  width:260px;
+  max-width:90vw;
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 10px 35px rgba(0,0,0,0.12);
+  overflow:hidden;
+  z-index:9999;
+  animation:fadeMenu 0.25s ease;
+}
+
+.dropdown a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 16px;
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
+  transition:0.25s;
+  border-bottom:1px solid #f4f4f4;
+}
+
+.dropdown a:hover{
+  background:#fff5f5;
+  color:#8B0000;
+  padding-left:22px;
+}
+
+
+
+
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+
+
+
+
+.download-btn {
+  background: green; /* green to stand out */
+  color: green;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background: white;
+  transform: scale(1.05);
+}
+
+
+
+
+@media (max-width: 768px) {
+  .download-btn {
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+  }
+}
+
+
+
+
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin:0;
+      background:#fff5f5;
+      color:#333;
+      scroll-behavior:smooth;
+      animation:fadeDown 1.4s ease;
+    }
+
+
+
+
+ #about {
+      animation:aboutPop 1.8s ease;
+      background:#fff;
+      border:2px solid #ffe6e6;
+      border-radius:15px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.05);
+      margin-top:30px;
+      animation:fadeDown 1.4s ease;
+    }
+
+    h2 {
+      color:#8B0000;
+      border-left:5px solid #ff1a1a;
+      padding-left:10px;
+    }
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:15px;
+}
+    .card {
+      background:#fff;
+      padding:15px;
+      border-radius:15px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.05);
+      text-align:center;
+      border:2px solid #ffe6e6;
+      transition:0.3s;
+    }
+
+    .card:hover {border-color:#ff1a1a; transform:translateY(-5px);}
+
+    .media-img {
+      width:100%;
+      height:260px;
+      object-fit:cover;
+      border-radius:10px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .media-img:hover {transform:scale(1.05);} 
+
+    .btn {
+      display:inline-block;
+      padding:10px 18px;
+      background:green;
+      color:green;
+      border-radius:8px;
+      text-decoration:none;
+      margin-top:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .btn:hover {background:teal;}
+
+    footer {
+      background:green;
+      color:#fff;
+      text-align:center;
+      padding:20px;
+      border-top:4px solid #ff1a1a;
+    }
+
+    .chat-btn {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:green;
+      color:white;
+      padding:15px;
+      border-radius:50%;
+      font-size:20px;
+      text-decoration:none;
+      box-shadow:0 5px 10px rgba(0,0,0,0.2);
+    }
+
+    .group-title{
+      margin-top:40px;
+      font-size:1.4rem;
+      color:#b30000;
+      font-weight:600;
+      border-bottom:2px solid #ffcccc;
+      padding-bottom:5px;
+    }
+
+
+    @keyframes pageLoad {
+      from {opacity:0; transform:scale(1.03);} 
+      to {opacity:1; transform:scale(1);} 
+    }
+
+    @keyframes fadeUp {
+      from {opacity:0; transform:translateY(40px);} 
+      to {opacity:1; transform:translateY(0);} 
+    }
+
+    @keyframes fadeDown {
+      from {opacity:0; transform:translateY(-40px);} 
+      to {opacity:1; transform:translateY(0);} 
+    }
+
+    @keyframes aboutPop {
+      0% {opacity:0; transform:scale(0.92) translateY(40px);} 
+      100% {opacity:1; transform:scale(1) translateY(0);} 
+    }
+
+    /* ANNOUNCEMENT FIXED */
+    .announcement {
+      margin-top:10px;
+      width:100%;
+      overflow:hidden;
+      background:rgba(0,0,0,0.25);
+      border-radius:25px;
+      padding:4px 0;
+
+    }
+
+    @keyframes scrollText {
+      0% { transform:translateX(100%); }
+      100% { transform:translateX(-100%); }
+    }
+
+
+    /* =======================
+   MOBILE FIXES
+======================= */
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+}
+
+
+
+/* MAKE BUTTONS STACK BETTER */
+.btn {
+  font-size: 18px;
+  padding: 10px 10px;
+
+}
+
+/* GRID FIX FOR SMALL SCREENS */
+@media (max-width: 768px) {
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  nav {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+  .right-nav {
+    width: auto;
+    justify-content: flex-end;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: 10px;
+  }
+
+  section {
+    padding: 25px 15px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .media-img {
+    height: 180px;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+
+  #walletBalance {
+    font-size: 18px;
+  }
+}
+
+
+
+
+
+/* =========================
+   TOP NAVBAR LAYOUT
+========================= */
+
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  width:100%;
+}
+
+.menu-container{
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+
+  margin-right:auto;
+}
+
+.right-nav{
+  margin-left:auto;
+
+  display:flex;
+  align-items:center;
+}
+
+
+
+/* =========================
+   TOP NAVBAR LAYOUT
+========================= */
+
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:12px 15px;
+
+  background:#00a86b;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+
+  z-index:9999;
+  box-sizing:border-box;
+}
+
+
+
+
+/* MENU LEFT */
+.menu-container{
+  display:flex;
+  align-items:left;
+}
+
+
+
+/* WALLET CARD */
+.nav-wallet{
+  background:#8B0000;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:30px;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+/* MENU ICON */
+.menu-icon{
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  color:#111;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  nav{
+    padding:10px 12px;
+  }
+
+  .nav-wallet{
+    font-size:13px;
+    padding:7px 12px;
+  }
+
+}
+
+
+
+
+
+
+
+.btn{
+  background:linear-gradient(135deg,green,green);
+  color:white;
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+  width:100%;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  opacity:0.95;
+}
+
+
+
+
+    .wallet-box{font-weight:1;color:white;}
+
+    section{padding:50px 20px;max-width:1200px;margin:auto;}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+
+
+
+.card{
+  background:white;
+  padding:18px;
+  border-radius:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.06);
+  border:1px solid #f1f1f1;
+  transition:0.3s ease;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.1);
+}
+
+
+    /* FIXED IMAGE SCALE */
+    .media-img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      border-radius:10px;
+    }
+
+    .announcement{margin-top:20px;overflow:hidden;background:rgba(0,0,0,0.3);padding:5px;border-radius:25px;}
+    .announcement p{white-space:nowrap;color:white;animation:scroll 25s linear infinite;}
+
+    @keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+/* =========================
+   WORLD CLASS MODAL SYSTEM
+========================= */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: #00a86b;
+  width: 92%;
+  max-width: 420px;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+  transform: translateY(20px) scale(0.98);
+  animation: popUp 0.25s ease forwards;
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes popUp {
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-content h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #8B0000;
+  text-align: center;
+}
+
+.modal-content p {
+  font-size: 14px;
+  color: #444;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Inputs */
+.modal-content input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: 0.2s;
+}
+
+.modal-content input:focus {
+  border-color: #ff1a1a;
+  box-shadow: 0 0 0 3px rgba(255,26,26,0.15);
+}
+
+/* Buttons */
+.modal-content .btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.modal-content .btn:hover {
+  transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+
+
+
+#receiptPrint {
+  display: none;
+}
+
+
+
+@media print {
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: auto !important;
+    overflow: hidden !important;
+  }
+
+  /* hide everything */
+  body * {
+    display: none !important;
+  }
+
+  /* only show receipt */
+  #receiptPrint,
+  #receiptPrint * {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  #receiptPrint {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: auto;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.0;
+  }
+
+  @page {
+    size: 58mm auto;
+    margin: 0;
+  }
+}
+
+
+/* =========================
+   TRANSACTION TABLE
+========================= */
+
+.transaction-wrapper{
+  width:100%;
+  overflow:hidden;
+  border-radius:16px;
+}
+
+#transactionTable{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  table-layout:fixed;
+}
+
+#transactionTable th{
+  background:#8B0000;
+  color:#fff;
+  padding:12px;
+  font-size:14px;
+  text-align:center;
+}
+
+#transactionTable td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+  text-align:center;
+  word-wrap:break-word;
+}
+
+#transactionTable tr:hover{
+  background:#fafafa;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  #transactionTable th,
+  #transactionTable td{
+    padding:10px 6px;
+    font-size:12px;
+  }
+
+  .btn{
+    font-size:11px !important;
+    padding:6px 8px !important;
+  }
+
+}
+
+
+
+
+html, body {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+
+
+.toast-container{
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999999; /* higher than everything */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+
+
+
+/* =========================
+   PROFESSIONAL BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:white;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding:4px 3px;
+  box-shadow:0 -2px 15px rgba(0,0,0,0.08);
+  z-index:99999;
+  border-top:1px solid #eee;
+}
+
+.bottom-nav button{
+  background:white;
+  border:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:Black;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.bottom-nav button span{
+  font-size:22px;
+  margin-bottom:4px;
+}
+
+.bottom-nav button:hover{
+  color:white;
+  transform:translateY(-2px);
+}
+
+/* Space so content doesn't hide behind nav */
+body{
+  padding-bottom:90px;
+}
+
+
+
+.input{
+  width:auto%;
+  padding:14px;
+  border-radius:15px;
+  border:1px solid #ddd;
+  margin-bottom:15px;
+  font-size:15px;
+  outline:none;
+  transition:0.3s;
+}
+
+.input:focus{
+  border-color:#8B0000;
+  box-shadow:0 0 0 4px rgba(139,0,0,0.08);
+}
+
+
+/* MENU SECTION TITLES */
+
+.menu-title{
+  padding:10px 14px;
+  font-size:12px;
+  font-weight:700;
+  color:#999;
+  background:#f8f8f8;
+  letter-spacing:1px;
+  border-bottom:1px solid #eee;
+}
+
+
+/* =========================
+   RED BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+
+  background:white;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+
+  padding:5px 3px;
+
+  box-shadow:0 -2px 15px rgba(0,0,0,0.15);
+
+  z-index:99999;
+
+  border-top:2px solid white;
+}
+
+
+
+
+/* ICON CIRCLE */
+.bottom-nav button span{
+  font-size:22px;
+  background:green;   
+  color:green;    width:45px;
+  height:45px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  margin-bottom:2px;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+
+  transition:0.3s;
+}
+
+/* HOVER EFFECT */
+.bottom-nav button:hover span{
+  transform:scale(1.08);
+  background:none;
+}
+
+/* LABEL */
+.bottom-nav button small{
+  font-weight:100;
+}
+
+
+
+
+.nav-wallet{
+  background:linear-gradient(135deg,#008080,#006666);
+  color:#fff;
+  padding:10px 16px;
+  border-radius:25px;
+  font-weight:700;
+  font-size:16px;
+  display:flex;
+  align-items:right;
+  justify-content:center;
+  min-width:auto;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  transition:0.3s;
+}
+
+.nav-wallet:hover{
+  transform:translateY(-2px);
+  opacity:0.95;
+}
+
+
+
+
+/* =========================
+   MODERN DASHBOARD
+========================= */
+
+#dashboard{
+  padding-top:110px;
+}
+
+.dashboard-header{
+  margin-bottom:25px;
+}
+
+.dashboard-header h2{
+  font-size:28px;
+  color:green;
+  margin-bottom:5px;
+  border:none;
+  padding:0;
+}
+
+.dashboard-header p{
+  color:#666;
+  font-size:14px;
+}
+
+/* GRID */
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+  gap:16px;
+}
+
+/* CARD */
+.service-card{
+  background:white;
+  border-radius:20px;
+  padding:8px 6px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  box-shadow:0 6px 20px rgba(0,0,0,0.06);
+
+  transition:0.25s ease;
+
+  border:1px solid #f3f3f3;
+}
+
+.service-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* ICON */
+.service-icon{
+  width:40px;
+  height:40px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:18px;
+
+  background:linear-gradient(135deg,Teal,Teal);
+
+  color:Teal;
+
+  font-size:22px;
+
+  margin-bottom:12px;
+
+  box-shadow:0 6px 15px rgba(255,26,26,0.25);
+}
+
+/* TEXT */
+.service-card span{
+  font-size:16px;
+  font-weight:600;
+  color:#333;
+  text-align:center;
+}
+
+/* =========================
+   MOBILE NAV FIX
+========================= */
+
+@media(max-width:768px){
+
+  nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    overflow:visible;
+  }
+
+.bottom-nav{
+  font-size:11px;
+  font-weight:700;
+  color:#7b7b7b;
+  transition:.3s ease;
+}
+
+  .menu-container{
+    position:relative;
+    flex:0 0 auto;
+    justify-content:flex-start;
+    align-items:center;
+  }
+
+.right-nav{
+  display:flex;
+  align-items:right;
+
+  margin-left:right;
+}
+
+  .dropdown{
+    position:absolute;
+    top:48px;
+    left:0;
+    right:auto;
+
+    width:230px;
+    max-width:85vw;
+
+    z-index:99999;
+  }
+
+}
+
+
+
+
+/* =========================
+   SUCCESS OVERLAY
+========================= */
+
+.success-card{
+  position:fixed;
+  inset:0;
+
+  display:none; /* HIDDEN BY DEFAULT */
+
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(8px);
+
+  z-index:999999;
+  padding:20px;
+
+  animation:fadeSuccess 0.3s ease;
+}
+
+/* SUCCESS BOX */
+.success-box{
+  width:100%;
+  max-width:360px;
+
+  background:rgba(255,255,255,0.96);
+
+  border-radius:28px;
+
+  padding:35px 25px;
+
+  text-align:center;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.18),
+    0 0 25px rgba(0,184,107,0.08);
+
+  animation:successPop 0.45s ease;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+/* TOP GLOW */
+.success-box::before{
+  content:"";
+
+  position:absolute;
+  top:-120px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  width:220px;
+  height:220px;
+
+  background:radial-gradient(
+    circle,
+    rgba(0,184,107,0.18),
+    transparent 70%
+  );
+
+  z-index:0;
+}
+
+/* ICON HOLDER */
+.success-icon{
+  width:95px;
+  height:95px;
+
+  margin:auto auto 22px;
+
+  border-radius:50%;
+
+  background:linear-gradient(
+    135deg,
+    #00d47e,
+    #00a86b
+  );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+
+  z-index:1;
+
+  animation:
+    iconPop 0.5s ease,
+    pulseGlow 2s infinite;
+}
+
+/* WHITE CHECK */
+.success-icon::before{
+  content:"✓";
+
+  color:#fff;
+
+  font-size:52px;
+  font-weight:900;
+
+  animation:checkBounce 0.6s ease;
+}
+
+/* SUCCESS TEXT */
+.success-box h2{
+  font-size:24px;
+  color:#111;
+  margin-bottom:10px;
+  position:relative;
+  z-index:1;
+}
+
+.success-box p{
+  color:#666;
+  font-size:15px;
+  line-height:1.5;
+  margin-bottom:25px;
+  position:relative;
+  z-index:1;
+}
+
+/* BUTTON */
+.success-box button{
+  width:100%;
+
+  border:none;
+
+  background:linear-gradient(
+    135deg,
+    #00c774,
+    #00995f
+  );
+
+  color:#fff;
+
+  padding:14px;
+
+  border-radius:14px;
+
+  font-size:15px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:0.3s;
+
+  position:relative;
+  z-index:1;
+}
+
+.success-box button:hover{
+  transform:translateY(-2px);
+  opacity:0.95;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeSuccess{
+  from{
+    opacity:0;
+  }
+
+  to{
+    opacity:1;
+  }
+}
+
+@keyframes successPop{
+  0%{
+    transform:scale(0.7) translateY(30px);
+    opacity:0;
+  }
+
+  100%{
+    transform:scale(1) translateY(0);
+    opacity:1;
+  }
+}
+
+@keyframes iconPop{
+  0%{
+    transform:scale(0.2) rotate(-20deg);
+    opacity:0;
+  }
+
+  70%{
+    transform:scale(1.15) rotate(5deg);
+    opacity:1;
+  }
+
+  100%{
+    transform:scale(1);
+  }
+}
+
+@keyframes checkBounce{
+  0%{
+    transform:scale(0);
+  }
+
+  60%{
+    transform:scale(1.3);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+}
+
+@keyframes pulseGlow{
+  0%{
+    box-shadow:
+      0 0 0 rgba(0,212,126,0.4);
+  }
+
+  50%{
+    box-shadow:
+      0 0 30px rgba(0,212,126,0.45),
+      0 0 60px rgba(0,212,126,0.2);
+  }
+
+  100%{
+    box-shadow:
+      0 0 0 rgba(0,212,126,0.4);
+  }
+}
+
+
+
+
+
+/* =========================
+CLASSIC CONFIRM MODAL
+========================= */
+
+.confirm-modal{
+
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.45);
+
+  backdrop-filter:blur(8px);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  z-index:999999999;
+
+  opacity:0;
+  visibility:hidden;
+
+  transition:.35s ease;
+}
+
+.confirm-modal.active{
+
+  opacity:1;
+  visibility:visible;
+}
+
+.confirm-box{
+
+  width:100%;
+  max-width:420px;
+
+  background:white;
+
+  border-radius:32px;
+
+  padding:35px 28px;
+
+  text-align:center;
+
+  transform:translateY(40px) scale(.9);
+
+  transition:.35s ease;
+
+  box-shadow:
+  0 30px 80px rgba(0,0,0,.18);
+}
+
+.confirm-modal.active .confirm-box{
+
+  transform:translateY(0) scale(1);
+}
+
+.confirm-icon{
+
+  width:90px;
+  height:90px;
+
+  margin:auto auto 20px;
+
+  border-radius:50%;
+
+  background:linear-gradient(
+    135deg,
+    #e9fff5,
+    #d7ffec
+  );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:42px;
+}
+
+.confirm-box h2{
+
+  font-size:28px;
+
+  color:#111827;
+
+  margin-bottom:14px;
+
+  font-weight:800;
+}
+
+.confirm-box p{
+
+  color:#666;
+
+  line-height:1.7;
+
+  font-size:15px;
+
+  margin-bottom:28px;
+
+  white-space:pre-line;
+}
+
+.confirm-actions{
+
+  display:flex;
+
+  gap:14px;
+}
+
+.confirm-btn{
+
+  flex:1;
+
+  border:none;
+
+  padding:16px;
+
+  border-radius:18px;
+
+  cursor:pointer;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  transition:.3s;
+}
+
+.cancel-btn{
+
+  background:#f3f4f6;
+
+  color:#111827;
+}
+
+.cancel-btn:hover{
+
+  background:#e5e7eb;
+}
+
+.proceed-btn{
+
+  background:linear-gradient(
+    135deg,
+    #00a86b,
+    #008753
+  );
+
+  color:white;
+
+  box-shadow:
+  0 10px 25px rgba(0,168,107,.25);
+}
+
+.proceed-btn:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 18px 35px rgba(0,168,107,.35);
+}
+
+@media(max-width:600px){
+
+  .confirm-box{
+
+    margin:20px;
+
+    padding:28px 22px;
+
+    border-radius:26px;
+  }
+
+  .confirm-actions{
+
+    flex-direction:column;
+  }
+}
+
+
+
+/* =========================
+ERROR MODAL
+========================= */
+
+.error-modal{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.55);
+
+  backdrop-filter:blur(8px);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  z-index:999999999;
+
+  opacity:0;
+  visibility:hidden;
+
+  transition:.3s ease;
+}
+
+.error-modal.active{
+  opacity:1;
+  visibility:visible;
+}
+
+.error-box{
+
+  width:100%;
+  max-width:400px;
+
+  background:white;
+
+  border-radius:30px;
+
+  padding:35px 28px;
+
+  text-align:center;
+
+  transform:translateY(30px) scale(.95);
+
+  transition:.35s ease;
+
+  box-shadow:
+  0 25px 70px rgba(0,0,0,.18);
+}
+
+.error-modal.active .error-box{
+  transform:translateY(0) scale(1);
+}
+
+.error-icon{
+
+  width:90px;
+  height:90px;
+
+  margin:auto auto 20px;
+
+  border-radius:50%;
+
+  background:#fff1f1;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:42px;
+}
+
+.error-box h2{
+  font-size:28px;
+  font-weight:800;
+  color:#111827;
+  margin-bottom:14px;
+}
+
+.error-box p{
+  color:#666;
+  line-height:1.7;
+  font-size:15px;
+  margin-bottom:25px;
+}
+
+.error-btn{
+
+  border:none;
+
+  background:linear-gradient(
+    135deg,
+    #ff4d4f,
+    #ff2d2f
+  );
+
+  color:white;
+
+  padding:15px 28px;
+
+  border-radius:18px;
+
+  cursor:pointer;
+
+  font-weight:700;
+
+  font-size:15px;
+
+  transition:.3s;
+}
+
+.error-btn:hover{
+  transform:translateY(-2px);
+}
+
+
+
+/* ===== DATA PAGE ===== */
+
+.section-title{
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.data-card{
+  padding: 15px;
+}
+
+/* SCROLL AREA */
+#dataPlansWrapper{
+  margin-top: 15px;
+  max-height: 450px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* GRID */
+.plans-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px;
+}
+
+
+/* PLAN CARD */
+.plan-card{
+  background:#fff;
+  border-radius:14px;
+  padding:12px;
+  border:1px solid #eee;
+  cursor:pointer;
+  transition:0.3s ease;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.plan-card:hover{
+  transform:translateY(-2px);
+  border-color:#0d6efd;
+}
+
+
+/* ACTIVE SELECT */
+.plan-card.active{
+  border:2px solid #0d6efd;
+  background:#eef5ff;
+}
+
+
+
+/* PLAN NAME */
+.plan-size{
+  font-size:14px;
+  font-weight:700;
+  color:Green;
+  line-height:1.4;
+}
+
+/* PRICE */
+.plan-price{
+  font-size:14px;
+  color:Teal;
+  margin-top:5px;
+  font-weight:600;
+}
+
+/* VALIDITY */
+.plan-validity{
+  font-size:11px;
+  color:#777;
+  margin-top:4px;
+}
+
+
+
+/* BUY BUTTON */
+.buy-btn{
+  margin-top:10px;
+  width:auto !important;
+  padding:8px 14px !important;
+  border-radius:10px !important;
+  font-size:12px !important;
+  font-weight:600;
+  align-self:flex-start;
+}
+
+
+/* MOBILE */
+@media(max-width:500px){
+
+  .plans-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+  }
+
+  .plan-card{
+    padding:10px;
+  }
+
+  .plan-size{
+    font-size:13px;
+  }
+
+  .plan-price{
+    font-size:13px;
+  }
+
+  .buy-btn{
+    padding:7px 12px !important;
+    font-size:11px !important;
+  }
+}
+
+
+
+/* FILTER BUTTONS */
+
+.plan-filters{
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-top: 15px;
+  padding-bottom: 5px;
+}
+
+.plan-filters::-webkit-scrollbar{
+  display: none;
+}
+
+.filter-btn{
+  border: none;
+  background: #f1f3f5;
+  padding: 10px 16px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.3s ease;
+}
+
+.filter-btn.active{
+  background: #0d6efd;
+  color: white;
+}
+
+.filter-btn:hover{
+  opacity: 0.9;
+}
+
+
+/* =========================
+
+  position:relative;
+
+  overflow:hidden;
+
+  flex-shrink:0;
+}
+
+
+
+
+/* =========================
+   ADS SLIDER
+========================= */
+
+.ads-section{
+  margin:20px 0;
+}
+
+.ads-slider{
+  position:relative;
+  width:100%;
+  height:170px;
+  overflow:hidden;
+}
+
+/* CARD */
+.ads-card{
+
+  position:absolute;
+  inset:0;
+
+  background:linear-gradient(
+    135deg,
+    #008080,
+    #00a86b
+  );
+
+  color:white;
+
+  border-radius:30px;
+
+  padding:25px;
+
+  opacity:0;
+
+  transform:translateX(100%);
+
+  transition:
+    opacity .6s ease,
+    transform .6s ease;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.15);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* ACTIVE CARD */
+.ads-card.active{
+
+  opacity:1;
+
+  transform:translateX(0);
+
+  z-index:2;
+}
+
+.ads-card h3{
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+.ads-card p{
+  font-size:15px;
+  line-height:1.6;
+  color:#fff;
+}
+
+
+/* MOBILE */
+@media(max-width:600px){
+
+  .ads-slider{
+    height:160px;
+  }
+
+  .ads-card{
+    padding:20px;
+  }
+
+  .ads-card h3{
+    font-size:20px;
+  }
+
+  .ads-card p{
+    font-size:14px;
+  }
+
+}
+
+
+
+/* EMOJI */
+.ad-emoji{
+
+  position:absolute;
+
+  right:18px;
+  bottom:12px;
+
+  font-size:80px;
+
+  animation:
+    emojiFly 10s infinite ease-in-out;
+}
+
+/* FLY UP + RETURN FROM DOWN */
+@keyframes emojiFly{
+
+  /* START FROM NORMAL */
+  0%{
+    transform:
+      translateY(0)
+      scale(1);
+    opacity:1;
+  }
+
+  /* FLOAT 1 */
+  15%{
+    transform:
+      translateY(-10px)
+      scale(0.5);
+  }
+
+  /* FLOAT 2 */
+  20%{
+    transform:
+      translateY(0)
+      scale(0.3);
+  }
+
+  /* FLEE UP FAST */
+  30%{
+    transform:
+      translateY(-80px)
+      scale(.8);
+    opacity:0;
+  }
+
+  /* COME FROM DOWN */
+  40%{
+    transform:
+      translateY(60px)
+      scale(.8);
+    opacity:0;
+  }
+
+  /* RETURN TO NORMAL */
+  50%{
+    transform:
+      translateY(0)
+      scale(1);
+    opacity:1;
+  }
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<nav>
+  <!-- LEFT -->
+  <div class="menu-container">
+
+    <span class="menu-icon" onclick="toggleMenu()">
+      ☰ Menu
+    </span>
+</div>
+
+
+     <div id="walletCard" class="wallet-card">
+     ₦<span id="navWallet">0</span>
+     </div>
+</nav>
+
+<body>
+
+
+
+
+    <div id="dropdownMenu" class="dropdown">
+
+
+
+
+
+
+  <!-- MAIN -->
+  <div class="menu-title">MAIN</div>
+
+<a href="#" onclick="showPage('dashboard'); closeMenu()">
+    🏠 Home
+</a>
+
+<a href="#" onclick="showPage('User'); closeMenu()">
+    👤 Profile
+</a>
+
+<a href="#" onclick="showPage('services'); closeMenu()">
+  🏗️ Our Services
+</a>
+
+<a href="#" onclick="showPage('partnership'); closeMenu()">
+  🤝 Partnership
+</a>
+
+
+
+<!-- ACCOUNT -->
+<div class="menu-title">ACCOUNT</div>
+
+<a href="#" onclick="fundWallet(); closeMenu()">
+  💰 Fund Wallet
+</a>
+
+<a href="#" id="activateBtn"
+   onclick="openBalance(); closeMenu()">
+   ⚡ Activate Voucher
+</a>
+
+
+  <!-- SUPPORT -->
+<!-- SUPPORT -->
+<div class="menu-title">SUPPORT</div>
+<a href="https://wa.me/2348037807558" target="_blank">
+  💬 WhatsApp Support
+</a>
+
+<a href="#" onclick="openChatBox(); closeMenu()">
+  🛟 Live Chat Support
+</a>
+
+
+<a href="#" id="menuLoginBtn"
+   onclick="openModal(); closeMenu()">
+   🔐 Login
+</a>
+
+<a href="#" id="menuLogoutBtn"
+   onclick="openLogoutBox(); closeMenu()"
+   style="display:none;">
+   🚪 Logout
+</a>
+
+</div>
+</div>
+
+</nav>
+
+
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Login / Signup</h3>
+    <input id="email" placeholder="Email">
+    <div style="position:relative;">
+  <input id="password" type="password" placeholder="Password" style="padding-right:40px;">
+  
+  <span onclick="togglePassword()" 
+        style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+    👁️
+  </span>
+</div>
+    <button class="btn" id="signupBtn" onclick="signup()">Signup</button>
+    <button class="btn" id="loginBtnModal" onclick="login()">Login</button>
+    <button class="btn" onclick="closeModal()" style="background:gray">Close</button>
+</div>
+</div>
+
+
+
+<header id="mainHeader" class="main-header">
+  <img src="https://res.cloudinary.com/djcnsgbzr/image/upload/v1774348546/3_jauepg.jpg" class="logo">
+
+  <h1>BIVA</h1>
+
+  <p class="tagline">
+    Premium Virtual Assistance & Internet Services
+  </p>
+
+  <div class="announcement">
+    <p>
+      🔔 Welcome to Bright International Virtual Assistance • Fast Internet • Reliable & Secure • Instant Wallet Deposit • 24/7 Support 📞08037807558
+    </p>
+  </div>
+</header>
+
+
+
+
+
+<section id="dashboard" class="page active">
+
+
+  <div class="dashboard-header">
+
+
+
+
+
+<!-- =========================
+   ADS SLIDER
+========================= -->
+<section class="ads-section">
+
+  <div class="ads-slider">
+
+
+
+<div class="ads-card active">
+
+  <h3>🔥 SME DATA</h3>
+
+  <p>
+    Enjoy cheap and fast SME data bundles instantly.
+  </p>
+
+  <div class="ad-emoji">
+    🚀
+  </div>
+</div>
+
+
+
+
+
+    <div class="ads-card">
+      <h3>⚡ Instant Airtime</h3>
+      <p>Buy airtime for all networks within seconds.</p>
+  <div class="ad-emoji">
+    📲
+  </div>
+    </div>
+
+
+
+    <div class="ads-card">
+      <h3>💰 Fund Wallet</h3>
+      <p>Instant wallet funding with secure payment.</p>
+
+  <div class="ad-emoji">
+    💰
+  </div>
+    </div>
+
+
+
+    <div class="ads-card">
+      <h3>💡 Pay Electricity Bills</h3>
+      <p>Fast electricity bill payment without stress.</p>
+  <div class="ad-emoji">
+    💡
+  </div>
+    </div>
+
+    <div class="ads-card">
+      <h3>🛜 Wi-Fi Voucher</h3>
+      <p>Generate premium Wi-Fi vouchers anytime.</p>
+  <div class="ad-emoji">
+    🛜
+  </div>
+  </div>
+
+  </div>
+
+</section>
+
+
+
+
+
+
+    <h2>Welcome to BIVA</h2>
+    <p>Premium Virtual Assistance & Internet Services</p>
+<div id="dashboardLoginBox" style="margin-top:15px;">
+
+  <button
+    class="btn"
+    onclick="openModal()"
+    style="
+      max-width:220px;
+      border-radius:18px;
+      font-size:15px;
+      padding:12px;
+    ">
+
+    🔐 Login / Signup
+
+  </button>
+</div>
+</div>
+
+
+
+
+
+
+
+  <div class="dashboard-grid">
+
+
+    <div class="service-card" onclick="showPage('voucher')">
+      <div class="service-icon">🛜</div>
+      <span>Voucher</span>
+    </div>
+
+    <div class="service-card" onclick="showPage('data')">
+      <div class="service-icon">🌐</div>
+      <span>Buy Data</span>
+    </div>
+
+    <div class="service-card" onclick="showPage('airtime')">
+      <div class="service-icon">📞</div>
+      <span>Airtime</span>
+    </div>
+
+    <div class="service-card" onclick="showPage('bills')">
+      <div class="service-icon">💡</div>
+      <span>Pay Bills</span>
+    </div>
+
+    <div class="service-card" onclick="showPage('transactions')">
+      <div class="service-icon">📑</div>
+      <span>Transactions</span>
+    </div>
+
+    <div class="service-card" onclick="showPage('User')">
+      <div class="service-icon">👤</div>
+      <span>Profile</span>
+    </div>
+
+    <div class="service-card" onclick="fundWallet()">
+      <div class="service-icon">💰</div>
+      <span>Fund Wallet</span>
+    </div>
+
+    <div class="service-card" onclick="showPage('about')">
+      <div class="service-icon">🎖️</div>
+      <span>About Us</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+
+<section id="about" class="page">
+
+  <h2>About Us</h2>
+  <p><strong>Bright International Virtual Assistance (BIVA)</strong> is a fully registered digital service and internet solutions company committed to delivering reliable, affordable, and high-quality virtual assistance and internet services across Nigeria and beyond.</p>
+  <p>We specialize in providing seamless connectivity solutions, internet voucher services, and professional virtual support for individuals, small businesses, and corporate organizations. Our goal is to help clients stay connected, productive, and efficient in today’s fast-paced digital world.</p>
+  <p>At BIVA, we believe that access to the internet and professional support services should be simple, fast, and affordable. That is why we continuously improve our infrastructure, customer service, and service delivery to ensure maximum satisfaction for all our users.</p>
+  <p>We are also deeply committed to customer satisfaction, offering 24/7 support and ensuring that every client receives timely assistance whenever needed. Whether you are purchasing data vouchers, managing online tasks, or seeking technical support, BIVA is your trusted digital partner.</p>
+  <p><em>Our vision is to become one of the leading virtual assistance and internet service providers in Africa, empowering individuals and businesses through reliable digital connectivity and support solutions.</em></p>
+
+
+<footer>
+  <p>© 2026 BIVA. All Rights Reserved.</p>
+  <p>Email: brightinternationaldamaturu@gmail.com</p>
+  <p>Phone: +234 080 3780 7558</p>
+<a href="https://drive.google.com/uc?export=download&id=1xE1sZylAidG84YJkoOvCE031RG9E4gXH"
+   class="btn download-btn"
+   target="_blank"
+   download>
+   ⬇ Download Our New App
+</a>
+
+</footer>
+
+</section>
+
+
+<section>
+  <section id="why" class="page">
+  <div class="grid">
+    <div class="card"><h3>⚡ Fast Internet</h3><p>Reliable high-speed connectivity.</p></div>
+    <div class="card"><h3>💰 Affordable</h3><p>Flexible plans for everyone.</p></div>
+    <div class="card"><h3>📞 24/7 Support</h3><p>Always available to assist you.</p></div>
+  </div>
+</section>
+
+
+<section id="services" class="page">
+  <h2>Our Services</h2>
+  <div class="grid">
+    <div class="card"><h3>Administrative Support</h3></div>
+    <div class="card"><h3>Customer Support</h3></div>
+    <div class="card"><h3>Social Media Management</h3></div>
+    <div class="card"><h3>Data Entry</h3></div>
+    <div class="card"><h3>Voucher Sales</h3></div>
+    <div class="card"><h3>Network Support</h3></div>
+  </div>
+</section>
+
+
+<section id="media" class="page">
+  <h2>Highlights</h2>
+  <div class="grid">
+    <div class="card"><img class="media-img" src="https://res.cloudinary.com/djcnsgbzr/image/upload/v1775820063/1_u1x1if.png"></div>
+    <div class="card"><img class="media-img" src="https://res.cloudinary.com/djcnsgbzr/image/upload/v1775820063/4_mjckpu.png"></div>
+    <div class="card"><img class="media-img" src="https://res.cloudinary.com/djcnsgbzr/image/upload/v1775820066/6_ho3ubp.png"></div>
+  </div>
+</section>
+
+
+
+
+<section id="voucher" class="page">
+  <h2>Wi_Fi Voucher</h2>
+
+  <!-- FILTER -->
+  <input
+    type="text"
+    id="voucherFilter"
+    class="input"
+    placeholder="Search voucher e.g 1GB, 2GB..."
+    onkeyup="filterVoucherPlans()"
+    style="margin-bottom:15px;"
+  >
+
+  <div id="voucherPlans"></div>
+</section>
+
+
+
+
+
+<section id="transactions" class="page">
+
+  <h2>Transaction History</h2>
+
+  <div class="transaction-wrapper">
+
+    <table id="transactionTable">
+
+<thead>
+  <tr>
+    <th>Type</th>
+    <th>Amount</th>
+    <th>Action</th>
+  </tr>
+</thead>
+
+<tbody id="transactionBody"></tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+<section id="partnership" class="page">
+  <h2>Partnership Program</h2>
+  <div class="card" style="text-align:left;padding:20px;">
+    <p>Join the BIVA Partnership Program and earn income by reselling internet vouchers.</p>
+    <a class="btn" href="https://form.jotform.com/260963343803054" target="_blank">Apply for Partnership</a>
+    <button class="btn" onclick="openInvoice()">Submit Invoice</button>
+  </div>
+
+</section>
+
+
+
+<section id="User" class="page">
+  <h2>User:</h2>
+ <div class="email-box">
+  <span id="userEmail"></span>
+</div>
+
+
+
+     <h2>Wallet Balance :</h2>
+     <div id="walletCard" class="wallet-card">
+     <span id="wallet">0</span>
+     </div>
+</section>
+
+
+
+<section id="airtime" class="page">
+  <h2>Buy Airtime</h2>
+
+  <div class="card">
+    <input id="airtimePhone" placeholder="Phone Number" class="input">
+    
+    <select id="airtimeNetwork" class="input">
+      <option>MTN</option>
+      <option>AIRTEL</option>
+      <option>GLO</option>
+      <option>9MOBILE</option>
+    </select>
+
+    <input id="airtimeAmount" placeholder="Amount" class="input">
+
+    <button class="btn" onclick="buyAirtime()">Buy Airtime</button>
+  </div>
+</section>
+
+
+<section id="data" class="page">
+  <h2 class="section-title">Buy Data</h2>
+
+  <div class="card data-card">
+
+    <!-- PHONE -->
+    <input id="dataPhone" placeholder="Phone Number" class="input">
+
+    <!-- NETWORK -->
+    <select id="dataNetwork" class="input" onchange="loadDataPlans(this.value)">
+      <option value="">Select Network</option>
+      <option value="mtn">MTN</option>
+      <option value="airtel">AIRTEL</option>
+      <option value="glo">GLO</option>
+      <option value="9mobile">9MOBILE</option>
+    </select>
+
+    <!-- SEARCH DATA PLANS-->
+
+
+<!-- FILTER BUTTONS -->
+<div class="plan-filters">
+
+  <button class="filter-btn active"
+    onclick="filterPlans('ALL', this)">
+    ALL
+  </button>
+
+  <button class="filter-btn"
+    onclick="filterPlans('SME', this)">
+    SME
+  </button>
+
+  <button class="filter-btn"
+    onclick="filterPlans('SME2', this)">
+    SME2
+  </button>
+
+  <button class="filter-btn"
+    onclick="filterPlans('GIFTING', this)">
+    GIFTING
+  </button>
+
+</div>
+
+
+
+
+    <!-- DATA PLANS -->
+    <div id="dataPlansWrapper">
+      <div id="dataPlans" class="plans-grid"></div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+<section id="bills" class="page">
+  <h2>Pay Electricity Bill</h2>
+
+  <div class="card">
+    <input id="meterNumber" placeholder="Meter Number" class="input">
+
+    <select id="disco" class="input">
+      <option>IKEDC</option>
+      <option>EKEDC</option>
+      <option>AEDC</option>
+      <option>PHED</option>
+    </select>
+
+    <input id="billAmount" placeholder="Amount" class="input">
+
+    <button class="btn" onclick="payBill()">Pay Bill</button>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+<div id="customAlert" class="toast-container"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+let loaderInterval;
+
+function showLoader(title = "Processing...", text = "Please wait...") {
+  const loader = document.getElementById("globalLoader");
+
+  document.getElementById("loaderTitle").innerText = title;
+  document.getElementById("loaderText").innerText = text;
+
+  loader.style.display = "flex";
+
+  // animate fake progress
+  let progress = 0;
+  const bar = document.getElementById("progressFill");
+
+  clearInterval(loaderInterval);
+
+  loaderInterval = setInterval(() => {
+    if (progress < 90) {
+      progress += Math.random() * 15;
+      bar.style.width = progress + "%";
+    }
+  }, 400);
+}
+
+function hideLoader() {
+  const bar = document.getElementById("progressFill");
+
+  bar.style.width = "100%";
+
+  setTimeout(() => {
+    document.getElementById("globalLoader").style.display = "none";
+    bar.style.width = "0%";
+    clearInterval(loaderInterval);
+  }, 500);
+}
+
+
+
+
+
+
+function showPage(pageId) {
+
+  // hide all pages
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  // show selected page
+  const selectedPage = document.getElementById(pageId);
+
+  if (selectedPage) {
+    selectedPage.classList.add("active");
+  }
+
+  // HEADER CONTROL
+  const header = document.getElementById("mainHeader");
+
+  // only show header on About page
+  if (pageId === "about") {
+    header.style.display = "block";
+  } else {
+    header.style.display = "none";
+  }
+
+  // close dropdown menu
+  closeMenu();
+
+  // smooth scroll to top
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+
+
+window.addEventListener("DOMContentLoaded", () => {
+
+  // hide all pages first
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  // show dashboard only
+  document.getElementById("dashboard").classList.add("active");
+
+  // hide header on refresh
+  document.getElementById("mainHeader").style.display = "none";
+
+  // close menu if open
+  const menu = document.getElementById("dropdownMenu");
+
+  if(menu){
+    menu.style.display = "none";
+  }
+
+  // reset scroll
+  window.scrollTo(0, 0);
+
+});
+
+
+
+
+
+
+
+function closeMenu() {
+  document.getElementById("dropdownMenu").style.display = "none";
+}
+
+
+
+
+
+
+function showAlert(message, type="success"){
+  const alertBox = document.createElement("div");
+
+  let bg = "#28a745";
+  if(type === "error") bg = "#dc3545";
+  if(type === "warning") bg = "#ffc107";
+
+  alertBox.style.background = bg;
+  alertBox.style.color = "#fff";
+  alertBox.style.padding = "12px 18px";
+  alertBox.style.borderRadius = "10px";
+  alertBox.style.boxShadow = "0 10px 25px rgba(0,0,0,0.3)";
+  alertBox.style.fontWeight = "600";
+  alertBox.style.minWidth = "250px";
+  alertBox.style.textAlign = "center";
+  alertBox.style.pointerEvents = "auto";
+  alertBox.style.animation = "fadeDown 0.3s ease";
+  
+  alertBox.innerText = message;
+
+  document.getElementById("customAlert").appendChild(alertBox);
+
+  setTimeout(()=>{
+    alertBox.style.opacity = "0";
+    alertBox.style.transform = "translateY(-10px)";
+    setTimeout(()=>alertBox.remove(), 300);
+  }, 3500);
+}
+
+
+
+const firebaseConfig={
+apiKey:"AIzaSyDaZH5kn_mmxap3jOyw3Yhq55d936Jhl0g",
+authDomain:"biva-system.firebaseapp.com",
+projectId:"biva-system"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.firestore();
+
+function openModal(id = "modal") {
+  const el = document.getElementById(id);
+  el.style.display = "flex";
+  el.style.opacity = "0";
+
+  setTimeout(() => {
+    el.style.opacity = "1";
+  }, 10);
+}
+
+function closeModal(id = "modal") {
+  const el = document.getElementById(id);
+  el.style.opacity = "0";
+
+  setTimeout(() => {
+    el.style.display = "none";
+  }, 200);
+}
+
+
+
+async function signup(){
+  showLoader("Creating account...");
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  try{
+    const cred = await auth.createUserWithEmailAndPassword(email, password);
+    const user = cred.user;
+
+    await db.collection("users").doc(user.uid).set({
+      email: user.email,
+      wallet: 0,
+      blocked: false,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    showSuccessCard("Account Created Successfuly");
+    closeModal();
+
+  }catch(err){
+    console.error(err);
+
+showErrorModal(
+  "Signup Failed",
+  "Please use differnt info or try again later."
+);
+
+  }finally{
+    hideLoader();
+  }
+}
+
+
+async function fundWallet() {
+
+if (!currentUser) {
+
+  showErrorModal(
+    "Please login first."
+  );
+
+  return;
+}
+
+let amount = prompt(
+  "Enter amount to fund (₦):"
+);
+
+if (!amount) {
+
+  showErrorModal(
+    "Amount is required."
+  );
+
+  return;
+}
+
+amount = Number(
+  amount.toString()
+  .replace(/[^0-9]/g, "")
+);
+
+if (!amount || amount <= 0) {
+
+  showErrorModal(
+    "Please enter a valid amount."
+  );
+
+  return;
+}
+
+  FlutterwaveCheckout({
+
+    public_key: "FLWPUBK-28666bd71e66a7e62eff4c94a16b83fb-X",
+
+    tx_ref: "BIVA_" + Date.now(),
+
+    amount: amount,
+
+    currency: "NGN",
+
+    customer: {
+      email: currentUser.email,
+    },
+
+    callback: async function(response) {
+
+      try {
+
+        showLoader("Verifying Payment...");
+
+        const res = await fetch(
+          "https://biva-backend-ezvu.onrender.com/api/payment/verify",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+              transaction_id: response.transaction_id,
+              userId: currentUser.uid
+            })
+          }
+        );
+
+        const text = await res.text();
+
+        let data;
+
+        try {
+          data = JSON.parse(text);
+        } catch(e) {
+          console.error(text);
+          throw new Error("Invalid server response");
+        }
+
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || "Wallet funding failed");
+        }
+
+       showSuccessCard("Wallet funded successful");
+
+        await getWallet();
+
+      } catch(err) {
+
+        console.error(err);
+
+        console.error(err);
+
+      } finally {
+
+        hideLoader();
+
+      }
+    }
+  });
+}
+
+
+
+
+
+async function login(){
+  showLoader("Signing you in...");
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  try{
+    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+
+    await user.reload();
+
+    document.getElementById("userEmail").innerText = user.email;
+
+    const ref = db.collection("users").doc(user.uid);
+    const doc = await ref.get();
+
+    if(!doc.exists){
+      await ref.set({
+        email: user.email,
+        wallet: 0,
+        blocked: false,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+
+    closeModal();
+
+  }catch(err){
+    console.error(err);
+
+showErrorModal(
+  "Login Failed",
+  "Please make sure your login details are correct before retrying."
+);
+
+  }finally{
+    hideLoader();
+  }
+}
+
+
+
+
+auth.onAuthStateChanged(user => {
+
+  const loginBox = document.getElementById("dashboardLoginBox");
+
+  if(user){
+
+    // hide login button
+    if(loginBox){
+      loginBox.style.display = "none";
+    }
+
+  } else {
+
+    // show login button
+    if(loginBox){
+      loginBox.style.display = "block";
+    }
+
+  }
+
+});
+
+
+
+
+
+
+async function logout(){
+  showLoader("Signing you out...");
+
+  try {
+    await auth.signOut();
+
+    // optional cleanup UI
+    document.getElementById("userEmail").innerText = "";
+    showSuccessCard("You Successfuly Logged Out");
+
+  } catch (err) {
+    showAlert("Error: " + err.message, "error");
+
+  } finally {
+    hideLoader();
+  }
+}
+
+
+// WALLET LIVE UPDATE
+let currentUser = null;
+
+// ADD HERE
+async function getWallet() {
+  const res = await fetch(`/api/wallet/${currentUser.uid}`);
+  const data = await res.json();
+
+document.getElementById("wallet").innerText = "₦" + data.wallet;
+document.getElementById("navWallet").innerText = data.wallet;
+}
+
+// AUTH LISTENER
+auth.onAuthStateChanged(user => {
+  currentUser = user;
+
+  if (user) {
+    getWallet(); // 🔥 CALL HERE
+  }
+
+  if (user) {
+document.getElementById("menuLoginBtn").style.display = "none";
+document.getElementById("menuLogoutBtn").style.display = "flex";
+    document.getElementById("userEmail").innerText = user.email;
+
+    loadTransactions(user.uid);
+
+    db.collection('users').doc(user.uid).onSnapshot(doc => {
+      const voucherEl = document.getElementById("lastVoucher");
+
+      if (doc.exists) {
+        const balance = doc.data().wallet || 0;
+
+
+const userRef = db.collection("users").doc(user.uid);
+
+userRef.get().then(doc => {
+
+  if (
+    doc.exists &&
+    doc.data().blocked === true
+  ) {
+
+    auth.signOut();
+
+    showErrorModal(
+      "Your account has been blocked."
+    );
+
+    return;
+  }
+
+});
+
+
+        wallet.innerText = '₦' + balance;
+        document.getElementById("navWallet").innerText = balance;
+
+        voucherEl.innerText = doc.data().lastVoucher
+          ? "Last Purchased Voucher: " + doc.data().lastVoucher
+          : "";
+      } else {
+        wallet.innerText = '₦0';
+        document.getElementById("navWallet").innerText = "0";
+        document.getElementById("userEmail").innerText = "";
+      }
+    });
+
+  } else {
+    currentUser = null;
+    wallet.innerText = '₦0';
+    document.getElementById("navWallet").innerText = "0";
+
+document.getElementById("menuLoginBtn").style.display = "flex";
+document.getElementById("menuLogoutBtn").style.display = "none";
+
+    document.getElementById("userEmail").innerText = "";
+    document.getElementById("transactionBody").innerHTML = "";
+  }
+});
+
+
+
+
+
+// BUY WITH WALLET
+async function buy(price, plan) {
+
+  if (!currentUser) {
+    showErrorModal("Please login first.");
+    return;
+  }
+
+  const userId = currentUser.uid;
+
+  const userRef = db.collection("users").doc(userId);
+  const lockRef = db.collection("purchaseLocks").doc(userId);
+
+  const txId = "TX_" + userId + "_" + Date.now();
+
+  let deducted = false;
+
+  try {
+
+    showLoader(
+      "Processing Purchase",
+      "Securing payment & generating voucher..."
+    );
+
+    // =========================
+    // STEP 1: CHECK LOCK
+    // =========================
+    const lockSnap = await lockRef.get();
+
+    if (lockSnap.exists && lockSnap.data().locked === true) {
+
+      hideLoader();
+
+      showAlert(
+        "⏳ Transaction already in progress",
+        "warning"
+      );
+
+      return;
+    }
+
+    // =========================
+    // STEP 2: CREATE LOCK
+    // =========================
+    await lockRef.set({
+      locked: true,
+      txId,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // =========================
+    // STEP 3: GET USER
+    // =========================
+    const userDoc = await userRef.get();
+
+    if (!userDoc.exists) {
+      throw new Error("User not found");
+    }
+
+    const wallet = Number(userDoc.data().wallet || 0);
+
+    if (wallet < price) {
+      throw new Error("Insufficient balance");
+    }
+
+    // =========================
+    // STEP 4: GENERATE VOUCHER FIRST
+    // =========================
+    showLoader(
+      "Generating Voucher",
+      "Please wait..."
+    );
+
+    const res = await fetch(
+      "https://hook.us2.make.com/pm61x9gphx81e59lrvy1q7tmnfsd7ggo",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          plan,
+          price,
+          email: currentUser.email,
+          txId
+        })
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Voucher server error");
+    }
+
+    const data = await res.json();
+
+    if (!data || !data.voucher) {
+      throw new Error("Voucher not received");
+    }
+
+    const voucher = data.voucher;
+
+    // =========================
+    // STEP 5: DEDUCT WALLET ONLY AFTER SUCCESS
+    // =========================
+    await db.runTransaction(async (transaction) => {
+
+      const freshUser = await transaction.get(userRef);
+
+      const freshWallet = Number(
+        freshUser.data().wallet || 0
+      );
+
+      if (freshWallet < price) {
+        throw new Error("Insufficient balance");
+      }
+
+      transaction.update(userRef, {
+        wallet: freshWallet - price,
+        lastVoucher: voucher
+      });
+
+    });
+
+    deducted = true;
+
+    // =========================
+    // STEP 6: SAVE VOUCHER
+    // =========================
+    await db.collection("vouchers")
+      .doc(voucher)
+      .set({
+        code: voucher,
+        plan,
+        price,
+        used: false,
+        userId,
+        email: currentUser.email,
+        createdAt:
+          firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+    // =========================
+    // STEP 7: SAVE TRANSACTION
+    // =========================
+    await db.collection("transactions")
+      .doc(txId)
+      .set({
+        txId,
+        userId,
+        email: currentUser.email,
+        plan,
+        price,
+        voucher,
+        type: "purchase",
+        createdAt:
+          firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+    // =========================
+    // STEP 8: ADMIN NOTIFICATION
+    // =========================
+    await db.collection("adminNotifications")
+      .add({
+        title: "Voucher Purchase",
+        message:
+          `${currentUser.email} bought ${plan} voucher for ₦${Number(price).toLocaleString("en-NG")}`,
+        type: "voucher",
+        read: false,
+        createdAt:
+          firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+    // =========================
+    // STEP 9: SUCCESS
+    // =========================
+    hideLoader();
+
+    showAlert(
+      "Purchase successful!"
+    );
+
+    document.getElementById(
+      "activateBtn"
+    ).style.display = "block";
+
+    printVoucher({
+      email: currentUser.email,
+      plan,
+      price,
+      voucher
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    // =========================
+    // OPTIONAL REFUND PROTECTION
+    // =========================
+    if (deducted === true) {
+
+      try {
+
+        await db.runTransaction(async (transaction) => {
+
+          const refundDoc = await transaction.get(userRef);
+
+          const currentWallet = Number(
+            refundDoc.data().wallet || 0
+          );
+
+          transaction.update(userRef, {
+            wallet: currentWallet + price
+          });
+
+        });
+
+      } catch (refundError) {
+
+        console.error(
+          "Refund failed:",
+          refundError
+        );
+
+      }
+    }
+
+    hideLoader();
+
+    showErrorModal(
+      err.message || "Purchase failed"
+    );
+
+  } finally {
+
+    // =========================
+    // RELEASE LOCK
+    // =========================
+    await lockRef.set({
+      locked: false
+    }, { merge: true });
+
+    hideLoader();
+
+  }
+}
+
+
+
+
+function loadTransactions(uid){
+
+  const body = document.getElementById("transactionBody");
+
+  db.collection("transactions")
+    .where("userId", "==", uid)
+
+    .onSnapshot(snapshot => {
+
+      body.innerHTML = "";
+
+      if(snapshot.empty){
+
+        body.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align:left;">
+              No transaction history yet
+            </td>
+          </tr>
+        `;
+
+        return;
+      }
+
+      // SAFE SORT
+      const docs = snapshot.docs.sort((a, b) => {
+
+        const aTime =
+          a.data().createdAt?.toMillis
+          ? a.data().createdAt.toMillis()
+          : 0;
+
+        const bTime =
+          b.data().createdAt?.toMillis
+          ? b.data().createdAt.toMillis()
+          : 0;
+
+        return bTime - aTime;
+
+      });
+
+      docs.forEach(doc => {
+
+        const t = doc.data();
+        const id = doc.id;
+
+        let badge = "";
+        let details = "";
+
+        // =========================
+        // FUND WALLET
+        // =========================
+        if(t.type === "fund"){
+
+          badge = `<span class="tx-badge tx-fund">FUND</span>`;
+
+          details = `Wallet Funding`;
+        }
+
+        // =========================
+        // WIFI VOUCHER
+        // =========================
+        else if(t.type === "purchase"){
+
+          badge = `<span class="tx-badge tx-debit">VOUCHER</span>`;
+
+          details = `${t.plan || "-"}`;
+        }
+
+        // =========================
+        // DATA
+        // =========================
+        else if(t.type === "data"){
+
+          badge = `<span class="tx-badge tx-data">DATA</span>`;
+
+          details = `
+            ${t.network || ""}<br>
+            ${t.plan || ""}
+          `;
+        }
+
+        // =========================
+        // AIRTIME
+        // =========================
+        else if(t.type === "airtime"){
+
+          badge = `<span class="tx-badge tx-airtime">AIRTIME</span>`;
+
+          details = `
+            ${t.network || ""}<br>
+            ${t.phone || ""}
+          `;
+        }
+
+        // =========================
+        // BILL PAYMENT
+        // =========================
+        else if(t.type === "bill"){
+
+          badge = `<span class="tx-badge tx-bill">BILL</span>`;
+
+          details = `
+            ${t.disco || ""}<br>
+            Meter: ${t.meter || ""}
+          `;
+        }
+
+        body.innerHTML += `
+
+          <tr>
+
+            <td>${badge}</td>
+
+            <td>
+              ₦${Number(t.amount || t.price || 0).toLocaleString()}
+            </td>
+
+            <td>
+
+              <button
+                class="btn"
+                style="padding:6px 10px;font-size:12px;"
+                onclick="viewTransaction('${id}')">
+
+                View
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        `;
+      });
+    });
+}
+
+
+
+
+let selectedPlan = null;
+let selectedPrice = null;
+
+function openConfirm(price, plan){
+  selectedPlan = plan;
+  selectedPrice = price;
+
+  document.getElementById("confirmText").innerText =
+    `Do you want to buy ${plan} for ₦${price}?`;
+
+  document.getElementById("confirmBox").style.display = "flex";
+}
+
+function closeConfirm(){
+  document.getElementById("confirmBox").style.display = "none";
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("confirmYes").addEventListener("click", function () {
+    closeConfirm();
+    buy(selectedPrice, selectedPlan);
+  });
+});
+
+
+
+
+
+
+async function viewTransaction(id){
+
+  try{
+
+const doc = await db
+  .collection("transactions")
+  .doc(id)
+  .get();
+
+if(!doc.exists){
+
+  showErrorModal(
+    "Transaction not found."
+  );
+
+  return;
+}
+
+    const t = doc.data();
+
+    printVoucher({
+      email: t.email || currentUser.email,
+      plan: t.plan || t.network || t.disco || "Transaction",
+      price: t.amount || t.price || 0,
+      voucher: t.voucher || t.reference || t.phone || t.meter || "N/A"
+    });
+
+  }catch(err){
+
+    console.error(err);
+    showAlert("Failed to load transaction", "error");
+
+  }
+}
+
+
+
+
+
+
+function scrollToWallet(){
+  document.getElementById("User").scrollIntoView({behavior:"smooth"});
+}
+
+function togglePassword(){
+  const passwordInput = document.getElementById("password");
+
+  if(passwordInput.type === "password"){
+    passwordInput.type = "text";
+  } else {
+    passwordInput.type = "password";
+  }
+}
+
+
+
+
+function setLoading(btnId, loading=true){
+  const btn = document.getElementById(btnId);
+  if(!btn) return;
+
+  btn.disabled = loading;
+  btn.innerText = loading ? "Please wait..." : btn.getAttribute("data-text");
+}
+
+// store original text
+document.getElementById("signupBtn")?.setAttribute("data-text","Signup");
+document.getElementById("loginBtnModal")?.setAttribute("data-text","Login");
+
+
+
+
+
+function printVoucher(data){
+  document.getElementById("r_email").innerText = data.email;
+  document.getElementById("r_plan").innerText = data.plan;
+  document.getElementById("r_price").innerText = data.price;
+  document.getElementById("r_voucher").innerText = data.voucher;
+  document.getElementById("r_date").innerText = new Date().toLocaleString();
+
+  document.getElementById("receiptOverlay").style.display = "flex";
+}
+
+
+
+function closeReceipt(){
+  document.getElementById("receiptOverlay").style.display = "none";
+}
+
+
+
+function printReceipt(){
+
+  const receipt = document.getElementById("receiptPrint");
+
+  // fill values
+  document.getElementById("p_email").innerText = document.getElementById("r_email").innerText;
+  document.getElementById("p_plan").innerText = document.getElementById("r_plan").innerText;
+  document.getElementById("p_price").innerText = document.getElementById("r_price").innerText;
+  document.getElementById("p_voucher").innerText = document.getElementById("r_voucher").innerText;
+  document.getElementById("p_date").innerText = document.getElementById("r_date").innerText;
+
+  // FORCE visible BEFORE print
+  receipt.style.display = "block";
+
+  // wait for DOM paint
+  setTimeout(() => {
+    window.print();
+
+    // hide again after print
+    setTimeout(() => {
+      receipt.style.display = "none";
+    }, 500);
+
+  }, 300);
+}
+
+
+
+
+function downloadReceipt(){
+  const content = document.querySelector("#receiptOverlay").innerText;
+
+  const blob = new Blob([content], { type: "text/plain" });
+  const link = document.createElement("a");
+
+  link.href = URL.createObjectURL(blob);
+  link.download = "BIVA-Receipt.txt";
+  link.click();
+
+}
+
+
+
+
+
+
+
+
+
+function openBalance(){
+window.open("http://neverssl.com", "_self");
+}
+
+
+
+
+
+
+
+
+function openChatBox(){
+  document.getElementById("chatBox").style.display = "block";
+  loadMessages();
+}
+
+function closeChatBox(){
+  document.getElementById("chatBox").style.display = "none";
+}
+
+
+
+
+
+
+
+async function sendMessage(){
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+
+if(!text || !currentUser){
+
+  showErrorModal(
+    "Please login first to chat."
+  );
+
+  return;
+}
+
+  const ref = db.collection("supportChats").doc(currentUser.uid);
+
+  await ref.set({
+    email: currentUser.email,
+    updatedAt: new Date(),
+    lastMessage: text,
+    unreadAdmin: true
+  }, { merge: true });
+
+  await ref.collection("messages").add({
+    text: text,
+    sender: "user",
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  input.value = "";
+}
+
+
+
+
+
+function loadMessages(){
+  const box = document.getElementById("chatMessages");
+
+db.collection("supportChats")
+  .doc(currentUser.uid)
+  .collection("messages")
+  .orderBy("createdAt")
+  .onSnapshot(snapshot => {
+
+      box.innerHTML = "";
+
+      snapshot.forEach(doc => {
+        const m = doc.data();
+
+        box.innerHTML += `
+          <div style="
+            text-align:${m.sender === 'user' ? 'right' : 'left'};
+            margin:5px 0;
+          ">
+            <span style="
+              display:inline-block;
+              padding:8px;
+              border-radius:10px;
+              background:${m.sender === 'user' ? '#ff1a1a' : '#eee'};
+              color:${m.sender === 'user' ? '#fff' : '#000'};
+              max-width:80%;
+            ">
+              ${m.text}
+            </span>
+          </div>
+        `;
+      });
+
+      box.scrollTop = box.scrollHeight;
+    });
+}
+
+
+
+
+async function sendSupportMessage(text){
+
+  const ref = db.collection("supportChats").doc(currentUser.uid);
+
+  await ref.set({
+    email: currentUser.email,
+    updatedAt: new Date(),
+    lastMessage: text,
+    unreadAdmin: true
+  }, { merge:true });
+
+  await ref.collection("messages").add({
+    text: text,
+    sender: "user",
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+}
+
+
+
+
+
+
+//Avoid creating New tab when opening a links
+document.querySelectorAll("a").forEach(link => {
+  link.removeAttribute("target");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+function openInvoice(){
+  window.location.href = "https://brightinternationaldamaturu-hue.github.io/staffs/";
+}
+
+
+
+
+
+
+function toggleMenu() {
+  const menu = document.getElementById("dropdownMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Optional: close menu when clicking outside
+document.addEventListener("click", function(e) {
+  const menu = document.getElementById("dropdownMenu");
+  const icon = document.querySelector(".menu-icon");
+
+  if (!menu.contains(e.target) && e.target !== icon) {
+    menu.style.display = "none";
+  }
+});
+
+
+
+
+
+
+
+
+
+function openLogoutBox(){
+  document.getElementById("logoutBox").style.display = "flex";
+}
+
+function closeLogoutBox(){
+  document.getElementById("logoutBox").style.display = "none";
+}
+
+async function confirmLogout(){
+  closeLogoutBox();
+  showLoader("Logging you out...");
+
+  try {
+    await auth.signOut();
+
+    document.getElementById("userEmail").innerText = "";
+
+    showSuccessCard("You Successfuly Logged Out");
+
+  } catch (err) {
+    console.error(err);
+
+showErrorModal(
+  "Logout Failed",
+  "Please try again later."
+);
+
+  } finally {
+    hideLoader();
+  }
+}
+
+
+
+
+
+// ===============================
+// 📞 BUY AIRTIME WITH CONFIRMATION
+// ===============================
+
+let airtimeProcessing = false;
+
+async function buyAirtime() {
+
+  // ===============================
+  // PREVENT DOUBLE CLICK
+  // ===============================
+
+  if (airtimeProcessing) {
+
+    showAlert(
+      "Transaction already processing...",
+      "warning"
+    );
+
+    return;
+  }
+
+  try {
+
+    // ===============================
+    // VALIDATION
+    // ===============================
+
+    if (!currentUser) {
+
+      showErrorModal(
+        "Please login first."
+      );
+
+      return;
+    }
+
+    const phone =
+      document.getElementById(
+        "airtimePhone"
+      ).value.trim();
+
+    const network =
+      document.getElementById(
+        "airtimeNetwork"
+      ).value;
+
+    const amount = Number(
+      document.getElementById(
+        "airtimeAmount"
+      ).value
+    );
+
+    if (!phone || !network || !amount) {
+
+      showErrorModal(
+        "Please fill all fields."
+      );
+
+      return;
+    }
+
+    // ===============================
+    // MINIMUM VALIDATION
+    // ===============================
+
+    if (amount < 50) {
+
+      showErrorModal(
+        "Minimum Airtime Purchase is ₦50"
+      );
+
+      return;
+    }
+
+    // ===============================
+    // CONFIRM PURCHASE
+    // ===============================
+
+    const confirmBuy =
+      await showConfirmModal(
+
+        "Confirm Airtime Purchase",
+
+`Network: ${network}
+
+Phone: ${phone}
+
+Amount: ₦${amount.toLocaleString('en-NG')}
+
+Proceed with transaction?`
+
+      );
+
+    if (!confirmBuy) {
+      return;
+    }
+
+    // ===============================
+    // START PROCESSING
+    // ===============================
+
+    airtimeProcessing = true;
+
+    showLoader(
+      "Processing Airtime..."
+    );
+
+    // ===============================
+    // GENERATE TRANSACTION ID
+    // ===============================
+
+    const requestId =
+
+      "AIRTIME_" +
+      currentUser.uid +
+      "_" +
+      Date.now();
+
+    // ===============================
+    // CALL BACKEND
+    // ===============================
+
+    const res = await fetch(
+
+      "https://biva-backend-ezvu.onrender.com/api/buy-airtime",
+
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+          "application/json"
+        },
+
+        body: JSON.stringify({
+
+          phone,
+          network,
+          amount,
+
+          email:
+          currentUser.email,
+
+          userId:
+          currentUser.uid,
+
+          requestId
+
+        })
+      }
+    );
+
+    // ===============================
+    // PARSE RESPONSE
+    // ===============================
+
+    const text =
+      await res.text();
+
+    let data;
+
+    try {
+
+      data = JSON.parse(text);
+
+    } catch (e) {
+
+      console.error(
+        "Invalid JSON:",
+        text
+      );
+
+      throw new Error(
+        "Invalid server response"
+      );
+    }
+
+    // ===============================
+    // CHECK RESPONSE
+    // ===============================
+
+    if (
+      !res.ok ||
+      !data.success
+    ) {
+
+      throw new Error(
+
+        data.message ||
+
+        "Airtime purchase failed"
+
+      );
+    }
+
+    // ===============================
+    // SAVE TRANSACTION
+    // ===============================
+
+    await db.collection(
+      "transactions"
+    ).add({
+
+      txId: requestId,
+
+      userId:
+      currentUser.uid,
+
+      email:
+      currentUser.email,
+
+      type: "airtime",
+
+      network,
+      phone,
+      amount,
+
+      status: "success",
+
+      providerStatus:
+      data.status || "success",
+
+      response:
+      data,
+
+      createdAt:
+      new Date()
+
+    });
+
+    // ===============================
+    // SUCCESS
+    // ===============================
+
+    showSuccessCard(
+      `₦${amount.toLocaleString('en-NG')} airtime sent successfully`
+    );
+
+    // ===============================
+    // ADMIN NOTIFICATION
+    // ===============================
+
+    await db.collection(
+      "adminNotifications"
+    ).add({
+
+      title:
+      "Airtime Purchase",
+
+      message:
+
+`${currentUser.email} bought airtime worth ₦${amount.toLocaleString('en-NG')}`,
+
+      type: "airtime",
+
+      read: false,
+
+      createdAt:
+
+      firebase.firestore
+      .FieldValue
+      .serverTimestamp()
+
+    });
+
+    // ===============================
+    // REFRESH WALLET
+    // ===============================
+
+    await getWallet();
+
+  }
+
+  catch (err) {
+
+    console.error(
+      "Airtime Purchase Error:",
+      err
+    );
+
+  }
+
+  finally {
+
+    airtimeProcessing = false;
+
+    hideLoader();
+  }
+}
+
+
+
+
+// ===============================
+// 💵 BUY DATA WITH CONFIRMATION
+// ===============================
+
+let dataProcessing = false;
+
+async function buyData(plan) {
+
+  // ===============================
+  // PREVENT DOUBLE CLICK
+  // ===============================
+
+  if (dataProcessing) {
+
+    showAlert(
+      "Transaction already processing...",
+      "warning"
+    );
+
+    return;
+  }
+
+  try {
+
+    // ===============================
+    // VALIDATION
+    // ===============================
+
+if (!currentUser) {
+
+  showErrorModal(
+    "Please login first."
+  );
+
+  return;
+}
+
+    const phone = document
+      .getElementById("dataPhone")
+      .value
+      .trim();
+
+    if (!phone) {
+
+showErrorModal(
+  "Please enter phone number."
+);
+
+return;
+    }
+
+// ===============================
+// CONFIRM PURCHASE
+// ===============================
+
+const confirmBuy =
+await showConfirmModal(
+
+  "Confirm Data Purchase",
+
+`Plan: ${plan.data_plan}
+
+Network: ${plan.network_id}
+
+Phone: ${phone}
+
+Amount: ₦${Number(plan.amount).toLocaleString('en-NG')}
+
+Proceed with transaction?`
+
+);
+
+if(!confirmBuy){
+  return;
+}
+
+    // ===============================
+    // START PROCESSING
+    // ===============================
+
+    dataProcessing = true;
+
+    showLoader("Processing Data...");
+
+    // ===============================
+    // CALL BACKEND
+    // ===============================
+
+    const res = await fetch(
+
+      "https://biva-backend-ezvu.onrender.com/api/data/buy",
+
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+          "application/json"
+        },
+
+        body: JSON.stringify({
+
+          userId:
+          currentUser.uid,
+
+          phone,
+
+          data_plan:
+          plan.data_plan,
+
+          network_id:
+          plan.network_id
+
+        })
+      }
+    );
+
+    const text =
+      await res.text();
+
+    let data;
+
+    try {
+
+      data = JSON.parse(text);
+
+    } catch (e) {
+
+      console.error(
+        "Invalid JSON:",
+        text
+      );
+
+      throw new Error(
+        "Server returned invalid response"
+      );
+    }
+
+    // ===============================
+    // CHECK RESPONSE
+    // ===============================
+
+    if (
+      !res.ok ||
+      !data.success
+    ) {
+
+  showErrorModal(
+    "Something went Wrong"
+  );
+
+return;
+    }
+
+    // ===============================
+    // SAVE TRANSACTION
+    // ===============================
+
+    await db.collection(
+      "transactions"
+    ).add({
+
+      userId:
+      currentUser.uid,
+
+      email:
+      currentUser.email,
+
+      type: "data",
+
+      network:
+      plan.network_id,
+
+      plan:
+      plan.data_plan,
+
+      amount:
+      Number(plan.amount),
+
+      phone,
+
+      status: "success",
+
+      createdAt:
+      new Date()
+
+    });
+
+    // ===============================
+    // SUCCESS
+    // ===============================
+
+    showSuccessCard(
+      "Data Purchase Successful"
+    );
+
+    // ===============================
+    // ADMIN NOTIFICATION
+    // ===============================
+
+    await db.collection(
+      "adminNotifications"
+    ).add({
+
+      title:
+      "Data Purchase",
+
+      message:
+
+      `${currentUser.email} bought ${plan.data_plan} data for ₦${Number(plan.amount).toLocaleString('en-NG')}`,
+
+      type: "data",
+
+      read: false,
+
+      createdAt:
+
+      firebase.firestore
+      .FieldValue
+      .serverTimestamp()
+
+    });
+
+// ===============================
+// REFRESH WALLET
+// ===============================
+
+await getWallet();
+} 
+
+catch (err) {
+console.error(err);
+} 
+
+finally {
+
+    dataProcessing = false;
+
+    hideLoader();
+  }
+}
+
+
+
+
+function getNetworkId(network) {
+  const map = {
+    mtn: 1,
+    glo: 2,
+    "9mobile": 3,
+    airtel: 4
+  };
+
+  return map[network?.toLowerCase()];
+}
+
+
+
+
+
+
+async function loadDataPlans(network) {
+
+  if (!network) return;
+
+  try {
+
+    showLoader("Loading Data Plans...");
+
+    const networkMap = {
+      mtn: 1,
+      glo: 2,
+      "9mobile": 3,
+      airtel: 4
+    };
+
+    const network_id = networkMap[network.toLowerCase()];
+
+    const res = await fetch(
+      `https://biva-backend-ezvu.onrender.com/api/data/plans/${network_id}`
+    );
+
+    // READ AS TEXT FIRST
+    const text = await res.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("Invalid JSON:", text);
+      throw new Error("Server returned invalid response");
+    }
+
+    console.log("PLANS RESPONSE:", data);
+
+if (!res.ok || !data.success) {
+
+  showErrorModal(
+
+    data.error ||
+
+    "Failed to load plans."
+
+  );
+
+  return;
+}
+
+const plans = data.data || [];
+
+renderPlans(
+  plans.map(plan => ({
+
+    id: plan.data_plan,
+
+    name: plan.name || plan.data_plan,
+
+    validity: plan.validity || "Valid",
+
+    amount: plan.selling_price,
+
+    network_id: network_id,
+
+    raw: plan
+
+  }))
+);
+
+  } catch (err) {
+
+console.error(err);
+
+showErrorModal(
+
+  "Error loading plans. Please try again later."
+
+);
+
+} finally {
+
+    hideLoader();
+  }
+}
+
+
+
+
+
+function renderPlans(plans){
+
+  const container =
+    document.getElementById("dataPlans");
+
+  container.innerHTML = "";
+
+  plans.forEach(plan => {
+
+    let type = "OTHER";
+
+    const name =
+      (plan.name || "").toUpperCase();
+
+    if(name.includes("SME2")){
+      type = "SME2";
+    }
+    else if(name.includes("SME")){
+      type = "SME";
+    }
+    else if(name.includes("GIFTING")){
+      type = "GIFTING";
+    }
+
+    const card =
+      document.createElement("div");
+
+    card.className = "plan-card";
+
+    // IMPORTANT
+    card.dataset.type = type;
+
+    card.innerHTML = `
+
+      <div class="plan-size">
+        ${plan.name}
+      </div>
+
+      <div class="plan-price">
+        ₦${plan.amount}
+      </div>
+
+      <div class="plan-validity">
+        ${plan.validity}
+      </div>
+
+      <button class="btn buy-btn">
+        Buy Now
+      </button>
+    `;
+
+    // BUY BUTTON
+    card.querySelector(".buy-btn")
+      .onclick = (e) => {
+
+      e.stopPropagation();
+
+      buyData({
+        data_plan: plan.id,
+        network_id: plan.network_id,
+        amount: plan.amount
+      });
+
+    };
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+
+
+
+function selectPlan(el, id, amount){
+
+  document.querySelectorAll(".plan-card")
+    .forEach(card => card.classList.remove("active"));
+
+  el.classList.add("active");
+
+  selectedPlan = id;
+}
+
+
+
+function filterPlans(type, btn){
+
+  // ACTIVE BUTTON
+  document.querySelectorAll(".filter-btn")
+    .forEach(button => {
+      button.classList.remove("active");
+    });
+
+  btn.classList.add("active");
+
+  // GET CARDS
+  const cards = document.querySelectorAll(".plan-card");
+
+  cards.forEach(card => {
+
+    const cardType = card.dataset.type;
+
+    if(type === "ALL" || cardType === type){
+
+      // RESTORE ORIGINAL DISPLAY
+      card.style.display = "";
+
+    }else{
+
+      // HIDE
+      card.style.display = "none";
+
+    }
+
+  });
+
+}
+
+
+
+
+// ===============================
+// ⚡ PAY BILL WITH CONFIRMATION
+// ===============================
+
+let billProcessing = false;
+
+async function payBill(){
+
+  // ===============================
+  // PREVENT DOUBLE CLICK
+  // ===============================
+
+  if (billProcessing) {
+
+    showAlert(
+      "Transaction already processing...",
+      "warning"
+    );
+
+    return;
+  }
+
+  try{
+
+    // ===============================
+    // VALIDATION
+    // ===============================
+
+if(!currentUser){
+
+  showErrorModal(
+    "Please login first."
+  );
+
+  return;
+}
+
+    const meter =
+      document.getElementById(
+        "meterNumber"
+      ).value.trim();
+
+    const disco =
+      document.getElementById(
+        "disco"
+      ).value;
+
+    const amount = Number(
+
+      document.getElementById(
+        "billAmount"
+      ).value
+
+    );
+
+if(!meter || !disco || !amount){
+
+  showErrorModal(
+    "Please fill all fields."
+  );
+
+  return;
+}
+
+
+
+// ===============================
+// CONFIRM PAYMENT
+// ===============================
+
+const confirmPay =
+await showConfirmModal(
+
+  "Confirm Electricity Payment",
+
+`Disco: ${disco}
+
+Meter Number: ${meter}
+
+Amount: ₦${amount.toLocaleString('en-NG')}
+
+Proceed with payment?`
+
+);
+
+if(!confirmPay){
+  return;
+}
+
+
+    // ===============================
+    // START PROCESSING
+    // ===============================
+
+    billProcessing = true;
+
+    showLoader(
+      "Processing Bill Payment..."
+    );
+
+    // ===============================
+    // CALL BACKEND
+    // ===============================
+
+    const res = await fetch(
+
+      "https://biva-backend-ezvu.onrender.com/pay-bill",
+
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+          "application/json"
+        },
+
+        body:JSON.stringify({
+
+          meter,
+          disco,
+          amount,
+
+          email:
+          currentUser.email
+
+        })
+      }
+    );
+
+    const data =
+      await res.json();
+
+    // ===============================
+    // CHECK RESPONSE
+    // ===============================
+
+if(!res.ok){
+
+  showErrorModal(
+
+    data.error ||
+
+    "Payment failed. Please try again later."
+
+  );
+
+  return;
+}
+
+    // ===============================
+    // SAVE TRANSACTION
+    // ===============================
+
+    await db.collection(
+      "transactions"
+    ).add({
+
+      userId:
+      currentUser.uid,
+
+      email:
+      currentUser.email,
+
+      type: "bill",
+
+      disco,
+      meter,
+      amount,
+
+      reference:
+
+      data.reference ||
+      "Electricity Payment",
+
+      status: "success",
+
+      createdAt:
+      new Date()
+
+    });
+
+    // ===============================
+    // SUCCESS
+    // ===============================
+
+    showSuccessCard(
+      "Bill Payment Successful"
+    );
+
+    // ===============================
+    // ADMIN NOTIFICATION
+    // ===============================
+
+    await db.collection(
+      "adminNotifications"
+    ).add({
+
+      title:
+      "Bill Payment",
+
+      message:
+
+      `${currentUser.email} paid ₦${Number(amount).toLocaleString('en-NG')} for ${disco}`,
+
+      type: "bill",
+
+      read: false,
+
+      createdAt:
+
+      firebase.firestore
+      .FieldValue
+      .serverTimestamp()
+
+    });
+
+    // ===============================
+    // REFRESH WALLET
+    // ===============================
+
+    await getWallet();
+
+} catch(err){
+
+  // LOG REAL ERROR
+  console.error(
+    "Bill Payment Error:",
+    err
+  );
+
+  // SHOW CLEAN ERROR MODAL
+  showErrorModal(
+    "Transaction failed."
+  );
+
+} finally{
+
+    billProcessing = false;
+
+    hideLoader();
+  }
+}
+
+
+
+
+
+// ===============================
+// VOUCHER DATA PLANS
+// ===============================
+
+const voucherPlans = [
+  {price:150, desc:'1GB'},
+  {price:300, desc:'2GB'},
+  {price:450, desc:'3GB'},
+  {price:600, desc:'4GB'},
+  {price:900, desc:'6GB'},
+  {price:1050, desc:'7GB'},
+  {price:1200, desc:'8GB'},
+  {price:1500, desc:'10GB'},
+  {price:2250, desc:'15GB'},
+  {price:3000, desc:'20GB'},
+  {price:3750, desc:'25GB'},
+  {price:5400, desc:'36GB'},
+  {price:9750, desc:'65GB'},
+  {price:15000, desc:'100GB'},
+  {price:16500, desc:'120GB'},
+  {price:17500, desc:'150GB'},
+  {price:25000, desc:'200GB'},
+  {price:30000, desc:'Unlimited'}
+
+];
+
+function loadVoucherPlans(){
+
+  const plansDiv = document.getElementById("voucherPlans");
+
+  plansDiv.innerHTML = "";
+
+  plansDiv.classList.add("grid");
+
+  voucherPlans.forEach(p => {
+
+    plansDiv.innerHTML += `
+
+      <div class="card">
+
+        <h3>₦${p.price}</h3>
+
+        <p>${p.desc}</p>
+
+        <button
+          class="btn"
+          onclick="openConfirm(${p.price}, '${p.desc}')">
+
+          Buy
+
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+// LOAD ON PAGE START
+window.addEventListener(
+  "DOMContentLoaded",
+  loadVoucherPlans
+);
+
+
+
+
+
+function showSuccessCard(message = "Your Purchase is Successful"){
+
+  document.querySelector(
+    "#successCard h2"
+  ).innerText = message;
+
+  document.getElementById(
+    "successCard"
+  ).style.display = "flex";
+
+}
+
+function closeSuccessCard(){
+
+  document.getElementById(
+    "successCard"
+  ).style.display = "none";
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// =========================
+// CUSTOM CONFIRM MODAL
+// =========================
+
+// GLOBAL VARIABLE
+let confirmResolver = null;
+
+
+// OPEN MODAL
+function showConfirmModal(title, message){
+
+  return new Promise((resolve)=>{
+
+    // SAVE RESOLVER
+    confirmResolver = resolve;
+
+    // SET CONTENT
+    document.getElementById(
+      "confirmTitle"
+    ).innerText = title;
+
+    document.getElementById(
+      "confirmMessage"
+    ).innerText = message;
+
+    // SHOW MODAL
+    document.getElementById(
+      "confirmModal"
+    ).classList.add("active");
+
+  });
+
+}
+
+
+// CLOSE MODAL
+function closeConfirmModal(result){
+
+  // HIDE MODAL
+  document.getElementById(
+    "confirmModal"
+  ).classList.remove("active");
+
+  // RETURN RESULT
+  if(confirmResolver){
+
+    confirmResolver(result);
+
+    confirmResolver = null;
+  }
+}
+
+
+/* =========================
+ERROR MODAL SYSTEM
+========================= */
+
+function showErrorModal(
+
+  title = "Transaction Failed",
+
+  message =
+  "Please try again later."
+
+){
+
+  document.getElementById(
+    "errorTitle"
+  ).innerText = title;
+
+  document.getElementById(
+    "errorMessage"
+  ).innerText = message;
+
+  document.getElementById(
+    "errorModal"
+  ).classList.add("active");
+
+}
+
+function closeErrorModal(){
+
+  document.getElementById(
+    "errorModal"
+  ).classList.remove("active");
+
+}
+
+
+
+
+function filterVoucherPlans(){
+
+  const input =
+    document.getElementById("voucherFilter")
+    .value
+    .toLowerCase();
+
+  // ALL VOUCHER CARDS
+  const cards =
+    document.querySelectorAll("#voucherPlans .card");
+
+  cards.forEach(card => {
+
+    const text =
+      card.innerText.toLowerCase();
+
+    if(text.includes(input)){
+
+      card.style.display = "";
+
+    }else{
+
+      card.style.display = "none";
+
+    }
+
+  });
+
+}
+
+
+
+// =========================
+// AUTO ADS SLIDER
+// =========================
+
+const adsCards =
+  document.querySelectorAll(".ads-card");
+
+let currentAd = 0;
+
+function showNextAd(){
+
+  adsCards[currentAd]
+    .classList.remove("active");
+
+  currentAd++;
+
+  if(currentAd >= adsCards.length){
+    currentAd = 0;
+  }
+
+  adsCards[currentAd]
+    .classList.add("active");
+}
+
+// CHANGE EVERY 5 SECONDS
+setInterval(showNextAd, 8000);
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="confirmBox" class="modal" style="display:none;">
+  <div class="modal-content">
+
+    <h3 style="color:#b30000;">⚠ Important Notice</h3>
+
+    <p id="confirmText" style="font-weight:600;"></p>
+
+    <div style="
+      background:#fff5f5;
+      border:2px solid #ffcccc;
+      padding:12px;
+      border-radius:10px;
+      margin:15px 0;
+      text-align:left;
+      font-size:14px;
+      line-height:1.6;
+      color:#8B0000;
+    ">
+
+      <strong>PLEASE READ CAREFULLY:</strong><br><br>
+
+      • This voucher works ONLY within selected areas of Damaturu, Yobe State.<br><br>
+
+      • Ensure you are within coverage location before purchase.<br><br>
+
+      • All voucher purchases are FINAL and NON-REFUNDABLE.<br><br>
+
+      • By proceeding, you confirm that you understand and accept these terms.
+
+    </div>
+
+    <!-- AGREEMENT CHECKBOX -->
+    <label style="
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-bottom:15px;
+      font-size:14px;
+      cursor:pointer;
+    ">
+
+      <input type="checkbox" id="agreementCheck" style="margin-top:4px;">
+
+      <span>
+        I understand that this voucher only works in some parts of Damaturu, Yobe State, and I agree that this purchase cannot be refunded.
+      </span>
+
+    </label>
+
+    <button class="btn" id="confirmYes">
+      Yes, I Agree & Buy
+    </button>
+
+    <button class="btn"
+      onclick="closeConfirm()"
+      style="background:gray">
+      Cancel
+    </button>
+
+  </div>
+</div>
+
+
+
+<!-- FULL SCREEN RECEIPT OVERLAY -->
+<div id="receiptOverlay" style="
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  z-index:999999;
+  justify-content:center;
+  align-items:center;
+">
+
+  <div style="
+    background:#fff;
+    width:100%;
+    max-width:400px;
+    border-radius:10px;
+    padding:20px;
+    text-align:left;
+  ">
+
+    <h2 style="color:#8B0000;text-align:center;">
+  Purchase Successful
+</h2>
+
+    <p><strong>Email:</strong> <span id="r_email"></span></p>
+    <p><strong>Plan:</strong> <span id="r_plan"></span></p>
+    <p><strong>Amount:</strong> ₦<span id="r_price"></span></p>
+    <p><strong>Voucher:</strong> <span id="r_voucher"></span></p>
+    <p><strong>Date:</strong> <span id="r_date"></span></p>
+
+<div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+
+  <button class="btn" onclick="openBalance()">⚡ Activate</button>
+
+  <button class="btn" onclick="downloadReceipt()">⬇ Download</button>
+
+  <button class="btn" onclick="printReceipt()">🖨 Print</button>
+
+</div>
+
+    <button class="btn" style="background:gray;width:100%;margin-top:10px;" onclick="closeReceipt()">Close</button>
+
+  </div>
+</div>
+
+
+
+
+
+
+<div id="chatBox" style="
+  display:none;
+  position:fixed;
+  bottom:150px;
+  right:20px;
+  width:300px;
+  height:400px;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  z-index:99999;
+  overflow:hidden;
+">
+
+  <div style="background:#8B0000;color:#fff;padding:10px;">
+    Live Support
+    <span onclick="closeChatBox()" style="float:right;cursor:pointer;">❌</span>
+  </div>
+
+  <div id="chatMessages" style="height:300px;overflow:auto;padding:10px;font-size:14px;"></div>
+
+  <div style="display:flex;">
+    <input id="chatInput" placeholder="Type message..." style="flex:1;padding:10px;border:none;">
+    <button onclick="sendMessage()" style="background:#8B0000;color:#fff;border:none;padding:10px;">Send</button>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+<div id="receiptPrint">
+
+  <h3 style="text-align:center;">BIVA RECEIPT</h3>
+  <hr>
+
+  <p>Email: <span id="p_email"></span></p>
+  <p>Plan: <span id="p_plan"></span></p>
+  <p>Amount: ₦<span id="p_price"></span></p>
+  <p>Voucher: <span id="p_voucher"></span></p>
+  <p>Date: <span id="p_date"></span></p>
+
+  <hr>
+  <p style="text-align:center;">Thank you</p>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- GLOBAL LOADING OVERLAY -->
+<div id="globalLoader" class="loader-overlay">
+
+  <div class="loader-box">
+
+    <!-- Animated Logo Pulse -->
+    <div class="logo-pulse"></div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Text -->
+    <h3 id="loaderTitle">Processing...</h3>
+    <p id="loaderText">Please wait while we complete your request</p>
+
+  </div>
+
+</div>
+
+
+
+
+
+<div id="logoutBox" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Confirm Logout</h3>
+    <p>Are you sure you want to log out?</p>
+
+    <button class="btn" onclick="confirmLogout()">Yes, Logout</button>
+    <button class="btn" onclick="closeLogoutBox()" style="background:gray;">Cancel</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="bottom-nav">
+
+  <button onclick="showPage('dashboard')">
+    <span>🏠</span>
+  </button>
+</div>
+
+
+
+<div id="successCard" class="success-card">
+
+  <div class="success-box">
+
+    <div class="success-icon"></div>
+
+    <h2>Your Purchase is Successful</h2>
+
+    <p>Thank you for using BIVA</p>
+
+    <button onclick="closeSuccessCard()">
+      Continue
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+CLASSIC CONFIRM MODAL
+========================= -->
+
+<div class="confirm-modal" id="confirmModal">
+
+  <div class="confirm-box">
+
+    <div class="confirm-icon">
+      💳
+    </div>
+
+    <h2 id="confirmTitle">
+      Confirm Transaction
+    </h2>
+
+    <p id="confirmMessage">
+      Are you sure you want to continue?
+    </p>
+
+    <div class="confirm-actions">
+
+      <button
+        class="confirm-btn cancel-btn"
+        onclick="closeConfirmModal(false)">
+
+        Cancel
+
+      </button>
+
+      <button
+        class="confirm-btn proceed-btn"
+        onclick="closeConfirmModal(true)">
+
+        Proceed
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<!-- =========================
+ERROR MODAL
+========================= -->
+
+<div class="error-modal" id="errorModal">
+
+  <div class="error-box">
+
+    <div class="error-icon">
+      ❌
+    </div>
+
+    <h2 id="errorTitle">
+      Transaction Failed
+    </h2>
+
+    <p id="errorMessage">
+      Something went wrong.
+      Please try again later.
+    </p>
+
+    <button
+      class="error-btn"
+      onclick="closeErrorModal()">
+
+      Okay
+
+    </button>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+</body>
+</html>
