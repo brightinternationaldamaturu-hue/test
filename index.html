@@ -2716,6 +2716,137 @@ ERROR MODAL
     font-size:16px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+.wallet-account-card{
+
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  margin-top:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.05);
+
+}
+
+.wallet-header{
+
+  margin-bottom:20px;
+
+}
+
+.account-box{
+
+  text-align:center;
+
+}
+
+.bank-name{
+
+  color:#777;
+  font-size:14px;
+
+}
+
+.account-number{
+
+  font-size:32px;
+  margin:10px 0;
+  color:#111;
+  letter-spacing:2px;
+
+}
+
+.account-name{
+
+  font-size:15px;
+  color:#444;
+  margin-bottom:20px;
+
+}
+
+.account-box button,
+.generate-btn{
+
+  background:#0a84ff;
+  color:#fff;
+  border:none;
+  padding:12px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+
+}
+
+@media(max-width:768px){
+
+  .account-number{
+
+    font-size:24px;
+
+  }
+
+}
+
+
+
+
+.virtual-account-box{
+
+  text-align:center;
+  padding:20px;
+
+}
+
+.virtual-account-box h2{
+
+  margin-bottom:15px;
+  color:#111;
+
+}
+
+.bank-name{
+
+  color:#666;
+  font-size:14px;
+  margin-bottom:10px;
+
+}
+
+.account-number{
+
+  font-size:32px;
+  letter-spacing:2px;
+  margin:15px 0;
+  color:#0a84ff;
+
+}
+
+.account-name{
+
+  color:#333;
+  margin-bottom:20px;
+
+}
+
+.virtual-account-box button{
+
+  background:#0a84ff;
+  color:#fff;
+  border:none;
+  padding:12px 20px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+
+}
 </style>
 
 
@@ -3031,16 +3162,21 @@ ERROR MODAL
 
     </div>
 
-    <div class="quick-item"
-      onclick="fundWallet()">
+    
 
-      <div class="quick-icon">💰</div>
+<div class="quick-item"
+     onclick="openWalletFunding()">
 
-      <small>Fund Wallet</small>
+  <div class="quick-icon">🏦</div>
 
-    </div>
+  <small>Bank Transfer</small>
 
-    <div class="quick-item"
+</div>
+
+    
+
+
+<div class="quick-item"
       onclick="showPage('about')">
 
       <div class="quick-icon">🎖️</div>
@@ -3700,37 +3836,127 @@ function closeModal(id = "modal") {
 
 
 async function signup(){
+
   showLoader("Creating account...");
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
+  const email =
+    document.getElementById('email')
+    .value.trim();
+
+  const password =
+    document.getElementById('password')
+    .value;
+
+  const fullName =
+    document.getElementById('fullName')
+    .value.trim();
+
+  const phone =
+    document.getElementById('phone')
+    .value.trim();
 
   try{
-    const cred = await auth.createUserWithEmailAndPassword(email, password);
+
+    // CREATE AUTH ACCOUNT
+    const cred =
+      await auth
+      .createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
     const user = cred.user;
 
-    await db.collection("users").doc(user.uid).set({
-      email: user.email,
-      wallet: 0,
-      blocked: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    // SAVE USER
+    await db
+      .collection("users")
+      .doc(user.uid)
+      .set({
 
-    showSuccessCard("Account Created Successfuly");
+        email: user.email,
+
+        fullName,
+
+        phone,
+
+        wallet: 0,
+
+        blocked: false,
+
+        createdAt:
+          firebase.firestore
+          .FieldValue
+          .serverTimestamp()
+
+      });
+
+    // CREATE VIRTUAL ACCOUNT
+    const response =
+      await fetch(
+
+      "https://biva-backend-ezvu.onrender.com/api/create-virtual-account",
+
+      {
+
+        method: "POST",
+
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          uid: user.uid,
+
+          email: user.email,
+
+          fullName,
+
+          phone
+
+        })
+
+      });
+
+    const data =
+      await response.json();
+
+    console.log(
+      "Virtual Account:",
+      data
+    );
+
+    showSuccessCard(
+      "Account Created Successfully"
+    );
+
     closeModal();
 
   }catch(err){
+
     console.error(err);
 
-showErrorModal(
-  "Signup Failed",
-  "Please use differnt info or try again later."
-);
+    showErrorModal(
+
+      "Signup Failed",
+
+      err.message ||
+      "Please use different info or try again later."
+
+    );
 
   }finally{
+
     hideLoader();
+
   }
+
 }
+
+
+
+
 
 
 async function fundWallet() {
@@ -4266,6 +4492,308 @@ async function buy(price, plan) {
 
   }
 }
+
+
+
+
+
+
+
+
+async function openWalletFunding(){
+
+  try{
+
+    // CHECK LOGIN
+    if(!currentUser){
+
+      showErrorModal(
+        "Please login first"
+      );
+
+      return;
+    }
+
+    showLoader(
+      "Loading account..."
+    );
+
+    console.log(
+      "Current User UID:",
+      currentUser.uid
+    );
+
+    // GET USER DOC
+    const userDoc =
+      await db
+      .collection("users")
+      .doc(currentUser.uid)
+      .get();
+
+    hideLoader();
+
+    // USER NOT FOUND
+    if(!userDoc.exists){
+
+      showErrorModal(
+        "User profile not found"
+      );
+
+      return;
+    }
+
+    const userData =
+      userDoc.data();
+
+    console.log(
+      "USER DATA:",
+      userData
+    );
+
+    // NO VIRTUAL ACCOUNT
+    if(!userData.virtualAccount){
+
+      showModal(`
+
+        <div class="virtual-account-box">
+
+          <h2>
+            Generate Wallet Account
+          </h2>
+
+          <p>
+            You don't have a wallet
+            account yet.
+          </p>
+
+          <button
+            onclick="generateVirtualAccount()">
+
+            Generate Account
+
+          </button>
+
+        </div>
+
+      `);
+
+      return;
+    }
+
+    const account =
+      userData.virtualAccount;
+
+    // SHOW ACCOUNT
+    showModal(`
+
+      <div class="virtual-account-box">
+
+        <h2>
+          Fund Wallet
+        </h2>
+
+        <p class="bank-name">
+          ${account.bankName || '-'}
+        </p>
+
+        <h1 class="account-number">
+          ${account.accountNumber || '-'}
+        </h1>
+
+        <p class="account-name">
+          ${account.accountName || '-'}
+        </p>
+
+        <button
+          onclick="copyAccountNumber('${account.accountNumber}')">
+
+          Copy Account Number
+
+        </button>
+
+      </div>
+
+    `);
+
+  }catch(error){
+
+    hideLoader();
+
+    console.log(
+      "LOAD ACCOUNT ERROR:",
+      error
+    );
+
+    showErrorModal(
+      "Failed to load account",
+      error.message
+    );
+
+  }
+
+}
+
+
+
+
+
+
+function copyAccountNumber(number){
+
+  navigator.clipboard.writeText(
+    number
+  );
+
+  showSuccessModal(
+    "Account number copied"
+  );
+
+}
+
+
+
+
+async function loadVirtualAccount() {
+
+  if (!currentUser) return;
+
+  const userDoc = await db
+    .collection("users")
+    .doc(currentUser.uid)
+    .get();
+
+  const userData = userDoc.data();
+
+  const container =
+    document.getElementById(
+      "accountContent"
+    );
+
+  // NO ACCOUNT
+  if (!userData.virtualAccount) {
+
+    container.innerHTML = `
+
+      <button
+        class="generate-btn"
+        onclick="generateVirtualAccount()">
+
+        Generate Account
+
+      </button>
+
+    `;
+
+    return;
+  }
+
+  const account =
+    userData.virtualAccount;
+
+  container.innerHTML = `
+
+    <div class="account-box">
+
+      <p class="bank-name">
+        ${account.bankName}
+      </p>
+
+      <h2 class="account-number">
+        ${account.accountNumber}
+      </h2>
+
+      <p class="account-name">
+        ${account.accountName}
+      </p>
+
+      <button
+        onclick="copyAccountNumber('${account.accountNumber}')">
+
+        Copy Account Number
+
+      </button>
+
+    </div>
+
+  `;
+}
+
+
+
+
+async function generateVirtualAccount() {
+
+  try {
+
+    showLoader();
+
+    const response =
+      await fetch(
+
+      "https://biva-backend-ezvu.onrender.com/api/create-virtual-account",
+
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          uid: currentUser.uid,
+
+          email: currentUser.email,
+
+          fullName:
+            currentUserData.fullName,
+
+          phone:
+            currentUserData.phone ||
+            "08000000000"
+
+        })
+
+      });
+
+    const data =
+      await response.json();
+
+    hideLoader();
+
+    if (!data.success) {
+
+      showErrorModal(
+        data.error ||
+        "Failed to generate account"
+      );
+
+      return;
+    }
+
+    showSuccessModal(
+      "Virtual account created successfully"
+    );
+
+    loadVirtualAccount();
+
+  } catch (error) {
+
+    hideLoader();
+
+    console.log(error);
+
+    showErrorModal(
+      "Failed to generate account"
+    );
+
+  }
+
+}
+
+
+
 
 
 
