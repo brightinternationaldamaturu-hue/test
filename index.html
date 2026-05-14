@@ -2218,6 +2218,362 @@ ERROR MODAL
   }
 }
 
+
+
+
+
+
+/* MAIN CARD */
+.airtime-card{
+  padding:18px;
+
+  border-radius:22px;
+
+  background:#fff;
+
+  box-shadow:0 4px 18px rgba(0,0,0,0.05);
+}
+
+
+
+/* NETWORK GRID */
+.network-grid{
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  gap:12px;
+
+  margin-top:18px;
+}
+
+/* NETWORK CARD */
+.network-card{
+  height:75px;
+
+  border-radius:18px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  cursor:pointer;
+
+  transition:0.3s ease;
+
+  position:relative;
+
+  overflow:hidden;
+
+  border:2px solid transparent;
+}
+
+
+
+/* ACTIVE */
+.network-card.active{
+  border-color:Teal;
+
+  box-shadow:0 0 0 3px #0d6efd;
+}
+
+/* MTN */
+.network-card.mtn{
+  background:linear-gradient(135deg,#ffcc00,#f5b400);
+}
+
+/* AIRTEL */
+.network-card.airtel{
+  background:linear-gradient(135deg,#ff1f1f,#d90000);
+}
+
+/* GLO */
+.network-card.glo{
+  background:linear-gradient(135deg,#00b140,#008f32);
+}
+
+/* 9MOBILE */
+.network-card.mobile9{
+  background:linear-gradient(135deg,#1d1d1d,#00c853);
+}
+
+
+
+/* TEXT */
+.network-card span{
+  color:#fff;
+
+  font-size:22px;
+
+  font-weight:800;
+
+  letter-spacing:0.5px;
+}
+
+
+
+/* AMOUNT BOX */
+.amount-box{
+  margin-top:18px;
+
+  height:58px;
+
+  border:1.5px solid #e5e5e5;
+
+  border-radius:16px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 16px;
+
+  background:#fff;
+}
+
+.amount-box span{
+  font-size:22px;
+
+  font-weight:700;
+
+  color:#0d6efd;
+
+  margin-right:10px;
+}
+
+.amount-box input{
+  border:none;
+
+  outline:none;
+
+  width:100%;
+
+  height:100%;
+
+  font-size:18px;
+
+  font-weight:700;
+}
+
+
+
+/* QUICK AMOUNT WRAPPER */
+.quick-amounts{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:15px 0;
+}
+
+/* AMOUNT CARD */
+.amount-chip{
+  padding:12px 18px;
+  border-radius:14px;
+  background:#f5f7ff;
+  border:2px solid transparent;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.3s ease;
+  color:#0d6efd;
+}
+
+/* HOVER */
+.amount-chip:hover{
+  background:#eaf2ff;
+  transform:translateY(-2px);
+}
+
+/* ACTIVE */
+.amount-chip.active{
+  background:#0d6efd;
+  color:#fff;
+  border-color:#0d6efd;
+  box-shadow:0 5px 15px rgba(13,110,253,0.25);
+}
+
+
+
+
+/* BUY BUTTON */
+.premium-buy-btn{
+  width:100%;
+
+  margin-top:22px;
+
+  border:none;
+
+  height:56px;
+
+  border-radius:25px;
+
+  background:green;
+
+  color:#fff;
+
+  font-size:16px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:0.3s ease;
+}
+
+.premium-buy-btn:hover{
+  transform:translateY(-2px);
+}
+
+/* MOBILE */
+@media(max-width:500px){
+
+  .network-grid{
+    gap:8px;
+  }
+
+  .network-card{
+    height:65px;
+
+    border-radius:14px;
+  }
+
+  .network-card span{
+    font-size:11px;
+  }
+}
+
+
+
+
+/* PREMIUM PHONE BOX */
+.premium-phone-box{
+  height:64px;
+
+  width:100%;
+
+  background:#fff;
+
+  border:1.5px solid #e8e8e8;
+
+  border-radius:18px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 10px;
+
+  margin-top:15px;
+
+  transition:0.3s ease;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* FOCUS */
+.premium-phone-box:focus-within{
+  border-color:#0d6efd;
+
+  box-shadow:0 0 0 4px rgba(13,110,253,0.10);
+}
+
+
+/* FIELD */
+.phone-field{
+  flex:1;
+
+  display:flex;
+  flex-direction:column;
+}
+
+/* LABEL */
+.phone-field label{
+  font-size:17px;
+
+  font-weight:700;
+
+  color:#777;
+}
+
+/* INPUT */
+.phone-field input{
+  border:none;
+
+  outline:none;
+
+  width:auto;
+
+  font-size:17px;
+
+  font-weight:700;
+
+  background:transparent;
+
+  color:#111;
+}
+
+/* PLACEHOLDER */
+.phone-field input::placeholder{
+  color:#bbb;
+
+  font-weight:500;
+}
+
+/* CONTACT BUTTON */
+.contact-btn{
+  width:44px;
+  height:44px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:#eef5ff;
+
+  color:#0d6efd;
+
+  font-size:18px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:0.3s ease;
+}
+
+/* HOVER */
+.contact-btn:hover{
+  transform:scale(1.05);
+
+  background:#dbe9ff;
+}
+
+/* MOBILE */
+@media(max-width:500px){
+
+  .premium-phone-box{
+    height:58px;
+
+    border-radius:16px;
+  }
+
+  .country-code{
+    min-width:75px;
+
+    font-size:12px;
+
+    height:40px;
+  }
+
+  .phone-field input{
+    font-size:15px;
+  }
+
+  .contact-btn{
+    width:40px;
+    height:40px;
+
+    font-size:16px;
+  }
+}
 </style>
 
 
@@ -2704,24 +3060,144 @@ ERROR MODAL
 
 
 
+
+
+
+
+
 <section id="airtime" class="page">
-  <h2>Buy Airtime</h2>
 
-  <div class="card">
-    <input id="airtimePhone" placeholder="Phone Number" class="input">
-    
-    <select id="airtimeNetwork" class="input">
-      <option>MTN</option>
-      <option>AIRTEL</option>
-      <option>GLO</option>
-      <option>9MOBILE</option>
-    </select>
+  <h2 class="section-title">Buy Airtime</h2>
 
-    <input id="airtimeAmount" placeholder="Amount" class="input">
+  <div class="card airtime-card">
 
-    <button class="btn" onclick="buyAirtime()">Buy Airtime</button>
+
+
+<!-- NETWORKS -->
+<div class="network-grid">
+
+  <div class="network-card mtn active"
+       onclick="selectNetwork(this,'MTN')">
+
+    <span>MTN</span>
   </div>
+
+  <div class="network-card airtel"
+       onclick="selectNetwork(this,'AIRTEL')">
+
+    <span>AIRTEL</span>
+  </div>
+
+  <div class="network-card glo"
+       onclick="selectNetwork(this,'GLO')">
+
+    <span>GLO</span>
+  </div>
+
+  <div class="network-card mobile9"
+       onclick="selectNetwork(this,'9MOBILE')">
+
+    <span>9MOBILE</span>
+  </div>
+
+</div>
+
+
+
+
+<!-- PHONE INPUT -->
+<div class="premium-phone-box">
+
+
+  <div class="phone-field">
+    <input 
+      type="tel"
+      id="airtimePhone"
+      maxlength="11"
+      placeholder="Enter Phone Number"
+    />
+
+  </div>
+
+  <button 
+    type="button"
+    class="contact-btn"
+    onclick="pickContact('airtimePhone')"
+  >
+    ⌕
+  </button>
+
+</div>
+
+
+
+
+
+
+
+    <!-- HIDDEN INPUT -->
+    <input type="hidden" id="airtimeNetwork" value="MTN">
+
+    <!-- AMOUNT -->
+    <div class="amount-box">
+      <span>₦</span>
+
+      <input 
+        id="airtimeAmount"
+        type="number"
+        placeholder="Enter amount"
+      />
+    </div>
+
+
+
+<!-- QUICK AMOUNT -->
+<div class="quick-amounts">
+
+  <div class="amount-chip" onclick="selectAmount(100)">
+    ₦100
+  </div>
+
+  <div class="amount-chip" onclick="selectAmount(200)">
+    ₦200
+  </div>
+
+  <div class="amount-chip" onclick="selectAmount(500)">
+    ₦500
+  </div>
+
+  <div class="amount-chip" onclick="selectAmount(1000)">
+    ₦1000
+  </div>
+
+</div>
+
+
+
+
+
+    <!-- BUY BUTTON -->
+    <button class="premium-buy-btn"
+            onclick="buyAirtime()">
+
+      Buy Airtime
+    </button>
+
+  </div>
+
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <section id="data" class="page">
@@ -4402,6 +4878,61 @@ Proceed with transaction?`
 
 
 
+
+async function pickContact() {
+
+  // Check support
+  if (!('contacts' in navigator && 'ContactsManager' in window)) {
+
+    alert("Contact picker not supported on this device.");
+
+    return;
+  }
+
+  try {
+
+    const props = ['name', 'tel'];
+
+    const opts = {
+      multiple: false
+    };
+
+    const contacts = await navigator.contacts.select(props, opts);
+
+    if (contacts.length > 0) {
+
+      let number = contacts[0].tel[0];
+
+      // Remove spaces/dashes
+      number = number.replace(/\D/g, '');
+
+      // Convert +234 to 0
+      if (number.startsWith('234')) {
+        number = '0' + number.slice(3);
+      }
+
+      // Limit to 11 digits
+      number = number.slice(0,11);
+
+      document.getElementById("phone").value = number;
+    }
+
+  } catch (err) {
+
+    console.log(err);
+
+    alert("Failed to pick contact.");
+  }
+}
+
+
+
+
+
+
+
+
+
 // ===============================
 // 💵 BUY DATA WITH CONFIRMATION
 // ===============================
@@ -4870,6 +5401,30 @@ function filterPlans(type, btn){
   });
 
 }
+
+
+
+
+function selectNetwork(card, network){
+
+  // Remove active from all cards
+  document.querySelectorAll('.network-card')
+    .forEach(item => {
+      item.classList.remove('active');
+    });
+
+  // Activate clicked card
+  card.classList.add('active');
+
+  // Update hidden input
+  document.getElementById('airtimeNetwork').value = network;
+
+  console.log("Selected:", network);
+}
+
+
+
+
 
 
 
@@ -5372,6 +5927,30 @@ function showNextAd(){
 setInterval(showNextAd, 8000);
 
 
+
+
+function selectAmount(amount){
+
+  // SET INPUT VALUE
+  document.getElementById("airtimeAmount").value = amount;
+
+  // REMOVE ACTIVE FROM ALL
+  document.querySelectorAll(".amount-chip")
+    .forEach(chip => {
+      chip.classList.remove("active");
+    });
+
+  // FIND MATCHING CHIP
+  document.querySelectorAll(".amount-chip")
+    .forEach(chip => {
+
+      if(chip.innerText.includes(amount)){
+        chip.classList.add("active");
+      }
+
+    });
+
+}
 </script>
 
 
