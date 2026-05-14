@@ -1078,94 +1078,6 @@ body{
 
 
 
-
-/* =========================
-   MODERN DASHBOARD
-========================= */
-
-#dashboard{
-  padding-top:110px;
-}
-
-.dashboard-header{
-  margin-bottom:25px;
-}
-
-.dashboard-header h2{
-  font-size:28px;
-  color:green;
-  margin-bottom:5px;
-  border:none;
-  padding:0;
-}
-
-.dashboard-header p{
-  color:#666;
-  font-size:14px;
-}
-
-/* GRID */
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
-  gap:16px;
-}
-
-/* CARD */
-.service-card{
-  background:white;
-  border-radius:20px;
-  padding:8px 6px;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  cursor:pointer;
-
-  box-shadow:0 6px 20px rgba(0,0,0,0.06);
-
-  transition:0.25s ease;
-
-  border:1px solid #f3f3f3;
-}
-
-.service-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.12);
-}
-
-/* ICON */
-.service-icon{
-  width:40px;
-  height:40px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:18px;
-
-  background:linear-gradient(135deg,Teal,Teal);
-
-  color:Teal;
-
-  font-size:22px;
-
-  margin-bottom:12px;
-
-  box-shadow:0 6px 15px rgba(255,26,26,0.25);
-}
-
-/* TEXT */
-.service-card span{
-  font-size:16px;
-  font-weight:600;
-  color:#333;
-  text-align:center;
-}
-
 /* =========================
    MOBILE NAV FIX
 ========================= */
@@ -2026,10 +1938,10 @@ ERROR MODAL
   right:18px;
   bottom:12px;
 
-  font-size:80px;
+  font-size:60px;
 
   animation:
-    emojiFly 10s infinite ease-in-out;
+    emojiFly 5s infinite ease-in-out;
 }
 
 /* FLY UP + RETURN FROM DOWN */
@@ -2082,6 +1994,132 @@ ERROR MODAL
   }
 }
 
+
+
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-actions-card{
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f7f9fc
+    );
+
+  border-radius:30px;
+
+  padding:22px 18px;
+
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.08);
+
+  margin-top:20px;
+
+  border:1px solid #f0f0f0;
+}
+
+/* GRID */
+.quick-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:20px;
+}
+
+/* ITEM */
+.quick-item{
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+}
+
+.quick-item:hover{
+
+  transform:
+    translateY(-4px);
+}
+
+/* ICON */
+.quick-icon{
+
+  width:58px;
+  height:58px;
+
+  border-radius:20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #008080,
+      #00a86b
+    );
+
+  color:white;
+
+  margin-bottom:8px;
+
+  box-shadow:
+    0 8px 20px rgba(0,168,107,.22);
+}
+
+/* TEXT */
+.quick-item small{
+
+  font-size:13px;
+
+  font-weight:600;
+
+  color:#333;
+
+  text-align:center;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+  .quick-grid{
+
+    grid-template-columns:
+      repeat(4,1fr);
+
+    gap:16px;
+  }
+
+  .quick-icon{
+
+    width:52px;
+    height:52px;
+
+    font-size:24px;
+  }
+
+  .quick-item small{
+
+    font-size:11px;
+  }
+}
 
 </style>
 
@@ -2336,50 +2374,91 @@ ERROR MODAL
 
 
 
-  <div class="dashboard-grid">
+<!-- =========================
+   QUICK ACTIONS CARD
+========================= -->
 
+<div class="quick-actions-card">
 
-    <div class="service-card" onclick="showPage('voucher')">
-      <div class="service-icon">🛜</div>
-      <span>Voucher</span>
+  <div class="quick-grid">
+
+    <div class="quick-item"
+      onclick="showPage('voucher')">
+
+      <div class="quick-icon">🛜</div>
+
+      <small>Voucher</small>
+
     </div>
 
-    <div class="service-card" onclick="showPage('data')">
-      <div class="service-icon">🌐</div>
-      <span>Buy Data</span>
+    <div class="quick-item"
+      onclick="showPage('data')">
+
+      <div class="quick-icon">🌐</div>
+
+      <small>Buy Data</small>
+
     </div>
 
-    <div class="service-card" onclick="showPage('airtime')">
-      <div class="service-icon">📞</div>
-      <span>Airtime</span>
+    <div class="quick-item"
+      onclick="showPage('airtime')">
+
+      <div class="quick-icon">📞</div>
+
+      <small>Airtime</small>
+
     </div>
 
-    <div class="service-card" onclick="showPage('bills')">
-      <div class="service-icon">💡</div>
-      <span>Pay Bills</span>
+    <div class="quick-item"
+      onclick="showPage('bills')">
+
+      <div class="quick-icon">💡</div>
+
+      <small>Pay Bills</small>
+
     </div>
 
-    <div class="service-card" onclick="showPage('transactions')">
-      <div class="service-icon">📑</div>
-      <span>Transactions</span>
+    <div class="quick-item"
+      onclick="showPage('transactions')">
+
+      <div class="quick-icon">📑</div>
+
+      <small>Transactions</small>
+
     </div>
 
-    <div class="service-card" onclick="showPage('User')">
-      <div class="service-icon">👤</div>
-      <span>Profile</span>
+    <div class="quick-item"
+      onclick="showPage('User')">
+
+      <div class="quick-icon">👤</div>
+
+      <small>Profile</small>
+
     </div>
 
-    <div class="service-card" onclick="fundWallet()">
-      <div class="service-icon">💰</div>
-      <span>Fund Wallet</span>
+    <div class="quick-item"
+      onclick="fundWallet()">
+
+      <div class="quick-icon">💰</div>
+
+      <small>Fund Wallet</small>
+
     </div>
 
-    <div class="service-card" onclick="showPage('about')">
-      <div class="service-icon">🎖️</div>
-      <span>About Us</span>
+    <div class="quick-item"
+      onclick="showPage('about')">
+
+      <div class="quick-icon">🎖️</div>
+
+      <small>About Us</small>
+
     </div>
 
   </div>
+
+</div>
+
+
 
 </section>
 
