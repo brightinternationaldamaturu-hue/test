@@ -1669,191 +1669,333 @@ ERROR MODAL
 
 
 
-/* ===== DATA PAGE ===== */
+/* =========================
+   DATA PAGE
+========================= */
 
+#data{
+  padding:12px;
+  width:100%;
+  box-sizing:border-box;
+}
+
+/* CARD */
+.data-card{
+  background:#ffffff;
+  border-radius:24px;
+  padding:16px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.05);
+  border:none;
+}
+
+/* TITLE */
 .section-title{
-  font-size:24px;
-  font-weight:700;
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:14px;
+  color:#111;
+}
+
+/* =========================
+   PHONE INPUT
+========================= */
+
+.phone-input-box{
+  display:flex;
+  align-items:center;
+
+  height:54px;
+
+  background:#f7f9fc;
+
+  border-radius:16px;
+
+  padding:0 12px;
+
+  margin-bottom:14px;
+
+  border:1px solid transparent;
+
+  transition:0.3s ease;
+}
+
+.phone-input-box:focus-within{
+  border-color:#0d6efd;
+  background:#fff;
+}
+
+.phone-icon{
+  font-size:18px;
+  margin-right:10px;
+  color:#0d6efd;
+}
+
+.premium-phone-input{
+  flex:1;
+  border:none;
+  outline:none;
+  background:none;
+
+  font-size:15px;
+  font-weight:600;
+  color:#111;
+}
+
+.contact-btn{
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:12px;
+  background:#e9f1ff;
+  cursor:pointer;
+  font-size:18px;
+}
+
+
+/* =========================
+   NETWORKS
+========================= */
+
+.network-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
   margin-bottom:15px;
 }
 
-/* MAIN CARD */
-.data-card{
-  padding:15px;
+/* NETWORK CARD */
+.network-card{
+  height:56px;
 
-  width:100%;
+  border-radius:16px;
 
-  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  border-radius:20px;
+  font-size:16px;
+  font-weight:1200;
 
-  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  color:white;
+
+  cursor:pointer;
+
+  transition:0.25s ease;
+
+  border:2px solid transparent;
 }
 
-/* SCROLL AREA */
+
+.network-card.active{
+  border-color:#0d6efd;
+  transform:scale(1.02);
+}
+
+/* COLORS */
+.network-card.mtn{
+  background:#ffcc00;
+  color:#111;
+}
+
+.network-card.airtel{
+  background:#ff1f1f;
+}
+
+.network-card.glo{
+  background:#00a63e;
+}
+
+.network-card.mobile9{
+  background:#1a1a1a;
+}
+
+/* =========================
+   SEARCH BOX
+========================= */
+
+.search-box{
+  display:flex;
+  align-items:center;
+  height:50px;
+  background:#f7f9fc;
+  border-radius:16px;
+  padding:0 14px;
+  margin-bottom:14px;
+}
+
+.search-box input{
+  flex:1;
+  border:none;
+  outline:none;
+  background:none;
+  font-size:16px;
+}
+
+
+.search-icon{
+  margin-right:10px;
+  font-size:15px;
+}
+
+/* =========================
+   FILTER BUTTONS
+========================= */
+
+.plan-filters{
+  display:flex;
+  gap:8px;
+
+  overflow-x:auto;
+
+  padding-bottom:4px;
+
+  margin-bottom:16px;
+
+  scrollbar-width:none;
+}
+
+
+.plan-filters::-webkit-scrollbar{
+  display:none;
+}
+
+.filter-btn{
+  border:none;
+  padding:9px 14px;
+  border-radius:12px;
+  background:teal;
+  color:green;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+
+.filter-btn.active{
+  background:Teal;
+  color:#fff;
+}
+
+/* =========================
+   DATA PLANS
+========================= */
+
 #dataPlansWrapper{
-  margin-top:15px;
-
-  width:100%;
-
+  max-height:520px;
   overflow-y:auto;
-
   padding-right:2px;
 }
 
 /* GRID */
 .plans-grid{
   display:grid;
-
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-
-  gap:14px;
-
-  width:100%;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 
 /* PLAN CARD */
 .plan-card{
   background:#fff;
-
   border-radius:18px;
-
-  padding:16px 14px;
-
-  border:1px solid #ececec;
-
-  cursor:pointer;
-
-  transition:0.3s ease;
-
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
-
+  padding:14px 12px;
+  box-shadow:0 3px 12px rgba(0,0,0,0.04);
+  border:1px solid #f1f1f1;
   display:flex;
   flex-direction:column;
-
-  justify-content:center;
   align-items:center;
-
+  justify-content:center;
   text-align:center;
-
-  min-height:180px;
-
-  position:relative;
-
-  overflow:hidden;
+  min-height:145px;
+  transition:0.25s ease;
+  cursor:pointer;
 }
 
-/* HOVER */
+
+
+
 .plan-card:hover{
-  transform:translateY(-4px);
-
-  border-color:#0d6efd;
-
-  box-shadow:0 8px 20px rgba(13,110,253,0.12);
+  transform:translateY(-2px);
 }
 
-/* ACTIVE SELECT */
 .plan-card.active{
   border:2px solid #0d6efd;
-
-  background:#eef5ff;
+  background:#f4f8ff;
 }
 
-/* PLAN NAME */
+/* PLAN TEXT */
 .plan-size{
-  font-size:18px;
-
+  font-size:15px;
   font-weight:800;
-
   color:green;
 
-  line-height:1.4;
-
-  text-align:center;
-
-  margin-bottom:8px;
+  margin-bottom:6px;
 }
 
-/* PRICE */
 .plan-price{
-  font-size:20px;
-
-  color:teal;
-
-  margin-top:4px;
-
+  font-size:18px;
   font-weight:800;
+  color:Teal;
 
-  text-align:center;
+  margin-bottom:6px;
 }
 
-/* VALIDITY */
 .plan-validity{
-  font-size:13px;
-
-  color:#666;
-
-  margin-top:6px;
-
-  text-align:center;
+  font-size:11px;
+  color:#777;
+  margin-bottom:10px;
 }
 
-/* BUY BUTTON */
+/* BUTTON */
 .buy-btn{
-  margin-top:16px;
-
-  width:auto !important;
-
-  min-width:90px;
-
-  padding:8px 16px !important;
-
-  border-radius:12px !important;
-
-  font-size:12px !important;
-
-  font-weight:700;
-
   border:none;
 
-  align-self:center;
+  width:50%;
+
+  height:40px;
+
+  border-radius:12px;
+
+  background:green;
+
+  color:#fff;
+
+  font-size:16px;
+  font-weight:700;
 }
 
-/* MOBILE */
-@media(max-width:768px){
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:500px){
+
+  #data{
+    padding:10px;
+  }
+
+  .data-card{
+    padding:14px;
+    border-radius:20px;
+  }
 
   .plans-grid{
-    grid-template-columns:repeat(2,1fr);
-
-    gap:10px;
+    gap:8px;
   }
 
   .plan-card{
-    min-height:165px;
-
-    padding:14px 10px;
-  }
-
-  .plan-size{
-    font-size:15px;
+    min-height:135px;
+    padding:12px 10px;
   }
 
   .plan-price{
-    font-size:17px;
+    font-size:16px;
   }
 
-  .plan-validity{
-    font-size:12px;
-  }
-
-  .buy-btn{
-    padding:7px 14px !important;
-
-    font-size:11px !important;
-
-    min-width:80px;
-  }
 }
+
 
 /* EXTRA SMALL PHONES */
 @media(max-width:420px){
@@ -2303,7 +2445,7 @@ ERROR MODAL
 .network-card span{
   color:#fff;
 
-  font-size:18px;
+  font-size:16px;
 
   font-weight:800;
 
@@ -3201,60 +3343,124 @@ ERROR MODAL
 
 
 <section id="data" class="page">
-  <h2 class="section-title">Buy Data</h2>
+
+  <h2 class="section-title">
+    Buy Data
+  </h2>
+
+
+    <!-- NETWORK CARDS -->
+    <div class="network-grid">
+
+      <div class="network-card mtn active"
+           onclick="selectDataNetwork(this,'mtn')">
+        MTN
+      </div>
+
+      <div class="network-card airtel"
+           onclick="selectDataNetwork(this,'airtel')">
+        AIRTEL
+      </div>
+
+      <div class="network-card glo"
+           onclick="selectDataNetwork(this,'glo')">
+        GLO
+      </div>
+
+      <div class="network-card mobile9"
+           onclick="selectDataNetwork(this,'9mobile')">
+        9MOBILE
+      </div>
+
+    </div>
+
+    <!-- HIDDEN NETWORK INPUT -->
+    <input type="hidden" id="dataNetwork" value="mtn">
+
+
+
 
   <div class="card data-card">
 
-    <!-- PHONE -->
-    <input id="dataPhone" placeholder="Phone Number" class="input">
+    <!-- PHONE INPUT -->
+    <div class="phone-input-box">
 
-    <!-- NETWORK -->
-    <select id="dataNetwork" class="input" onchange="loadDataPlans(this.value)">
-      <option value="">Select Network</option>
-      <option value="mtn">MTN</option>
-      <option value="airtel">AIRTEL</option>
-      <option value="glo">GLO</option>
-      <option value="9mobile">9MOBILE</option>
-    </select>
+      <input 
+        type="tel"
+        id="dataPhone"
+        class="premium-phone-input"
+        placeholder="Enter phone number"
+        maxlength="11"
+      />
 
-    <!-- SEARCH DATA PLANS-->
+      <button 
+        type="button"
+        class="contact-btn"
+        onclick="pickContact('dataPhone')"
+      >
+        👥
+      </button>
+
+    </div>
 
 
-<!-- FILTER BUTTONS -->
-<div class="plan-filters">
 
-  <button class="filter-btn active"
-    onclick="filterPlans('ALL', this)">
-    ALL
-  </button>
 
-  <button class="filter-btn"
-    onclick="filterPlans('SME', this)">
-    SME
-  </button>
+    <!-- FILTER BUTTONS -->
+    <div class="plan-filters">
 
-  <button class="filter-btn"
-    onclick="filterPlans('SME2', this)">
-    SME2
-  </button>
+      <button class="filter-btn active"
+        onclick="filterPlans('ALL', this)">
+        ALL
+      </button>
 
-  <button class="filter-btn"
-    onclick="filterPlans('GIFTING', this)">
-    GIFTING
-  </button>
+      <button class="filter-btn"
+        onclick="filterPlans('SME', this)">
+        SME
+      </button>
 
-</div>
+      <button class="filter-btn"
+        onclick="filterPlans('SME2', this)">
+        SME2
+      </button>
 
+      <button class="filter-btn"
+        onclick="filterPlans('GIFTING', this)">
+        GIFTING
+      </button>
+
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+
+      <span class="search-icon">🔍</span>
+
+      <input
+        type="text"
+        id="planSearch"
+        placeholder="Search 1GB, SME..."
+        onkeyup="searchPlans()"
+      />
+
+    </div>
 
 
 
     <!-- DATA PLANS -->
     <div id="dataPlansWrapper">
-      <div id="dataPlans" class="plans-grid"></div>
+
+      <div id="dataPlans"
+           class="plans-grid">
+      </div>
+
     </div>
 
   </div>
+
 </section>
+
+
 
 
 
@@ -5949,6 +6155,50 @@ function selectAmount(amount){
     });
 
 }
+
+
+/* SELECT NETWORK */
+function selectDataNetwork(card, network){
+
+  document.querySelectorAll(".network-card")
+    .forEach(c => {
+      c.classList.remove("active");
+    });
+
+  card.classList.add("active");
+
+  document.getElementById("dataNetwork")
+    .value = network;
+
+  loadDataPlans(network);
+}
+
+
+/* SEARCH PLANS */
+function searchPlans(){
+
+  let input =
+    document.getElementById("planSearch")
+    .value
+    .toLowerCase();
+
+  let plans =
+    document.querySelectorAll(".plan-card");
+
+  plans.forEach(plan => {
+
+    let text =
+      plan.innerText.toLowerCase();
+
+    plan.style.display =
+      text.includes(input)
+      ? "flex"
+      : "none";
+
+  });
+
+}
+
 </script>
 
 
