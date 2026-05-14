@@ -3139,22 +3139,19 @@ BANK TRANSFER CARD
 
 
 
-
-    <h2>Welcome to BIVA</h2>
-    <p>Premium Virtual Assistance & Internet Services</p>
 <div id="dashboardLoginBox" style="margin-top:15px;">
 
   <button
     class="btn"
     onclick="openModal()"
     style="
-      max-width:220px;
+      max-width:150px;
       border-radius:18px;
       font-size:15px;
       padding:12px;
     ">
 
-    🔐 Login / Signup
+Login / Signup
 
   </button>
 </div>
@@ -3250,39 +3247,6 @@ BANK TRANSFER CARD
       <small>About Us</small>
 
     </div>
-
-
-</div>
-
-<!-- BANK ACCOUNT CARD -->
-<div class="wallet-account-card">
-
-  <div class="wallet-card-header">
-
-    <div>
-      <small>
-        Bank Transfer
-      </small>
-
-      <h3>
-        Fund Your Wallet
-      </h3>
-    </div>
-
-    <div class="bank-icon">
-      🏦
-    </div>
-
-  </div>
-
-  <div id="accountContent">
-
-    <div class="loading-account">
-      Loading account...
-    </div>
-
-  </div>
-
 </div>
 
 
@@ -3433,6 +3397,40 @@ BANK TRANSFER CARD
      <div id="walletCard" class="wallet-card">
      <span id="wallet">0</span>
      </div>
+
+
+
+<!-- BANK ACCOUNT CARD -->
+<div class="wallet-account-card">
+
+  <div class="wallet-card-header">
+
+    <div>
+      <small>
+        Bank Transfer
+      </small>
+
+      <h3>
+        Fund Your Wallet
+      </h3>
+    </div>
+
+    <div class="bank-icon">
+      🏦
+    </div>
+
+  </div>
+
+  <div id="accountContent">
+
+    <div class="loading-account">
+      Loading account...
+    </div>
+
+  </div>
+
+</div>
+
 </section>
 
 
@@ -4263,28 +4261,98 @@ auth.onAuthStateChanged(user => {
       "dashboardLoginBox"
     );
 
+  const walletCard =
+    document.getElementById(
+      "walletCard"
+    );
+
+  const authBtn =
+    document.getElementById(
+      "authBtn"
+    );
+
   if(user){
 
+    // HIDE LOGIN BUTTON
     if(loginBox){
       loginBox.style.display = "none";
     }
 
+    // SHOW WALLET
+    if(walletCard){
+      walletCard.style.display = "flex";
+    }
+
+    // UPDATE BUTTON
+    if(authBtn){
+
+      authBtn.style.background =
+        "#fff";
+
+      authBtn.style.color =
+        "#111";
+
+      authBtn.innerText =
+        "Dashboard";
+
+    }
+
+    // LOAD WALLET
     getWallet();
 
+    // LOAD ACCOUNT
     loadVirtualAccount();
+
+    // LIVE FIRESTORE UPDATE
+    db.collection("users")
+      .doc(user.uid)
+      .onSnapshot(doc => {
+
+        if(doc.exists){
+
+          const data = doc.data();
+
+          // UPDATE BALANCE
+          document.getElementById(
+            "navWallet"
+          ).innerText =
+            Number(
+              data.wallet || 0
+            ).toLocaleString();
+
+        }
+
+      });
 
   } else {
 
+    // SHOW LOGIN BUTTON
     if(loginBox){
       loginBox.style.display = "block";
+    }
+
+    // HIDE WALLET
+    if(walletCard){
+      walletCard.style.display = "none";
+    }
+
+    // RESET BUTTON
+    if(authBtn){
+
+      authBtn.style.background =
+        "";
+
+      authBtn.style.color =
+        "";
+
+      authBtn.innerText =
+        "Login/Signup";
+
     }
 
   }
 
 });
-
-
-
 
 
 
@@ -4351,74 +4419,238 @@ async function getWallet() {
 
 
 // AUTH LISTENER
-auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(async (user) => {
+
+  // SAVE USER
   currentUser = user;
 
-  if (user) {
-    getWallet(); // 🔥 CALL HERE
-  }
-
-  if (user) {
-document.getElementById("menuLoginBtn").style.display = "none";
-document.getElementById("menuLogoutBtn").style.display = "flex";
-    document.getElementById("userEmail").innerText = user.email;
-
-    loadTransactions(user.uid);
-
-    db.collection('users').doc(user.uid).onSnapshot(doc => {
-      const voucherEl = document.getElementById("lastVoucher");
-
-      if (doc.exists) {
-        const balance = doc.data().wallet || 0;
-
-
-const userRef = db.collection("users").doc(user.uid);
-
-userRef.get().then(doc => {
-
-  if (
-    doc.exists &&
-    doc.data().blocked === true
-  ) {
-
-    auth.signOut();
-
-    showErrorModal(
-      "Your account has been blocked."
+  // ELEMENTS
+  const loginBox =
+    document.getElementById(
+      "dashboardLoginBox"
     );
 
-    return;
+  const walletCard =
+    document.getElementById(
+      "walletCard"
+    );
+
+  const menuLoginBtn =
+    document.getElementById(
+      "menuLoginBtn"
+    );
+
+  const menuLogoutBtn =
+    document.getElementById(
+      "menuLogoutBtn"
+    );
+
+  // =========================
+  // USER LOGGED IN
+  // =========================
+  if(user){
+
+    console.log(
+      "USER LOGGED IN:",
+      user.email
+    );
+
+    // HIDE LOGIN BUTTON
+    if(loginBox){
+      loginBox.style.display = "none";
+    }
+
+    // SHOW WALLET CARD
+    if(walletCard){
+      walletCard.style.display = "flex";
+    }
+
+    // MENU BUTTONS
+    if(menuLoginBtn){
+      menuLoginBtn.style.display = "none";
+    }
+
+    if(menuLogoutBtn){
+      menuLogoutBtn.style.display = "flex";
+    }
+
+    // USER EMAIL
+    const userEmail =
+      document.getElementById(
+        "userEmail"
+      );
+
+    if(userEmail){
+      userEmail.innerText =
+        user.email;
+    }
+
+    // LOAD WALLET
+    await getWallet();
+
+    // LOAD BANK ACCOUNT
+    await loadVirtualAccount();
+
+    // LOAD TRANSACTIONS
+    loadTransactions(user.uid);
+
+    // LIVE USER UPDATE
+    db.collection("users")
+      .doc(user.uid)
+      .onSnapshot(doc => {
+
+        if(!doc.exists){
+          return;
+        }
+
+        const data =
+          doc.data();
+
+        // UPDATE WALLET
+        const balance =
+          Number(
+            data.wallet || 0
+          );
+
+        const wallet =
+          document.getElementById(
+            "wallet"
+          );
+
+        const navWallet =
+          document.getElementById(
+            "navWallet"
+          );
+
+        if(wallet){
+          wallet.innerText =
+            "₦" + balance.toLocaleString();
+        }
+
+        if(navWallet){
+          navWallet.innerText =
+            balance.toLocaleString();
+        }
+
+        // LAST VOUCHER
+        const voucherEl =
+          document.getElementById(
+            "lastVoucher"
+          );
+
+        if(voucherEl){
+
+          voucherEl.innerText =
+            data.lastVoucher
+
+            ? "Last Purchased Voucher: " +
+              data.lastVoucher
+
+            : "";
+
+        }
+
+        // BLOCK CHECK
+        if(data.blocked === true){
+
+          auth.signOut();
+
+          showErrorModal(
+            "Your account has been blocked."
+          );
+
+        }
+
+      });
+
+  }
+
+  // =========================
+  // USER LOGGED OUT
+  // =========================
+  else {
+
+    console.log(
+      "NO USER LOGGED IN"
+    );
+
+    // SHOW LOGIN BUTTON
+    if(loginBox){
+      loginBox.style.display = "block";
+    }
+
+    // HIDE WALLET CARD
+    if(walletCard){
+      walletCard.style.display = "none";
+    }
+
+    // MENU BUTTONS
+    if(menuLoginBtn){
+      menuLoginBtn.style.display = "flex";
+    }
+
+    if(menuLogoutBtn){
+      menuLogoutBtn.style.display = "none";
+    }
+
+    // RESET USER EMAIL
+    const userEmail =
+      document.getElementById(
+        "userEmail"
+      );
+
+    if(userEmail){
+      userEmail.innerText = "";
+    }
+
+    // RESET WALLET
+    const wallet =
+      document.getElementById(
+        "wallet"
+      );
+
+    const navWallet =
+      document.getElementById(
+        "navWallet"
+      );
+
+    if(wallet){
+      wallet.innerText = "₦0";
+    }
+
+    if(navWallet){
+      navWallet.innerText = "0";
+    }
+
+    // CLEAR TRANSACTIONS
+    const transactionBody =
+      document.getElementById(
+        "transactionBody"
+      );
+
+    if(transactionBody){
+      transactionBody.innerHTML = "";
+    }
+
+    // CLEAR ACCOUNT CARD
+    const accountContent =
+      document.getElementById(
+        "accountContent"
+      );
+
+    if(accountContent){
+
+      accountContent.innerHTML = `
+        <div class="loading-account">
+          Please login first
+        </div>
+      `;
+
+    }
+
   }
 
 });
-
-
-        wallet.innerText = '₦' + balance;
-        document.getElementById("navWallet").innerText = balance;
-
-        voucherEl.innerText = doc.data().lastVoucher
-          ? "Last Purchased Voucher: " + doc.data().lastVoucher
-          : "";
-      } else {
-        wallet.innerText = '₦0';
-        document.getElementById("navWallet").innerText = "0";
-        document.getElementById("userEmail").innerText = "";
-      }
-    });
-
-  } else {
-    currentUser = null;
-    wallet.innerText = '₦0';
-    document.getElementById("navWallet").innerText = "0";
-
-document.getElementById("menuLoginBtn").style.display = "flex";
-document.getElementById("menuLogoutBtn").style.display = "none";
-
-    document.getElementById("userEmail").innerText = "";
-    document.getElementById("transactionBody").innerHTML = "";
-  }
-});
-
 
 
 
