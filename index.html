@@ -2882,10 +2882,10 @@ ERROR MODAL
 
 <div class="ads-card active">
 
-  <h3>🔥 SME DATA</h3>
+  <h3>🔥 Cheap Data Deals</h3>
 
   <p>
-    Enjoy cheap and fast SME data bundles instantly.
+    Enjoy cheap and quality SME data bundles instantly.
   </p>
 
   <div class="ad-emoji">
@@ -2901,18 +2901,18 @@ ERROR MODAL
       <h3>⚡ Instant Airtime</h3>
       <p>Buy airtime for all networks within seconds.</p>
   <div class="ad-emoji">
-    📲
+    📞
   </div>
     </div>
 
 
 
     <div class="ads-card">
-      <h3>💰 Fund Wallet</h3>
-      <p>Instant wallet funding with secure payment.</p>
+      <h3>💰 Instant Wallet Funding</h3>
+      <p>Deposites arive in Less than a minute.</p>
 
   <div class="ad-emoji">
-    💰
+   🤩
   </div>
     </div>
 
@@ -2920,7 +2920,7 @@ ERROR MODAL
 
     <div class="ads-card">
       <h3>💡 Pay Electricity Bills</h3>
-      <p>Fast electricity bill payment without stress.</p>
+      <p>Save the stress of going to NEPA office.</p>
   <div class="ad-emoji">
     💡
   </div>
@@ -2928,9 +2928,9 @@ ERROR MODAL
 
     <div class="ads-card">
       <h3>🛜 Wi-Fi Voucher</h3>
-      <p>Generate premium Wi-Fi vouchers anytime.</p>
+      <p>Access our Wi_Fi with Just ₦150 per gig.</p>
   <div class="ad-emoji">
-    🛜
+    😮
   </div>
   </div>
 
@@ -2987,7 +2987,7 @@ ERROR MODAL
     </div>
 
     <div class="quick-item"
-      onclick="showPage('data')">
+      onclick="openDataPage()">
 
       <div class="quick-icon">🌐</div>
 
@@ -3266,7 +3266,7 @@ ERROR MODAL
     class="contact-btn"
     onclick="pickContact('airtimePhone')"
   >
-    ⌕
+    👥
   </button>
 
 </div>
@@ -5481,6 +5481,56 @@ showErrorModal(
     hideLoader();
   }
 }
+
+
+
+
+
+/* SELECT NETWORK */
+function selectNetwork(card, network){
+
+  // REMOVE ACTIVE
+  document.querySelectorAll('.network-card')
+    .forEach(c => c.classList.remove('active'));
+
+  // ADD ACTIVE
+  card.classList.add('active');
+
+  // SAVE VALUE
+  document.getElementById('dataNetwork').value = network;
+
+  // LOAD PLANS
+  loadDataPlans(network);
+}
+
+
+/* LOAD DEFAULT NETWORK WHEN DATA PAGE OPENS */
+function openDataPage(){
+
+  // OPEN PAGE
+  showPage('data');
+
+  // SET DEFAULT NETWORK
+  const defaultCard =
+    document.querySelector('.network-card.mtn');
+
+  // REMOVE ACTIVE FROM OTHERS
+  document.querySelectorAll('.network-card')
+    .forEach(c => c.classList.remove('active'));
+
+  // ADD ACTIVE
+  defaultCard.classList.add('active');
+
+  // SET VALUE
+  document.getElementById('dataNetwork').value = 'mtn';
+
+  // LOAD PLANS
+  loadDataPlans('mtn');
+}
+
+
+
+
 
 
 
