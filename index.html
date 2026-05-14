@@ -1667,124 +1667,221 @@ ERROR MODAL
 
 
 
+
+
 /* ===== DATA PAGE ===== */
 
 .section-title{
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 15px;
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:15px;
 }
 
+/* MAIN CARD */
 .data-card{
-  padding: 15px;
+  padding:15px;
+
+  width:100%;
+
+  background:#fff;
+
+  border-radius:20px;
+
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
 }
 
 /* SCROLL AREA */
 #dataPlansWrapper{
-  margin-top: 15px;
-  max-height: 450px;
-  overflow-y: auto;
-  padding-right: 5px;
+  margin-top:15px;
+
+  width:100%;
+
+  overflow-y:auto;
+
+  padding-right:2px;
 }
 
 /* GRID */
 .plans-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:10px;
-}
 
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+
+  gap:14px;
+
+  width:100%;
+}
 
 /* PLAN CARD */
 .plan-card{
   background:#fff;
-  border-radius:14px;
-  padding:12px;
-  border:1px solid #eee;
+
+  border-radius:18px;
+
+  padding:16px 14px;
+
+  border:1px solid #ececec;
+
   cursor:pointer;
+
   transition:0.3s ease;
-  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+
   display:flex;
   flex-direction:column;
-  align-items:flex-start;
+
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  min-height:180px;
+
+  position:relative;
+
+  overflow:hidden;
 }
 
+/* HOVER */
 .plan-card:hover{
-  transform:translateY(-2px);
-  border-color:#0d6efd;
-}
+  transform:translateY(-4px);
 
+  border-color:#0d6efd;
+
+  box-shadow:0 8px 20px rgba(13,110,253,0.12);
+}
 
 /* ACTIVE SELECT */
 .plan-card.active{
   border:2px solid #0d6efd;
+
   background:#eef5ff;
 }
 
-
-
 /* PLAN NAME */
 .plan-size{
-  font-size:14px;
-  font-weight:700;
-  color:Green;
+  font-size:18px;
+
+  font-weight:800;
+
+  color:green;
+
   line-height:1.4;
+
+  text-align:center;
+
+  margin-bottom:8px;
 }
 
 /* PRICE */
 .plan-price{
-  font-size:14px;
-  color:Teal;
-  margin-top:5px;
-  font-weight:600;
+  font-size:20px;
+
+  color:teal;
+
+  margin-top:4px;
+
+  font-weight:800;
+
+  text-align:center;
 }
 
 /* VALIDITY */
 .plan-validity{
-  font-size:11px;
-  color:#777;
-  margin-top:4px;
+  font-size:13px;
+
+  color:#666;
+
+  margin-top:6px;
+
+  text-align:center;
 }
-
-
 
 /* BUY BUTTON */
 .buy-btn{
-  margin-top:10px;
+  margin-top:16px;
+
   width:auto !important;
-  padding:8px 14px !important;
-  border-radius:10px !important;
+
+  min-width:90px;
+
+  padding:8px 16px !important;
+
+  border-radius:12px !important;
+
   font-size:12px !important;
-  font-weight:600;
-  align-self:flex-start;
+
+  font-weight:700;
+
+  border:none;
+
+  align-self:center;
 }
 
-
 /* MOBILE */
-@media(max-width:500px){
+@media(max-width:768px){
 
   .plans-grid{
     grid-template-columns:repeat(2,1fr);
+
+    gap:10px;
+  }
+
+  .plan-card{
+    min-height:165px;
+
+    padding:14px 10px;
+  }
+
+  .plan-size{
+    font-size:15px;
+  }
+
+  .plan-price{
+    font-size:17px;
+  }
+
+  .plan-validity{
+    font-size:12px;
+  }
+
+  .buy-btn{
+    padding:7px 14px !important;
+
+    font-size:11px !important;
+
+    min-width:80px;
+  }
+}
+
+/* EXTRA SMALL PHONES */
+@media(max-width:420px){
+
+  .plans-grid{
+    grid-template-columns:1fr 1fr;
+
     gap:8px;
   }
 
   .plan-card{
-    padding:10px;
+    min-height:155px;
+
+    padding:12px 8px;
   }
 
   .plan-size{
-    font-size:13px;
+    font-size:14px;
   }
 
   .plan-price{
-    font-size:13px;
-  }
-
-  .buy-btn{
-    padding:7px 12px !important;
-    font-size:11px !important;
+    font-size:15px;
   }
 }
+
+
+
+
 
 
 
