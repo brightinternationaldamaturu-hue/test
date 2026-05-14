@@ -2726,62 +2726,182 @@ ERROR MODAL
 
 
 
+/* =========================
+BANK TRANSFER CARD
+========================= */
+
 .wallet-account-card{
 
   background:#fff;
-  border-radius:20px;
+  margin:20px 15px;
   padding:20px;
-  margin-top:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,.05);
+  border-radius:24px;
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.06);
+
+  overflow:hidden;
 
 }
 
-.wallet-header{
+.wallet-card-header{
 
-  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:18px;
+
+}
+
+.wallet-card-title small{
+
+  color:#888;
+  font-size:13px;
+  display:block;
+  margin-bottom:4px;
+
+}
+
+.wallet-card-title h3{
+
+  margin:0;
+  color:#111;
+  font-size:20px;
+  font-weight:700;
+
+}
+
+.bank-icon{
+
+  width:52px;
+  height:52px;
+
+  border-radius:16px;
+
+  background:#ff1a1a;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#fff;
+  font-size:22px;
 
 }
 
 .account-box{
 
-  text-align:center;
+  background:
+    linear-gradient(
+      135deg,
+      #ff1a1a,
+      #d10000
+    );
+
+  border-radius:22px;
+
+  padding:24px 20px;
+
+  color:#fff;
+
+  position:relative;
 
 }
 
 .bank-name{
 
-  color:#777;
   font-size:14px;
+  opacity:.9;
+  margin-bottom:10px;
+
+}
+
+.account-number-row{
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+
+  margin:15px 0;
 
 }
 
 .account-number{
 
-  font-size:32px;
-  margin:10px 0;
-  color:#111;
+  font-size:30px;
+  font-weight:700;
   letter-spacing:2px;
+  margin:0;
+
+}
+
+.copy-btn{
+
+  width:42px;
+  height:42px;
+
+  border:none;
+  border-radius:12px;
+
+  background:rgba(255,255,255,.18);
+
+  color:#fff;
+
+  cursor:pointer;
+
+  font-size:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:.2s;
+
+}
+
+.copy-btn:active{
+
+  transform:scale(.95);
 
 }
 
 .account-name{
 
   font-size:15px;
-  color:#444;
-  margin-bottom:20px;
+  font-weight:500;
+  opacity:.95;
 
 }
 
-.account-box button,
 .generate-btn{
 
-  background:#0a84ff;
-  color:#fff;
+  width:100%;
+
   border:none;
-  padding:12px 20px;
-  border-radius:12px;
-  cursor:pointer;
+
+  padding:15px;
+
+  border-radius:16px;
+
+  background:#ff1a1a;
+
+  color:#fff;
+
   font-weight:600;
+
+  font-size:15px;
+
+  cursor:pointer;
+
+}
+
+.loading-account{
+
+  text-align:center;
+  color:#777;
+  padding:20px 0;
 
 }
 
@@ -2793,61 +2913,7 @@ ERROR MODAL
 
   }
 
-}
-
-
-
-
-.virtual-account-box{
-
-  text-align:center;
-  padding:20px;
-
-}
-
-.virtual-account-box h2{
-
-  margin-bottom:15px;
-  color:#111;
-
-}
-
-.bank-name{
-
-  color:#666;
-  font-size:14px;
-  margin-bottom:10px;
-
-}
-
-.account-number{
-
-  font-size:32px;
-  letter-spacing:2px;
-  margin:15px 0;
-  color:#0a84ff;
-
-}
-
-.account-name{
-
-  color:#333;
-  margin-bottom:20px;
-
-}
-
-.virtual-account-box button{
-
-  background:#0a84ff;
-  color:#fff;
-  border:none;
-  padding:12px 20px;
-  border-radius:12px;
-  font-weight:600;
-  cursor:pointer;
-
-}
-</style>
+}</style>
 
 
 
@@ -3185,9 +3251,42 @@ ERROR MODAL
 
     </div>
 
+
+</div>
+
+<!-- BANK ACCOUNT CARD -->
+<div class="wallet-account-card">
+
+  <div class="wallet-card-header">
+
+    <div>
+      <small>
+        Bank Transfer
+      </small>
+
+      <h3>
+        Fund Your Wallet
+      </h3>
+    </div>
+
+    <div class="bank-icon">
+      🏦
+    </div>
+
+  </div>
+
+  <div id="accountContent">
+
+    <div class="loading-account">
+      Loading account...
+    </div>
+
   </div>
 
 </div>
+
+
+
 
 
 
@@ -3814,6 +3913,9 @@ firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth();
 const db=firebase.firestore();
 
+
+
+
 function openModal(id = "modal") {
   const el = document.getElementById(id);
   el.style.display = "flex";
@@ -3832,6 +3934,39 @@ function closeModal(id = "modal") {
     el.style.display = "none";
   }, 200);
 }
+
+
+
+
+function showModal(content) {
+
+  const modal =
+    document.getElementById("modal");
+
+  modal.innerHTML = `
+
+    <div class="modal-content">
+
+      <span
+        class="close-btn"
+        onclick="closeModal()">
+
+        &times;
+
+      </span>
+
+      ${content}
+
+    </div>
+
+  `;
+
+  openModal();
+
+}
+
+
+
 
 
 
@@ -3919,13 +4054,17 @@ async function signup(){
 
       });
 
-    const data =
-      await response.json();
+const data = await response.json();
 
-    console.log(
-      "Virtual Account:",
-      data
-    );
+console.log("Virtual Account:", data);
+
+if(!data.success){
+
+  console.log(
+    "Virtual account creation failed"
+  );
+
+}
 
     showSuccessCard(
       "Account Created Successfully"
@@ -4117,18 +4256,25 @@ showErrorModal(
 
 auth.onAuthStateChanged(user => {
 
-  const loginBox = document.getElementById("dashboardLoginBox");
+  currentUser = user;
+
+  const loginBox =
+    document.getElementById(
+      "dashboardLoginBox"
+    );
 
   if(user){
 
-    // hide login button
     if(loginBox){
       loginBox.style.display = "none";
     }
 
+    getWallet();
+
+    loadVirtualAccount();
+
   } else {
 
-    // show login button
     if(loginBox){
       loginBox.style.display = "block";
     }
@@ -4162,16 +4308,47 @@ async function logout(){
 
 
 // WALLET LIVE UPDATE
+// WALLET LIVE UPDATE
 let currentUser = null;
 
-// ADD HERE
 async function getWallet() {
-  const res = await fetch(`/api/wallet/${currentUser.uid}`);
-  const data = await res.json();
 
-document.getElementById("wallet").innerText = "₦" + data.wallet;
-document.getElementById("navWallet").innerText = data.wallet;
+  try {
+
+    const res = await fetch(
+
+      `https://biva-backend-ezvu.onrender.com/api/wallet/${currentUser.uid}`
+
+    );
+
+    const data = await res.json();
+
+    console.log("WALLET RESPONSE:", data);
+
+    document.getElementById("wallet").innerText =
+      "₦" + Number(data.wallet || 0).toLocaleString("en-NG");
+
+    document.getElementById("navWallet").innerText =
+      Number(data.wallet || 0).toLocaleString("en-NG");
+
+  } catch(error) {
+
+    console.log("Wallet Error:", error);
+
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
 
 // AUTH LISTENER
 auth.onAuthStateChanged(user => {
@@ -4638,85 +4815,255 @@ async function openWalletFunding(){
 
 
 
-function copyAccountNumber(number){
+async function copyAccountNumber(number){
 
-  navigator.clipboard.writeText(
-    number
-  );
+  try {
 
-  showSuccessModal(
-    "Account number copied"
-  );
+    await navigator.clipboard.writeText(number);
+
+    showSuccessCard(
+      "Account number copied successfully"
+    );
+
+  } catch(error) {
+
+    console.log(error);
+
+    showErrorModal(
+      "Failed to copy account number"
+    );
+
+  }
 
 }
-
 
 
 
 async function loadVirtualAccount() {
 
-  if (!currentUser) return;
+  try {
 
-  const userDoc = await db
-    .collection("users")
-    .doc(currentUser.uid)
-    .get();
-
-  const userData = userDoc.data();
-
-  const container =
-    document.getElementById(
-      "accountContent"
+    console.log(
+      "Loading virtual account..."
     );
 
-  // NO ACCOUNT
-  if (!userData.virtualAccount) {
+    // CHECK USER
+    if (!currentUser) {
 
+      console.log("No current user");
+
+      return;
+    }
+
+    // GET CONTAINER
+    const container =
+      document.getElementById(
+        "accountContent"
+      );
+
+    if (!container) {
+
+      console.log(
+        "accountContent not found"
+      );
+
+      return;
+    }
+
+    // LOADING UI
     container.innerHTML = `
-
-      <button
-        class="generate-btn"
-        onclick="generateVirtualAccount()">
-
-        Generate Account
-
-      </button>
-
+      <div class="loading-account">
+        Loading account...
+      </div>
     `;
 
-    return;
-  }
+    // GET USER DOC
+    const userDoc = await db
+      .collection("users")
+      .doc(currentUser.uid)
+      .get();
 
-  const account =
-    userData.virtualAccount;
+    console.log(
+      "USER DOC:",
+      userDoc.data()
+    );
 
-  container.innerHTML = `
+    // USER NOT FOUND
+    if (!userDoc.exists) {
 
-    <div class="account-box">
+container.innerHTML = `
 
-      <p class="bank-name">
-        ${account.bankName}
-      </p>
+  <div class="modern-account-card empty">
 
-      <h2 class="account-number">
-        ${account.accountNumber}
-      </h2>
+    <div class="account-top">
 
-      <p class="account-name">
-        ${account.accountName}
-      </p>
+      <div>
 
-      <button
-        onclick="copyAccountNumber('${account.accountNumber}')">
+        <small>
+          Bank Transfer
+        </small>
 
-        Copy Account Number
+        <h3>
+          Generate Account
+        </h3>
 
-      </button>
+      </div>
+
+      <div class="bank-badge">
+        🏦
+      </div>
 
     </div>
 
-  `;
+    <p class="account-desc">
+
+      Create your personal account
+      number to fund wallet instantly.
+
+    </p>
+
+    <button
+      class="generate-account-btn"
+      onclick="generateVirtualAccount()">
+
+      Generate Bank Account
+
+    </button>
+
+  </div>
+
+`;
+
+      return;
+    }
+
+    const userData =
+      userDoc.data();
+
+    // NO VIRTUAL ACCOUNT
+    if (
+      !userData.virtualAccount ||
+      !userData.virtualAccount.accountNumber
+    ) {
+
+      console.log(
+        "No virtual account"
+      );
+
+container.innerHTML = `
+
+  <div class="modern-account-card empty">
+
+    <div class="account-top">
+
+      <div>
+
+        <small>
+          Bank Transfer
+        </small>
+
+        <h3>
+          Generate Account
+        </h3>
+
+      </div>
+
+      <div class="bank-badge">
+        🏦
+      </div>
+
+    </div>
+
+    <p class="account-desc">
+
+      Create your personal account
+      number to fund wallet instantly.
+
+    </p>
+
+    <button
+      class="generate-account-btn"
+      onclick="generateVirtualAccount()">
+
+      Generate Bank Account
+
+    </button>
+
+  </div>
+
+`;
+
+      return;
+    }
+
+    // ACCOUNT EXISTS
+    const account =
+      userData.virtualAccount;
+
+    console.log(
+      "ACCOUNT:",
+      account
+    );
+
+container.innerHTML = `
+
+  <div class="modern-account-card">
+
+    <div class="account-top">
+
+      <div>
+
+        <small>
+          Bank Transfer
+        </small>
+
+        <h3>
+          ${account.bankName}
+        </h3>
+
+      </div>
+
+      <div class="bank-badge">
+        🏦
+      </div>
+
+    </div>
+
+    <div class="account-number-row">
+
+      <div class="account-number">
+        ${account.accountNumber}
+      </div>
+
+      <div
+        class="copy-icon"
+        onclick="copyAccountNumber('${account.accountNumber}')">
+
+        📋
+
+      </div>
+
+    </div>
+
+    <div class="account-name">
+      ${account.accountName}
+    </div>
+
+  </div>
+
+`;
+
+  } catch(error) {
+
+    console.log(
+      "LOAD ACCOUNT ERROR:",
+      error
+    );
+
+  }
+
 }
+
 
 
 
@@ -4725,19 +5072,26 @@ async function generateVirtualAccount() {
 
   try {
 
-    showLoader();
+    showLoader("Generating Account...");
 
-    const response =
-      await fetch(
+    // GET USER DATA
+    const userDoc = await db
+      .collection("users")
+      .doc(currentUser.uid)
+      .get();
+
+    const userData = userDoc.data();
+
+    const response = await fetch(
 
       "https://biva-backend-ezvu.onrender.com/api/create-virtual-account",
 
       {
+
         method: "POST",
 
         headers: {
-          "Content-Type":
-            "application/json"
+          "Content-Type": "application/json"
         },
 
         body: JSON.stringify({
@@ -4747,51 +5101,54 @@ async function generateVirtualAccount() {
           email: currentUser.email,
 
           fullName:
-            currentUserData.fullName,
+            userData.fullName || "BIVA User",
 
           phone:
-            currentUserData.phone ||
-            "08000000000"
+            userData.phone || "08000000000"
 
         })
 
-      });
+      }
 
-    const data =
-      await response.json();
+    );
+
+    const data = await response.json();
 
     hideLoader();
+
+    console.log(data);
 
     if (!data.success) {
 
       showErrorModal(
-        data.error ||
-        "Failed to generate account"
+        "Failed to generate account",
+        data.error || "Please try again later"
       );
 
       return;
     }
 
-    showSuccessModal(
+    showSuccessCard(
       "Virtual account created successfully"
     );
 
-    loadVirtualAccount();
+    // RELOAD ACCOUNT UI
+    openWalletFunding();
 
-  } catch (error) {
+  } catch(error) {
 
     hideLoader();
 
     console.log(error);
 
     showErrorModal(
-      "Failed to generate account"
+      "Failed to generate account",
+      error.message
     );
 
   }
 
 }
-
 
 
 
