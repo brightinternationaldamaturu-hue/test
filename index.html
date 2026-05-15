@@ -3953,6 +3953,42 @@ BANK TRANSFER CARD
 
   transform:scale(0.96);
 }
+
+.referral-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.referral-box input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.copy-btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .referral-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .copy-btn {
+    width: 100%;
+  }
+}
 </style>
 
 
@@ -4571,22 +4607,13 @@ Login / Signup
 
 <div class="referral-box">
 
-  <input
-    type="text"
-    id="referralLink"
-    readonly
-  />
+  <input id="referralCode" readonly />
 
-  <button
-    class="copy-ref-btn"
-    onclick="copyReferralLink()"
-  >
-    <span>📋</span>
-    Copy Link
+  <button class="copy-btn" onclick="copyReferral()">
+    Copy Code
   </button>
 
 </div>
-
 
 
 
