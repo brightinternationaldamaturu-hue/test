@@ -3146,6 +3146,263 @@ BANK TRANSFER CARD
 
 }
 
+
+
+
+.receipt-card{
+
+  background:#fff;
+
+  border-radius:24px;
+
+  padding:28px 22px;
+
+  text-align:center;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+.receipt-success{
+
+  width:80px;
+  height:80px;
+
+  margin:0 auto 18px;
+
+  border-radius:50%;
+
+  background:#f5f5f5;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:38px;
+
+}
+
+.receipt-card h2{
+
+  font-size:24px;
+  font-weight:700;
+
+  color:#111;
+
+  margin-bottom:10px;
+
+}
+
+.receipt-amount{
+
+  font-size:36px;
+
+  font-weight:800;
+
+  color:#111;
+
+  margin:25px 0;
+
+}
+
+.receipt-details{
+
+  margin-top:25px;
+
+  border-top:1px solid #eee;
+
+}
+
+.receipt-row{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  padding:16px 0;
+
+  border-bottom:1px solid #f1f1f1;
+
+}
+
+.receipt-row span{
+
+  color:#777;
+
+  font-size:14px;
+
+}
+
+.receipt-row strong{
+
+  color:#111;
+
+  font-size:15px;
+
+  font-weight:700;
+
+}
+
+.forgot-password{
+
+  text-align:right;
+
+  margin-top:10px;
+
+}
+
+.forgot-password a{
+
+  color:#0f766e;
+
+  text-decoration:none;
+
+  font-size:14px;
+
+  font-weight:600;
+
+}
+
+.forgot-password a:hover{
+
+  text-decoration:underline;
+
+}
+
+
+.forgot-password-card{
+
+  text-align:center;
+
+  padding:10px;
+
+}
+
+.forgot-icon{
+
+  width:75px;
+  height:75px;
+
+  margin:0 auto 20px;
+
+  border-radius:50%;
+
+  background:#f0fdfa;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:35px;
+
+}
+
+.forgot-password-card h2{
+
+  color:#111;
+
+  margin-bottom:10px;
+
+  font-size:24px;
+
+}
+
+.forgot-password-card p{
+
+  color:white;
+
+  font-size:14px;
+
+  margin-bottom:25px;
+
+  line-height:1.6;
+
+}
+
+.forgot-password-card input{
+
+  width:100%;
+
+  padding:15px;
+
+  border-radius:14px;
+
+  border:1px solid #ddd;
+
+  outline:none;
+
+  font-size:15px;
+
+  margin-bottom:18px;
+
+  box-sizing:border-box;
+
+}
+
+.forgot-password-card input:focus{
+
+  border-color:#0f766e;
+
+}
+
+.forgot-password-card button{
+
+  width:100%;
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:#0f766e;
+
+  color:#fff;
+
+  font-size:15px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+}
+
+
+
+.forgot-close{
+
+  position:absolute;
+
+  top:15px;
+
+  right:15px;
+
+  width:35px;
+
+  height:35px;
+
+  border-radius:50%;
+
+  background:#f3f4f6;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+  font-weight:bold;
+
+}
 </style>
 
 
@@ -3211,9 +3468,6 @@ BANK TRANSFER CARD
 <!-- ACCOUNT -->
 <div class="menu-title">ACCOUNT</div>
 
-<a href="#" onclick="fundWallet(); closeMenu()">
-  💰 Fund Wallet
-</a>
 
 <a href="#" id="activateBtn"
    onclick="openBalance(); closeMenu()">
@@ -3260,12 +3514,26 @@ BANK TRANSFER CARD
   <input id="password" type="password" placeholder="Password" style="padding-right:40px;">
   
   <span onclick="togglePassword()" 
-        style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
-    👁️
+        style="position:auto; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+    Show Password
   </span>
+
+<div class="forgot-password">
+
+  <a href="#"
+     onclick="forgotPassword()">
+
+     Forgot Password?
+
+  </a>
+
 </div>
-    <button class="btn" id="signupBtn" onclick="signup()">Signup</button>
+
+
+
+</div>
     <button class="btn" id="loginBtnModal" onclick="login()">Login</button>
+    <button class="btn" id="signupBtn" onclick="signup()">Signup</button>
     <button class="btn" onclick="closeModal()" style="background:gray">Close</button>
 </div>
 </div>
@@ -3465,7 +3733,7 @@ Login / Signup
 
   <div class="quick-icon">🏦</div>
 
-  <small>Bank Transfer</small>
+  <small>Fund Wallet</small>
 
 </div>
 
@@ -4587,13 +4855,18 @@ async function logout(){
 
     // optional cleanup UI
     document.getElementById("userEmail").innerText = "";
-    showSuccessCard("You Successfuly Logged Out");
+showSuccessCard("You Successfuly Logged Out");
+
+setTimeout(() => {
+  location.reload();
+}, 1000);
 
   } catch (err) {
     showAlert("Error: " + err.message, "error");
 
   } finally {
     hideLoader();
+
   }
 }
 
@@ -5429,10 +5702,6 @@ container.innerHTML = `
 
       <div>
 
-        <small>
-          Bank Transfer
-        </small>
-
         <h3>
           Generate Account
         </h3>
@@ -5805,35 +6074,226 @@ async function viewTransaction(id){
 
   try{
 
-const doc = await db
-  .collection("transactions")
-  .doc(id)
-  .get();
+    const doc = await db
+      .collection("transactions")
+      .doc(id)
+      .get();
 
-if(!doc.exists){
+    if(!doc.exists){
 
-  showErrorModal(
-    "Transaction not found."
-  );
+      showModal(`
+        <h3>Transaction not found</h3>
+      `);
 
-  return;
-}
+      return;
+    }
 
     const t = doc.data();
 
-    printVoucher({
-      email: t.email || currentUser.email,
-      plan: t.plan || t.network || t.disco || "Transaction",
-      price: t.amount || t.price || 0,
-      voucher: t.voucher || t.reference || t.phone || t.meter || "N/A"
-    });
+    let receiptHTML = "";
 
-  }catch(err){
+    // =========================
+    // WALLET FUNDING RECEIPT
+    // =========================
+    if(t.type === "fund"){
 
-    console.error(err);
-    showAlert("Failed to load transaction", "error");
+      receiptHTML = `
+
+        <div class="receipt-card">
+
+          <div class="receipt-success">
+            ✅
+          </div>
+
+          <h2>
+            Wallet Funded
+          </h2>
+
+          <div class="receipt-amount">
+            ₦${Number(t.amount || 0).toLocaleString()}
+          </div>
+
+          <div class="receipt-details">
+
+            <div class="receipt-row">
+              <span>Status</span>
+              <strong>Successful</strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Payment Method</span>
+              <strong>
+                ${t.paymentType || "Bank Transfer"}
+              </strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Reference</span>
+              <strong>
+                ${t.reference || "-"}
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+    }
+
+    // =========================
+    // DATA RECEIPT
+    // =========================
+    else if(t.type === "data"){
+
+      receiptHTML = `
+
+        <div class="receipt-card">
+
+          <div class="receipt-success">
+            🌐
+          </div>
+
+          <h2>
+            Data Purchase
+          </h2>
+
+          <div class="receipt-amount">
+            ₦${Number(t.amount || 0).toLocaleString()}
+          </div>
+
+          <div class="receipt-details">
+
+            <div class="receipt-row">
+              <span>Network</span>
+              <strong>${t.network || "-"}</strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Plan</span>
+              <strong>${t.plan || "-"}</strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Phone</span>
+              <strong>${t.phone || "-"}</strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Status</span>
+              <strong>${t.status || "Successful"}</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+    }
+
+    // =========================
+    // AIRTIME RECEIPT
+    // =========================
+    else if(t.type === "airtime"){
+
+      receiptHTML = `
+
+        <div class="receipt-card">
+
+          <div class="receipt-success">
+            📱
+          </div>
+
+          <h2>
+            Airtime Purchase
+          </h2>
+
+          <div class="receipt-amount">
+            ₦${Number(t.amount || 0).toLocaleString()}
+          </div>
+
+          <div class="receipt-details">
+
+            <div class="receipt-row">
+              <span>Network</span>
+              <strong>${t.network || "-"}</strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Phone</span>
+              <strong>${t.phone || "-"}</strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Status</span>
+              <strong>${t.status || "Successful"}</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+    }
+
+    // =========================
+    // WIFI VOUCHER RECEIPT
+    // =========================
+    else if(t.type === "purchase"){
+
+      receiptHTML = `
+
+        <div class="receipt-card">
+
+          <div class="receipt-success">
+            🎟️
+          </div>
+
+          <h2>
+            Voucher Purchase
+          </h2>
+
+          <div class="receipt-amount">
+            ₦${Number(t.price || 0).toLocaleString()}
+          </div>
+
+          <div class="receipt-details">
+
+            <div class="receipt-row">
+              <span>Plan</span>
+              <strong>${t.plan || "-"}</strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Username</span>
+              <strong>${t.username || "-"}</strong>
+            </div>
+
+            <div class="receipt-row">
+              <span>Password</span>
+              <strong>${t.password || "-"}</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+    }
+
+    // SHOW RECEIPT
+    showModal(receiptHTML);
+
+  }catch(error){
+
+    console.log(error);
+
+    showModal(`
+      <h3>Error loading receipt</h3>
+    `);
 
   }
+
 }
 
 
@@ -7606,6 +8066,114 @@ function searchPlans(){
       : "none";
 
   });
+
+}
+
+
+
+function forgotPassword(){
+
+  showModal(`
+
+    <div class="forgot-password-card">
+
+      <div
+        class="forgot-close"
+        onclick="closeForgotPassword()">
+
+        ✕
+
+      </div>
+
+      <div class="forgot-icon">
+        🔒
+      </div>
+
+      <h2>
+        Reset Password
+      </h2>
+
+      <p>
+        Enter your email address to
+        receive a password reset link.
+      </p>
+
+      <input
+        type="email"
+        id="resetEmail"
+        placeholder="Enter your email">
+
+      <button
+        onclick="sendPasswordReset()">
+
+        Send Reset Link
+
+      </button>
+
+    </div>
+
+  `);
+
+}
+
+function closeForgotPassword(){
+
+  closeModal();
+
+  location.reload();
+
+}
+
+
+
+
+
+async function sendPasswordReset(){
+
+  const email =
+    document.getElementById(
+      "resetEmail"
+    ).value.trim();
+
+  if(!email){
+
+    showAlert(
+      "Please enter email",
+      "error"
+    );
+
+    return;
+
+  }
+
+  try{
+
+    showLoader(
+      "Sending reset link..."
+    );
+
+    await auth.sendPasswordResetEmail(
+      email
+    );
+
+    closeModal();
+
+    showSuccessCard(
+      "Password reset link sent successfully."
+    );
+
+  }catch(error){
+
+    showAlert(
+      error.message,
+      "error"
+    );
+
+  }finally{
+
+    hideLoader();
+
+  }
 
 }
 
