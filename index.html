@@ -7427,49 +7427,117 @@ Proceed with transaction?`
 
 async function pickContact(inputId){
 
-  // CHECK SUPPORT
-  if (!('contacts' in navigator) || !('ContactsManager' in window)) {
+  try{
 
-    alert("Contact picker not supported on this device/browser");
-    return;
-  }
+    // GET PLUGIN
+    const ContactsPlugin =
+      window.Capacitor
+      ?.Plugins
+      ?.Contacts;
 
-  try {
-
-    // OPEN CONTACT PICKER
-    const contacts = await navigator.contacts.select(
-      ['name', 'tel'],
-      { multiple: false }
+    console.log(
+      "PLUGIN:",
+      ContactsPlugin
     );
 
-    // IF CONTACT SELECTED
-    if (contacts.length > 0) {
+    if(!ContactsPlugin){
 
-      let number = contacts[0].tel[0];
+      showErrorModal(
+        "Contacts plugin not found"
+      );
 
-      // REMOVE SPACES & SPECIAL CHARACTERS
-      number = number.replace(/\s/g, '');
+      return;
 
-      // CONVERT +234 TO 0
-      if(number.startsWith('+234')){
-        number = '0' + number.slice(4);
-      }
-
-      // FILL INPUT
-      document.getElementById(inputId).value = number;
     }
 
-  } catch(err){
+    // REQUEST PERMISSION
+    const permission =
+      await ContactsPlugin.requestPermissions();
 
-    console.log(err);
+    console.log(
+      "PERMISSION:",
+      permission
+    );
 
-    alert("Failed to pick contact");
+    // CHECK PERMISSION
+    if(
+      permission.contacts !== 'granted'
+    ){
+
+      showErrorModal(
+        "Please allow contacts permission"
+      );
+
+      return;
+
+    }
+
+    // LOAD CONTACTS
+    const result =
+      await ContactsPlugin.getContacts();
+
+    console.log(
+      "CONTACTS:",
+      result
+    );
+
+    if(
+      !result.contacts ||
+      result.contacts.length === 0
+    ){
+
+      showErrorModal(
+        "No contacts found"
+      );
+
+      return;
+
+    }
+
+    // PICK FIRST CONTACT
+    const contact =
+      result.contacts[0];
+
+    console.log(
+      "FIRST CONTACT:",
+      contact
+    );
+
+    // GET PHONE
+    const phone =
+      contact.phoneNumbers?.[0]?.number ||
+      contact.phones?.[0]?.number;
+
+    if(!phone){
+
+      showErrorModal(
+        "Selected contact has no phone number"
+      );
+
+      return;
+
+    }
+
+    // INSERT PHONE
+    document.getElementById(
+      inputId
+    ).value = phone;
+
+  }catch(err){
+
+    console.log(
+      "CONTACT ERROR:",
+      err
+    );
+
+    showErrorModal(
+      err.message ||
+      "Failed to load contacts"
+    );
 
   }
 
 }
-
-
 
 
 
