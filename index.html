@@ -2752,6 +2752,20 @@ BANK TRANSFER CARD
 
   margin-bottom:18px;
 
+  padding:16px 18px;
+
+  background:#f0fdfa;
+
+  border-radius:18px;
+
+  border:1px solid #ccfbf1;
+
+  font-size:22px;
+
+  font-weight:700;
+
+  color:green;
+
 }
 
 .wallet-card-title small{
@@ -2913,7 +2927,226 @@ BANK TRANSFER CARD
 
   }
 
-}</style>
+}
+
+
+.bank-label{
+
+  font-size:28px;
+
+  font-weight:700;
+
+  color:teal;
+
+  letter-spacing:0.5px;
+
+}
+
+
+.copy-btn{
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  width:100%;
+
+  padding:14px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:linear-gradient(
+    135deg,
+    teal,
+    #14b8a6
+  );
+
+  color:#fff;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  box-shadow:
+    0 6px 18px rgba(20,184,166,.25);
+
+}
+
+.copy-btn:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 10px 24px rgba(20,184,166,.35);
+
+}
+
+.copy-icon{
+
+  font-size:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
+
+
+.virtual-account-box{
+
+  background:#fff;
+
+  text-align:center;
+
+  padding:30px 20px;
+
+  border-radius:24px;
+
+  width:100%;
+
+  color:#111;
+
+}
+
+
+
+
+.generate-account-btn{
+
+  width:100%;
+
+  height:56px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+    135deg,
+    teal,
+    #14b8a6
+  );
+
+  color:#fff;
+
+  font-size:16px;
+
+  font-weight:700;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:12px;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  box-shadow:
+    0 8px 20px rgba(20,184,166,.25);
+
+}
+
+.generate-account-btn:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 12px 26px rgba(20,184,166,.35);
+
+}
+
+.generate-account-btn:active{
+
+  transform:scale(.98);
+
+}
+
+.btn-icon{
+
+  font-size:20px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+}
+
+
+
+.generate-account-btn{
+
+  width:100%;
+
+  height:56px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+    135deg,
+    teal,
+    #14b8a6
+  );
+
+  color:#fff;
+
+  font-size:16px;
+
+  font-weight:700;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:12px;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  box-shadow:
+    0 8px 20px rgba(20,184,166,.25);
+
+}
+
+.generate-account-btn:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 12px 26px rgba(20,184,166,.35);
+
+}
+
+.generate-account-btn:active{
+
+  transform:scale(.98);
+
+}
+
+.btn-icon{
+
+  font-size:20px;
+
+}
+
+</style>
 
 
 
@@ -3393,12 +3626,6 @@ Login / Signup
 
 
 
-     <h2>Wallet Balance :</h2>
-     <div id="walletCard" class="wallet-card">
-     <span id="wallet">0</span>
-     </div>
-
-
 
 <!-- BANK ACCOUNT CARD -->
 <div class="wallet-account-card">
@@ -3406,10 +3633,6 @@ Login / Signup
   <div class="wallet-card-header">
 
     <div>
-      <small>
-        Bank Transfer
-      </small>
-
       <h3>
         Fund Your Wallet
       </h3>
@@ -4975,12 +5198,17 @@ async function openWalletFunding(){
             account yet.
           </p>
 
-          <button
-            onclick="generateVirtualAccount()">
+<button
+  class="generate-account-btn"
+  onclick="generateVirtualAccount()">
 
-            Generate Account
+  <span class="btn-icon">
+    ✨
+  </span>
 
-          </button>
+  Generate Account
+
+</button>
 
         </div>
 
@@ -5013,12 +5241,22 @@ async function openWalletFunding(){
           ${account.accountName || '-'}
         </p>
 
-        <button
-          onclick="copyAccountNumber('${account.accountNumber}')">
 
-          Copy Account Number
 
-        </button>
+
+<button
+  class="copy-btn"
+  onclick="copyAccountNumber('${account.accountNumber}')">
+
+  <span class="copy-icon">
+    ⧉
+  </span>
+
+  Copy
+
+</button>
+
+
 
       </div>
 
@@ -5131,10 +5369,6 @@ container.innerHTML = `
 
       <div>
 
-        <small>
-          Bank Transfer
-        </small>
-
         <h3>
           Generate Account
         </h3>
@@ -5142,7 +5376,6 @@ container.innerHTML = `
       </div>
 
       <div class="bank-badge">
-        🏦
       </div>
 
     </div>
@@ -5154,13 +5387,19 @@ container.innerHTML = `
 
     </p>
 
-    <button
-      class="generate-account-btn"
-      onclick="generateVirtualAccount()">
+<button
+  class="generate-account-btn"
+  onclick="generateVirtualAccount()">
 
-      Generate Bank Account
+  <span class="btn-icon">
+    🏦
+  </span>
 
-    </button>
+  Generate Bank Account
+
+</button>
+
+
 
   </div>
 
@@ -5201,7 +5440,6 @@ container.innerHTML = `
       </div>
 
       <div class="bank-badge">
-        🏦
       </div>
 
     </div>
@@ -5245,9 +5483,9 @@ container.innerHTML = `
 
       <div>
 
-        <small>
-          Bank Transfer
-        </small>
+<small class="bank-label">
+  Bank Name
+</small>
 
         <h3>
           ${account.bankName}
@@ -5256,8 +5494,15 @@ container.innerHTML = `
       </div>
 
       <div class="bank-badge">
-        🏦
+
       </div>
+
+
+
+<small class="bank-label">
+Account Number
+</small>
+
 
     </div>
 
@@ -5267,20 +5512,18 @@ container.innerHTML = `
         ${account.accountNumber}
       </div>
 
+
       <div
         class="copy-icon"
         onclick="copyAccountNumber('${account.accountNumber}')">
 
-        📋
-
-      </div>
+        ⧉
 
     </div>
-
+      </div>
     <div class="account-name">
       ${account.accountName}
     </div>
-
   </div>
 
 `;
@@ -5333,7 +5576,7 @@ async function generateVirtualAccount() {
           email: currentUser.email,
 
           fullName:
-            userData.fullName || "BIVA User",
+            userData.fullName || "BIVA Wallet",
 
           phone:
             userData.phone || "08000000000"
