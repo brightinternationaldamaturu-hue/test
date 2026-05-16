@@ -100,7 +100,7 @@
   height: 60px;
   margin: auto;
   border-radius: 50%;
-  background: radial-gradient(circle, #ff1a1a, #8B0000);
+  background: radial-gradient(circle, #ff1a1a, Green);
   animation: pulse 1.2s infinite;
 }
 
@@ -113,8 +113,8 @@
 /* PROGRESS BAR */
 .progress-bar {
   width: 100%;
-  height: 6px;
-  background: #333;
+  height: 8px;
+  background: white;
   border-radius: 10px;
   margin-top: 20px;
   overflow: hidden;
@@ -123,7 +123,7 @@
 .progress-fill {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #ff1a1a, #ff4d4d);
+  background: linear-gradient(90deg, green, green);
   transition: width 0.4s ease;
 }
 
@@ -3980,6 +3980,253 @@ BANK TRANSFER CARD
   cursor: pointer;
   white-space: nowrap;
 }
+
+
+
+
+
+
+
+
+#pullRefresh{
+
+  position: fixed;
+
+  top: -70px;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 60px;
+
+  background: Teal;
+
+  color: #fff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  z-index: 999999;
+
+  transition: 0.3s ease;
+
+  font-weight: bold;
+
+}
+
+#pullRefresh.active{
+
+  top: 0;
+
+}
+
+.refresh-spinner{
+
+  font-size: 22px;
+
+  animation: spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+  from{
+    transform: rotate(0deg);
+  }
+
+  to{
+    transform: rotate(360deg);
+  }
+
+}
+
+
+
+
+/* =========================
+USER CARD
+========================= */
+
+.user-card{
+
+  width:100%;
+
+  background:#fff;
+
+  border-radius:18px;
+
+  padding:18px;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.06);
+
+  margin-top:15px;
+}
+
+.user-card-top{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+}
+
+.user-icon{
+
+  width:55px;
+  height:55px;
+
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  font-size:24px;
+
+  color:#fff;
+}
+
+.user-label{
+
+  font-size:13px;
+
+  color:#777;
+
+  margin-bottom:5px;
+}
+
+#userEmail{
+
+  font-size:16px;
+
+  font-weight:700;
+
+  color:#111;
+
+  word-break:break-word;
+}
+
+
+
+/* =========================
+CASHBACK SUMMARY
+========================= */
+
+.cashback-summary-card{
+
+  background:#fff;
+
+  border-radius:20px;
+
+  padding:20px;
+
+  margin-top:20px;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.05);
+}
+
+.cashback-summary-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:20px;
+}
+
+.cashback-summary-top h3{
+
+  font-size:18px;
+
+  font-weight:700;
+}
+
+.cashback-summary-top span{
+
+  font-size:12px;
+
+  color:white;
+}
+
+.cashback-summary-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:15px;
+}
+
+.cashback-box{
+
+  border-radius:18px;
+
+  padding:20px;
+
+  color:white;
+}
+
+.cashback-box p{
+
+  font-size:13px;
+
+  margin-bottom:10px;
+
+  opacity:.9;
+}
+
+.cashback-box h2{
+
+  font-size:24px;
+
+  font-weight:800;
+}
+
+.cashback-box.earned{
+
+  background:
+    linear-gradient(
+      135deg,
+      #16a34a,
+      #15803d
+    );
+}
+
+.cashback-box.withdrawn{
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+}
+
+.cashback-box h2{
+
+  color:#fff !important;
+
+}
 </style>
 
 
@@ -4020,6 +4267,13 @@ BANK TRANSFER CARD
 
 <body>
 
+
+<div id="pullRefresh">
+
+  <div class="refresh-spinner">
+    ⟳
+  </div>
+</div>
 
 
 
@@ -4458,8 +4712,6 @@ Login / Signup
 
 
 
-
-
 </section>
 
 
@@ -4593,6 +4845,81 @@ Login / Signup
 
 <section id="User" class="page">
 
+<div class="user-card">
+
+  <div class="user-card-top">
+
+    <div class="user-icon">
+      👤
+    </div>
+
+    <div>
+
+      <p class="user-label">
+        Logged In User
+      </p>
+
+      <h3 id="userEmail"></h3>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+CASHBACK SUMMARY CARD
+========================= -->
+
+<div class="cashback-summary-card">
+
+  <div class="cashback-summary-top">
+
+    <h3>
+      🎁 Cashback Summary
+    </h3>
+
+    <span id="cashbackMonth">
+      This Month
+    </span>
+
+  </div>
+
+  <div class="cashback-summary-grid">
+
+    <!-- EARNED -->
+    <div class="cashback-box earned">
+
+      <p>
+        Total Earned
+      </p>
+
+      <h2 id="cashbackEarned">
+        ₦0
+      </h2>
+
+    </div>
+
+    <!-- WITHDRAWN -->
+    <div class="cashback-box withdrawn">
+
+      <p>
+        Withdrawn
+      </p>
+
+      <h2 id="cashbackWithdrawn">
+        ₦0
+      </h2>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 
 
 <div class="cashback-card">
@@ -4614,23 +4941,6 @@ Login / Signup
 </div>
 
 
-
-
-<div class="referral-box">
-
-  <input
-  id="referralLink"
-  readonly
-/>
-
-  <button
-    class="copy-btn"
-    onclick="copyReferral()"
-  >
-    Click to Copy your referral  Link
-  </button>
-
-</div>
 
 
 
@@ -4663,10 +4973,24 @@ Login / Signup
 
 
 
-  <h2>User:</h2>
- <div class="email-box">
-  <span id="userEmail"></span>
+<div class="referral-box">
+
+  <input
+  id="referralLink"
+  readonly
+/>
+
+  <button
+    class="copy-btn"
+    onclick="copyReferral()"
+  >
+    Click to Copy your referral  Link
+  </button>
+
 </div>
+
+
+
 </section>
 
 
@@ -5552,6 +5876,7 @@ if(user){
   loadWelcomeMessage();
   loadCashbackBalance(user.uid);
   loadReferralLink();
+  loadCashbackSummary( currentUser.uid);
 
 }
 
@@ -10042,6 +10367,252 @@ async function copyReferral(){
   }
 
 }
+
+
+
+let startY = 0;
+
+let pulling = false;
+
+const pullRefresh =
+  document.getElementById(
+    "pullRefresh"
+  );
+
+window.addEventListener(
+  "touchstart",
+
+  e => {
+
+    if (
+      window.scrollY === 0
+    ) {
+
+      startY =
+        e.touches[0].pageY;
+
+    }
+
+  }
+);
+
+window.addEventListener(
+  "touchmove",
+
+  e => {
+
+    const currentY =
+      e.touches[0].pageY;
+
+    // PULL DOWN
+    if (
+      currentY - startY > 120 &&
+      window.scrollY === 0
+    ) {
+
+      pulling = true;
+
+      pullRefresh
+        .classList
+        .add("active");
+
+    }
+
+  }
+);
+
+window.addEventListener(
+  "touchend",
+
+  () => {
+
+    if (pulling) {
+
+      location.reload();
+
+    }
+
+    pulling = false;
+
+    setTimeout(() => {
+
+      pullRefresh
+        .classList
+        .remove("active");
+
+    }, 500);
+
+  }
+);
+
+
+
+
+
+
+// =============================
+// ANDROID BACK BUTTON FIX
+// =============================
+
+document.addEventListener(
+  "deviceready",
+  function () {
+
+    document.addEventListener(
+      "backbutton",
+      function (e) {
+
+        e.preventDefault();
+
+        // =====================
+        // CLOSE MODAL FIRST
+        // =====================
+        const modal =
+          document.querySelector(
+            ".modal.show"
+          );
+
+        if (modal) {
+
+          modal.classList.remove(
+            "show"
+          );
+
+          return;
+        }
+
+        // =====================
+        // CLOSE MENU FIRST
+        // =====================
+        const menu =
+          document.querySelector(
+            ".menu-dropdown.active"
+          );
+
+        if (menu) {
+
+          menu.classList.remove(
+            "active"
+          );
+
+          return;
+        }
+
+        // =====================
+        // GO TO PREVIOUS PAGE
+        // =====================
+        if (
+          window.history.length > 1
+        ) {
+
+          window.history.back();
+
+          return;
+        }
+
+        // =====================
+        // DOUBLE BACK TO EXIT
+        // =====================
+        if (!window.backPressed) {
+
+          window.backPressed = true;
+
+          showToast(
+            "Press back again to exit"
+          );
+
+          setTimeout(() => {
+
+            window.backPressed =
+              false;
+
+          }, 2000);
+
+          return;
+        }
+
+        navigator.app.exitApp();
+
+      },
+      false
+    );
+
+  },
+  false
+);
+
+
+
+
+async function loadCashbackSummary(uid){
+
+  const startOfMonth =
+    new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1
+    );
+
+  let earned = 0;
+  let withdrawn = 0;
+
+  const snapshot =
+    await db.collection("transactions")
+
+    .where("userId","==",uid)
+
+    .get();
+
+  snapshot.forEach(doc => {
+
+    const t = doc.data();
+
+    const createdAt =
+      t.createdAt?.toDate
+      ? t.createdAt.toDate()
+      : null;
+
+    if(
+      !createdAt ||
+      createdAt < startOfMonth
+    ){
+      return;
+    }
+
+    // TOTAL EARNED
+    if(t.type === "cashback"){
+
+      earned += Number(
+        t.amount || 0
+      );
+    }
+
+    // TOTAL WITHDRAWN
+    if(
+      t.type ===
+      "cashback_withdrawal"
+    ){
+
+      withdrawn += Number(
+        t.amount || 0
+      );
+    }
+
+  });
+
+  document.getElementById(
+    "cashbackEarned"
+  ).innerText =
+
+    `₦${earned.toLocaleString()}`;
+
+  document.getElementById(
+    "cashbackWithdrawn"
+  ).innerText =
+
+    `₦${withdrawn.toLocaleString()}`;
+}
+
 </script>
 
 
@@ -10417,9 +10988,6 @@ ERROR MODAL
   </div>
 
 </div>
-
-
-
 
 
 
