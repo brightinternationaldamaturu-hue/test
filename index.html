@@ -6787,7 +6787,10 @@ async function generateVirtualAccount() {
 
 function loadTransactions(uid){
 
-  const body = document.getElementById("transactionBody");
+  const body =
+    document.getElementById(
+      "transactionBody"
+    );
 
   db.collection("transactions")
     .where("userId", "==", uid)
@@ -6799,37 +6802,54 @@ function loadTransactions(uid){
       if(snapshot.empty){
 
         body.innerHTML = `
+
           <tr>
             <td colspan="6" style="text-align:left;">
               No transaction history yet
             </td>
           </tr>
+
         `;
 
         return;
       }
 
+      // =========================
       // SAFE SORT
-      const docs = snapshot.docs.sort((a, b) => {
+      // =========================
+      const docs =
+        snapshot.docs.sort((a, b) => {
 
-        const aTime =
-          a.data().createdAt?.toMillis
-          ? a.data().createdAt.toMillis()
-          : 0;
+          const aTime =
+            a.data().createdAt?.toMillis
+            ? a.data().createdAt.toMillis()
+            : 0;
 
-        const bTime =
-          b.data().createdAt?.toMillis
-          ? b.data().createdAt.toMillis()
-          : 0;
+          const bTime =
+            b.data().createdAt?.toMillis
+            ? b.data().createdAt.toMillis()
+            : 0;
 
-        return bTime - aTime;
+          return bTime - aTime;
 
-      });
+        });
 
       docs.forEach(doc => {
 
         const t = doc.data();
-        console.log("VIEW TRANSACTION:", t);
+
+        // =========================
+        // HIDE CASHBACK REWARD
+        // =========================
+        if(t.type === "cashback"){
+          return;
+        }
+
+        console.log(
+          "VIEW TRANSACTION:",
+          t
+        );
+
         const id = doc.id;
 
         let badge = "";
@@ -6840,9 +6860,14 @@ function loadTransactions(uid){
         // =========================
         if(t.type === "fund"){
 
-          badge = `<span class="tx-badge tx-fund">FUND</span>`;
+          badge = `
+            <span class="tx-badge tx-fund">
+              FUND
+            </span>
+          `;
 
-          details = `Wallet Funding`;
+          details =
+            "Wallet Funding";
         }
 
         // =========================
@@ -6850,33 +6875,26 @@ function loadTransactions(uid){
         // =========================
         else if(t.type === "purchase"){
 
-          badge = `<span class="tx-badge tx-debit">VOUCHER</span>`;
+          badge = `
+            <span class="tx-badge tx-debit">
+              VOUCHER
+            </span>
+          `;
 
-          details = `${t.plan || "-"}`;
+          details =
+            `${t.plan || "-"}`;
         }
-
-        // =========================
-        // Airtime Cashback
-        // =========================
-else if(t.type === "cashback"){
-
-  badge = `
-    <span class="tx-badge tx-cashback">
-      CASHBACK
-    </span>
-  `;
-
-  details =
-    t.description ||
-    "Cashback Reward";
-}
 
         // =========================
         // DATA
         // =========================
         else if(t.type === "data"){
 
-          badge = `<span class="tx-badge tx-data">DATA</span>`;
+          badge = `
+            <span class="tx-badge tx-data">
+              DATA
+            </span>
+          `;
 
           details = `
             ${t.network || ""}<br>
@@ -6889,7 +6907,11 @@ else if(t.type === "cashback"){
         // =========================
         else if(t.type === "airtime"){
 
-          badge = `<span class="tx-badge tx-airtime">AIRTIME</span>`;
+          badge = `
+            <span class="tx-badge tx-airtime">
+              AIRTIME
+            </span>
+          `;
 
           details = `
             ${t.network || ""}<br>
@@ -6897,53 +6919,55 @@ else if(t.type === "cashback"){
           `;
         }
 
+        // =========================
+        // CASHBACK WITHDRAWAL
+        // =========================
+        else if(
+          t.type ===
+          "cashback_withdrawal"
+        ){
 
-// =========================
-// CASHBACK WITHDRAWAL
-// =========================
-else if(t.type === "cashback_withdrawal"){
+          badge = `
+            <span class="tx-badge tx-cashback">
+              WITHDRAW
+            </span>
+          `;
 
-  badge = `
-    <span class="tx-badge tx-cashback">
-      WITHDRAW
-    </span>
-  `;
+          details = `
+            Cashback Withdrawn<br>
+            To Wallet
+          `;
+        }
 
-  details = `
-    Cashback Withdrawn<br>
-    To Wallet
-  `;
-}
+        // =========================
+        // REFERRAL BONUS
+        // =========================
+        else if(
+          t.type ===
+          "referral_bonus"
+        ){
 
+          badge = `
+            <span class="tx-badge tx-referral">
+              REFERRAL
+            </span>
+          `;
 
-
-
-
-
-// =========================
-// Referal Bonus
-// =========================
-
-else if(t.type === "referral_bonus"){
-
-  badge = `
-    <span class="tx-badge tx-referral">
-      REFERRAL
-    </span>
-  `;
-
-  details =
-    t.description ||
-    "Referral Bonus";
-}
-
+          details =
+            t.description ||
+            "Referral Bonus";
+        }
 
         // =========================
         // BILL PAYMENT
         // =========================
         else if(t.type === "bill"){
 
-          badge = `<span class="tx-badge tx-bill">BILL</span>`;
+          badge = `
+            <span class="tx-badge tx-bill">
+              BILL
+            </span>
+          `;
 
           details = `
             ${t.disco || ""}<br>
@@ -6955,17 +6979,28 @@ else if(t.type === "referral_bonus"){
 
           <tr>
 
-            <td>${badge}</td>
+            <td>
+              ${badge}
+            </td>
 
             <td>
-              ₦${Number(t.amount || t.price || 0).toLocaleString()}
+
+              ₦${Number(
+                t.amount ||
+                t.price ||
+                0
+              ).toLocaleString()}
+
             </td>
 
             <td>
 
               <button
                 class="btn"
-                style="padding:6px 10px;font-size:12px;"
+                style="
+                  padding:6px 10px;
+                  font-size:12px;
+                "
                 onclick="viewTransaction('${id}')">
 
                 View
@@ -6980,6 +7015,8 @@ else if(t.type === "referral_bonus"){
       });
     });
 }
+
+
 
 
 
@@ -8038,40 +8075,6 @@ Proceed with transaction?`
       );
     }
 
-    // ===============================
-    // SAVE TRANSACTION
-    // ===============================
-
-    await db.collection(
-      "transactions"
-    ).add({
-
-      txId: requestId,
-
-      userId:
-      currentUser.uid,
-
-      email:
-      currentUser.email,
-
-      type: "airtime",
-
-      network,
-      phone,
-      amount,
-
-      status: "success",
-
-      providerStatus:
-      data.status || "success",
-
-      response:
-      data,
-
-      createdAt:
-      new Date()
-
-    });
 
     // ===============================
     // SUCCESS
@@ -8411,39 +8414,7 @@ if(!confirmBuy){
 return;
     }
 
-    // ===============================
-    // SAVE TRANSACTION
-    // ===============================
 
-    await db.collection(
-      "transactions"
-    ).add({
-
-      userId:
-      currentUser.uid,
-
-      email:
-      currentUser.email,
-
-      type: "data",
-
-      network:
-      plan.network_id,
-
-      plan:
-      plan.data_plan,
-
-      amount:
-      Number(plan.amount),
-
-      phone,
-
-      status: "success",
-
-      createdAt:
-      new Date()
-
-    });
 
     // ===============================
     // SUCCESS
