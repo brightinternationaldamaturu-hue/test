@@ -3979,16 +3979,6 @@ BANK TRANSFER CARD
   cursor: pointer;
   white-space: nowrap;
 }
-@media (max-width: 600px) {
-  .referral-box {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .copy-btn {
-    width: 100%;
-  }
-}
 </style>
 
 
@@ -4609,8 +4599,11 @@ Login / Signup
 
   <input id="referralCode" readonly />
 
-  <button class="copy-btn" onclick="copyReferral()">
-    Copy Code
+  <button
+    class="copy-btn"
+    onclick="copyReferral()"
+  >
+    Copy Link
   </button>
 
 </div>
@@ -10093,14 +10086,18 @@ async function loadReferralLink(){
     const referralCode =
       userData.referralCode;
 
+    console.log(
+      "Referral Code:",
+      referralCode
+    );
+
     if(!referralCode) return;
 
-const referralLink =
-
-  `https://brightinternationaldamaturu-hue.github.io/biva/?ref=${referralCode}`;
+    const referralLink =
+      `https://brightinternationaldamaturu-hue.github.io/biva/?ref=${referralCode}`;
 
     document.getElementById(
-      "referralLink"
+      "referralCode"
     ).value = referralLink;
 
   } catch(err){
@@ -10116,15 +10113,14 @@ const referralLink =
 
 
 
-
-async function copyReferralLink(){
-
-  const input =
-    document.getElementById(
-      "referralLink"
-    );
+async function copyReferral(){
 
   try{
+
+    const input =
+      document.getElementById(
+        "referralCode"
+      );
 
     await navigator.clipboard.writeText(
       input.value
@@ -10132,26 +10128,27 @@ async function copyReferralLink(){
 
     const btn =
       document.querySelector(
-        ".copy-ref-btn"
+        ".copy-btn"
       );
 
-    btn.innerHTML = "✅ Copied";
+    btn.innerText = "Copied ✅";
 
     setTimeout(() => {
 
-      btn.innerHTML =
-        "📋 Copy Link";
+      btn.innerText =
+        "Copy Link";
 
     }, 2000);
 
   } catch(err){
 
-    alert(
-      "Failed to copy link"
-    );
-  }
-}
+    console.log(err);
 
+    alert("Copy failed");
+
+  }
+
+}
 </script>
 
 
