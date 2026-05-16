@@ -4597,13 +4597,16 @@ Login / Signup
 
 <div class="referral-box">
 
-  <input id="referralCode" readonly />
+  <input
+  id="referralLink"
+  readonly
+/>
 
   <button
     class="copy-btn"
     onclick="copyReferral()"
   >
-    Copy Link
+    Click to Copy your referral  Link
   </button>
 
 </div>
@@ -10131,12 +10134,12 @@ async function copyReferral(){
         ".copy-btn"
       );
 
-    btn.innerText = "Copied ✅";
+    btn.innerText = "Referral Link Copied";
 
     setTimeout(() => {
 
       btn.innerText =
-        "Copy Link";
+        "Click to Copy your referral  Link";
 
     }, 2000);
 
