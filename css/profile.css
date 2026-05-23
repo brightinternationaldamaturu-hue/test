@@ -1,0 +1,226 @@
+body{
+  margin:0;
+  padding:0;
+  background:#07111F;
+  font-family:Arial,sans-serif;
+  color:white;
+  overflow-x:hidden;
+}
+
+.profile-container{
+  width:100%;
+  max-width:430px;
+  margin:auto;
+  padding:18px 16px 110px;
+  box-sizing:border-box;
+}
+
+/* =========================
+   TOP CARD
+========================= */
+
+.profile-top-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:30px;
+  padding:22px;
+  backdrop-filter:blur(18px);
+  margin-bottom:18px;
+}
+
+.profile-left{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.profile-avatar{
+  width:78px;
+  height:78px;
+  border-radius:28px;
+  background:linear-gradient(
+    135deg,
+    #00D492,
+    #00A884
+  );
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:32px;
+  font-weight:900;
+}
+
+.profile-user-info h2{
+  margin:0;
+  font-size:22px;
+}
+
+.profile-user-info p{
+  margin-top:6px;
+  opacity:.7;
+  font-size:13px;
+}
+
+.verified-badge{
+  display:inline-block;
+  margin-top:10px;
+  background:rgba(0,212,146,.15);
+  color:#00D492;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* =========================
+   WALLET SUMMARY
+========================= */
+
+.wallet-summary-card{
+  background:linear-gradient(
+    135deg,
+    #00A884,
+    #075E54
+  );
+  border-radius:30px;
+  padding:24px;
+  margin-bottom:20px;
+}
+
+.wallet-summary-item{
+  margin-bottom:18px;
+}
+
+.wallet-summary-item:last-child{
+  margin-bottom:0;
+}
+
+.wallet-summary-item span{
+  opacity:.8;
+  font-size:13px;
+}
+
+.wallet-summary-item h2{
+  margin-top:8px;
+  font-size:34px;
+}
+
+.wallet-summary-item h3{
+  margin-top:6px;
+  font-size:22px;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:26px;
+  padding:20px;
+  margin-bottom:18px;
+  backdrop-filter:blur(16px);
+}
+
+.section-title{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+.settings-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.setting-item{
+  background:#111827;
+  border-radius:18px;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.setting-item:active{
+  transform:scale(.97);
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+#logoutBtn{
+  width:100%;
+  height:58px;
+  border:none;
+  border-radius:22px;
+  background:#FF5A5A;
+  color:white;
+  font-size:16px;
+  font-weight:800;
+  margin-top:8px;
+  cursor:pointer;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:380px){
+
+  .profile-container{
+    padding:14px 12px 100px;
+  }
+
+  .profile-avatar{
+    width:68px;
+    height:68px;
+    font-size:28px;
+  }
+
+  .wallet-summary-item h2{
+    font-size:28px;
+  }
+
+}
+
+
+
+
+
+
+
+.install-btn{
+
+  width: 100%;
+
+  border: none;
+
+  padding: 16px;
+
+  border-radius: 14px;
+
+  margin-top: 20px;
+
+  margin-bottom: 14px;
+
+  background: #00d492;
+
+  color: #000;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+}

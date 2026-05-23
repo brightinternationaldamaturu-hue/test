@@ -1,0 +1,422 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>BIVA</title>
+
+<link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/loader.css">
+<link rel="stylesheet" href="../css/bottomnav.css">
+<link rel="stylesheet" href="../css/home.css">
+<link rel="stylesheet" href="../css/modal.css">
+<link rel="stylesheet" href="../css/pinmodal.css">
+
+
+
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00d492">
+</head>
+
+
+
+
+
+<body class="home-page">
+
+<div class="home-container">
+
+<!-- HEADER -->
+<div class="home-header">
+
+  <div class="home-user">
+
+    <div class="home-avatar" id="homeAvatar">
+      B
+    </div>
+
+    <div class="home-user-text">
+
+      <h2 id="welcomeText">
+        Welcome
+      </h2>
+
+      <p id="greetingText">
+        Good Evening 👋
+      </p>
+
+    </div>
+
+  </div>
+
+
+<!-- NOTIFICATION -->
+<div 
+  class="notification-btn"
+  onclick="location.href='notifications.html'"
+>
+  🔔
+</div>
+
+  </div>
+
+
+
+<!-- WALLET -->
+<div class="wallet-card">
+
+  <div class="wallet-top">
+
+    <div>
+
+      <div class="wallet-label">
+        Wallet Balance
+      </div>
+
+      <div
+        class="wallet-balance"
+        id="walletBalance"
+      >
+        ₦0
+      </div>
+
+    </div>
+
+    <!-- HIDE BUTTON -->
+<button
+  class="balance-toggle"
+  id="balanceToggle"
+>
+
+  <svg
+    id="eyeIcon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+    <circle cx="12" cy="12" r="3"/>
+  </svg>
+
+</button>
+
+  </div>
+
+
+<div class="wallet-actions">
+
+  <!-- FUND -->
+<button 
+  class="wallet-btn"
+  onclick="location.href='wallet.html'"
+>
+  Fund Wallet
+</button>
+
+  <!-- WITHDRAW -->
+  <button 
+    class="wallet-btn"
+    onclick="location.href='maintenance.html'"
+  >
+    Withdraw
+  </button>
+
+</div>
+
+</div>
+
+
+
+<div class="section-title transaction-header">
+
+  <span>Recent Transaction</span>
+
+  <button 
+    class="view-all-btn"
+    onclick="location.href='transactions.html'"
+  >
+    View all
+  </button>
+
+</div>
+
+<div id="transactionList" class="transaction-list"></div>
+
+
+  <!-- =========================
+     QUICK SERVICES
+========================= -->
+
+<div class="section-title">
+
+  Quick Services
+
+</div>
+
+
+<div class="quick-grid">
+
+  <!-- AIRTIME -->
+  <div
+    class="quick-card"
+    onclick="location.href='airtime.html'"
+  >
+
+    <div class="quick-icon">
+      📱
+    </div>
+
+    <span>Airtime</span>
+
+  </div>
+
+
+  <!-- DATA -->
+  <div
+    class="quick-card"
+    onclick="location.href='data.html'"
+  >
+
+    <div class="quick-icon">
+      🌐
+    </div>
+
+    <span>Data</span>
+
+  </div>
+
+
+  <!-- ELECTRICITY -->
+  <div
+    class="quick-card"
+    onclick="location.href='electricity.html'"
+  >
+
+    <div class="quick-icon">
+      ⚡
+    </div>
+
+    <span>Electricity</span>
+
+  </div>
+
+
+  <!-- VOUCHER -->
+  <div
+    class="quick-card"
+    onclick="location.href='voucher.html'"
+  >
+
+    <div class="quick-icon">
+      🎟️
+    </div>
+
+    <span>Voucher</span>
+
+  </div>
+
+
+  <!-- CASHBACK -->
+  <div
+    class="quick-card"
+    onclick="location.href='cashback.html'"
+  >
+
+    <div class="quick-icon">
+      💸
+    </div>
+
+    <span>Cashback</span>
+
+  </div>
+
+
+  <!-- HISTORY -->
+  <div
+    class="quick-card"
+    onclick="location.href='transactions.html'"
+  >
+
+    <div class="quick-icon">
+      📜
+    </div>
+
+    <span>History</span>
+
+  </div>
+
+
+  <!-- WITHDRAW -->
+  <div
+    class="quick-card"
+    onclick="location.href='maintenance.html'"
+  >
+
+    <div class="quick-icon">
+      🏦
+    </div>
+
+    <span>Withdraw</span>
+
+  </div>
+
+
+  <!-- PROFILE -->
+  <div
+    class="quick-card"
+    onclick="location.href='profile.html'"
+  >
+
+    <div class="quick-icon">
+      👤
+    </div>
+
+    <span>Profile</span>
+
+  </div>
+
+</div>
+
+
+
+  <!-- =========================
+     ADS SLIDER
+========================= -->
+
+<div class="ads-slider">
+
+  <div class="ads-track" id="adsTrack">
+
+    <!-- CARD 1 -->
+<div class="ad-card ad1">
+
+  <div class="floating-emoji">
+    💸
+  </div>
+
+  <div class="ad-content">
+
+        <h2>
+          Earn Cashback Daily
+        </h2>
+
+        <p>
+          Buy airtime & data and get rewards instantly.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 2 -->
+<div class="ad-card ad2">
+
+  <div class="floating-emoji">
+    🚀
+  </div>
+
+  <div class="ad-content">
+
+        <h2>
+          Fast VTU Services
+        </h2>
+
+        <p>
+          MTN, Airtel, Glo & 9mobile available 24/7.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="ad-card ad3">
+
+      <div class="floating-emoji">
+        🔒
+      </div>
+
+      <div class="ad-content">
+
+        <h2>
+          Secure Wallet
+        </h2>
+
+        <p>
+          Biometric & PIN protected transactions.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 4 -->
+<div class="ad-card ad4">
+
+  <div class="floating-emoji">
+    ⚡
+  </div>
+
+  <div class="ad-content">
+
+        <h2>
+          Electricity Bills
+        </h2>
+
+        <p>
+          Instantly pay electricity bills nationwide.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 5 -->
+<div class="ad-card ad5">
+
+  <div class="floating-emoji">
+    🎟️
+  </div>
+
+  <div class="ad-content">
+
+        <h2>
+          Voucher Marketplace
+        </h2>
+
+        <p>
+          Acess our Wi-Fi voucher marketplace anytime.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+  
+
+<div id="bottomNav"></div>
+
+<script type="module" src="../js/pages/home.js"></script>
+
+</body>
+</html>

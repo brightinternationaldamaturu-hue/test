@@ -1,0 +1,278 @@
+body{
+
+  margin:0;
+  padding:0;
+
+  font-family:Arial,sans-serif;
+
+  background:
+  linear-gradient(
+    180deg,
+    #07111F,
+    #0F172A
+  );
+
+  color:white;
+
+  min-height:100vh;
+
+}
+
+
+/* ===============================
+PAGE
+=============================== */
+
+.services-page{
+
+  width:100%;
+  max-width:430px;
+
+  margin:auto;
+
+  padding:24px 16px 120px;
+
+  box-sizing:border-box;
+
+}
+
+
+/* ===============================
+HEADER
+=============================== */
+
+.services-header{
+
+  margin-bottom:24px;
+
+}
+
+.services-header h1{
+
+  margin:0;
+
+  font-size:30px;
+
+  font-weight:900;
+
+  letter-spacing:-1px;
+
+}
+
+.services-header p{
+
+  margin-top:8px;
+
+  opacity:.7;
+
+  font-size:14px;
+
+}
+
+
+/* ===============================
+GRID
+=============================== */
+
+.services-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:16px;
+
+}
+
+
+/* ===============================
+CARD
+=============================== */
+
+.service-card{
+
+  position:relative;
+
+  min-height:145px;
+
+  border-radius:28px;
+
+  padding:18px;
+
+  box-sizing:border-box;
+
+  text-decoration:none;
+
+  overflow:hidden;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:space-between;
+
+  transition:.25s ease;
+
+  border:
+  1px solid rgba(255,255,255,.05);
+
+  box-shadow:
+  0 10px 24px rgba(0,0,0,.22);
+
+}
+
+
+/* ===============================
+HOVER
+=============================== */
+
+.service-card:hover{
+
+  transform:
+  translateY(-4px);
+
+}
+
+
+/* ===============================
+TOP ICON
+=============================== */
+
+.service-icon{
+
+  width:58px;
+  height:58px;
+
+  border-radius:20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:28px;
+
+  background:
+  rgba(255,255,255,.12);
+
+  backdrop-filter:blur(8px);
+
+}
+
+
+/* ===============================
+TEXT
+=============================== */
+
+.service-card h3{
+
+  margin:18px 0 6px;
+
+  font-size:20px;
+
+  font-weight:800;
+
+  color:white;
+
+}
+
+
+.service-card p{
+
+  margin:0;
+
+  font-size:13px;
+
+  line-height:1.4;
+
+  color:
+  rgba(255,255,255,.82);
+
+}
+
+
+/* ===============================
+AIRTIME
+=============================== */
+
+.airtime{
+
+  background:
+  linear-gradient(
+    135deg,
+    #00C853,
+    #009624
+  );
+
+}
+
+
+/* ===============================
+DATA
+=============================== */
+
+.data{
+
+  background:
+  linear-gradient(
+    135deg,
+    #2979FF,
+    #1565C0
+  );
+
+}
+
+
+/* ===============================
+VOUCHER
+=============================== */
+
+.voucher{
+
+  background:
+  linear-gradient(
+    135deg,
+    #7B1FA2,
+    #4A148C
+  );
+
+}
+
+
+/* ===============================
+ELECTRICITY
+=============================== */
+
+.electricity{
+
+  background:
+  linear-gradient(
+    135deg,
+    #FF8F00,
+    #E65100
+  );
+
+}
+
+
+/* ===============================
+MOBILE
+=============================== */
+
+@media(max-width:360px){
+
+  .services-grid{
+
+    gap:12px;
+
+  }
+
+  .service-card{
+
+    min-height:130px;
+
+    padding:16px;
+
+  }
+
+}

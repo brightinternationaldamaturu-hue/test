@@ -1,0 +1,735 @@
+/* =========================
+   FINTECH WALLET SYSTEM
+   ========================= */
+
+:root {
+  --bg: #0b1220;
+  --card: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text: #e5e7eb;
+  --muted: rgba(229, 231, 235, 0.6);
+
+  --primary: #00c6ff;
+  --primary-2: #0072ff;
+
+  --success: #00e5a8;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: radial-gradient(circle at top, #111827, var(--bg));
+  color: var(--text);
+}
+
+/* =========================
+   PAGE WRAPPER
+   ========================= */
+
+.wallet-page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 18px;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.wallet-header {
+  margin-bottom: 22px;
+}
+
+.wallet-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.wallet-header p {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* =========================
+   MAIN CARD
+   ========================= */
+
+.wallet-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle glow effect */
+.wallet-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 198, 255, 0.12),
+    transparent 55%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+}
+
+/* =========================
+   BANK HEADER ROW
+   ========================= */
+
+.wallet-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.bank-name {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.4px;
+}
+
+/* badge */
+.badge {
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(0, 229, 168, 0.12);
+  color: var(--success);
+  border: 1px solid rgba(0, 229, 168, 0.25);
+}
+
+/* =========================
+   ACCOUNT NUMBER
+   ========================= */
+
+.account-number {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin: 10px 0 6px;
+}
+
+/* =========================
+   ACCOUNT NAME
+   ========================= */
+
+.account-name {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+/* =========================
+   BUTTON SYSTEM
+   ========================= */
+
+.copy-btn {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: linear-gradient(
+    135deg,
+    rgba(0, 198, 255, 0.15),
+    rgba(0, 114, 255, 0.15)
+  );
+
+  color: #e5e7eb;
+
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  position: relative;
+  overflow: hidden;
+
+  transition: all 0.25s ease;
+
+  backdrop-filter: blur(10px);
+}
+
+/* ICON INSIDE BUTTON */
+.copy-btn::before {
+  content: "⧉";
+  font-size: 14px;
+  opacity: 0.9;
+  transform: translateY(0.5px);
+}
+
+/* HOVER GLOW EFFECT */
+.copy-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 198, 255, 0.35);
+  box-shadow:
+    0 10px 30px rgba(0, 114, 255, 0.25),
+    0 0 0 1px rgba(0, 198, 255, 0.1) inset;
+}
+
+/* CLICK FEEDBACK */
+.copy-btn:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+/* ANIMATED LIGHT SWEEP */
+.copy-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+.copy-btn:hover::after {
+  animation: shine 1s ease;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* =========================
+   GENERATE BUTTON
+   ========================= */
+
+.generate-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.generate-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   LOADING STATE
+   ========================= */
+
+.loading {
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+
+
+
+
+/* =========================
+   ATM CARD STYLE
+========================= */
+
+.atm-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #111827,
+      #1e293b
+    );
+
+  border-radius: 24px;
+
+  padding: 24px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  min-height: 220px;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.45);
+
+}
+
+/* LIGHT EFFECT */
+
+.atm-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: -120px;
+  right: -120px;
+
+  width: 250px;
+  height: 250px;
+
+  background:
+    radial-gradient(
+      rgba(0,198,255,.18),
+      transparent 70%
+    );
+
+  border-radius: 50%;
+
+}
+
+/* TOP */
+
+.wallet-top {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+}
+
+/* BIVA LOGO */
+
+.wallet-brand {
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  color: white;
+
+}
+
+/* LABEL */
+
+.wallet-label {
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  opacity: .6;
+
+  margin-bottom: 5px;
+
+  letter-spacing: 1px;
+
+}
+
+/* BANK TITLE */
+
+.bank-title {
+
+  margin: 0;
+
+  font-size: 20px;
+
+  font-weight: 700;
+
+}
+
+/* CHIP */
+
+.chip {
+
+  width: 55px;
+  height: 42px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #facc15,
+      #f59e0b
+    );
+
+  margin-top: 28px;
+
+  position: relative;
+
+}
+
+.chip::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 8px;
+
+  border: 1px solid rgba(0,0,0,.25);
+
+  border-radius: 6px;
+
+}
+
+/* ACCOUNT NUMBER */
+
+.wallet-number {
+
+  font-size: 28px;
+
+  font-weight: 700;
+
+  letter-spacing: 4px;
+
+  margin-top: 28px;
+
+}
+
+/* BOTTOM */
+
+.wallet-bottom {
+
+  margin-top: 28px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+}
+
+/* ACCOUNT HOLDER */
+
+.account-holder {
+
+  margin: 0;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+}
+
+/* PREMIUM COPY BUTTON */
+
+.copy-btn {
+
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #00c6ff,
+      #0072ff
+    );
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: .25s ease;
+
+  box-shadow:
+    0 10px 25px rgba(0,114,255,.35);
+
+}
+
+.copy-btn:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 15px 35px rgba(0,114,255,.45);
+
+}
+
+/* GENERATE STATE */
+
+.generate-state {
+
+  text-align: center;
+
+  padding: 40px 24px;
+
+}
+
+.wallet-logo {
+
+  width: 70px;
+  height: 70px;
+
+  border-radius: 20px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #00c6ff,
+      #0072ff
+    );
+
+  font-size: 22px;
+
+  font-weight: 800;
+
+  margin-bottom: 20px;
+
+}
+
+.generate-title {
+
+  margin-bottom: 10px;
+
+}
+
+.generate-text {
+
+  opacity: .7;
+
+  line-height: 1.6;
+
+  margin-bottom: 25px;
+
+}
+
+
+
+
+/* =========================
+   PREMIUM RED ATM CARD
+========================= */
+
+.atm-card {
+
+  background:
+    linear-gradient(
+      145deg,
+      #0f172a 0%,
+      #1e1b4b 35%,
+      #3b0820 70%,
+      #7f1d1d 100%
+    );
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  position: relative;
+
+  overflow: hidden;
+
+}
+
+/* RED GLOW */
+
+.atm-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: -120px;
+  right: -120px;
+
+  width: 260px;
+  height: 260px;
+
+  background:
+    radial-gradient(
+      rgba(255, 0, 80, 0.28),
+      transparent 70%
+    );
+
+  border-radius: 50%;
+
+}
+
+/* BLUE SECONDARY GLOW */
+
+.atm-card::after {
+
+  content: "";
+
+  position: absolute;
+
+  bottom: -100px;
+  left: -100px;
+
+  width: 240px;
+  height: 240px;
+
+  background:
+    radial-gradient(
+      rgba(0,198,255,.18),
+      transparent 70%
+    );
+
+  border-radius: 50%;
+
+}
+
+/* LOGO CONTAINER */
+
+.wallet-brand {
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255,255,255,.08);
+
+  backdrop-filter: blur(12px);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+/* LOGO IMAGE */
+
+.wallet-logo-img {
+
+  width: 38px;
+  height: 38px;
+
+  object-fit: contain;
+
+}
+
+/* CARD CONTENT ABOVE GLOWS */
+
+.wallet-top,
+.wallet-number,
+.wallet-bottom,
+.chip {
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+/* PREMIUM ACCOUNT NUMBER */
+
+.wallet-number {
+
+  font-size: 30px;
+
+  font-weight: 800;
+
+  letter-spacing: 5px;
+
+  margin-top: 34px;
+
+  color: white;
+
+  text-shadow:
+    0 2px 12px rgba(255,255,255,.12);
+
+}
+
+/* CHIP IMPROVEMENT */
+
+.chip {
+
+  background:
+    linear-gradient(
+      145deg,
+      #fde68a,
+      #f59e0b,
+      #b45309
+    );
+
+  box-shadow:
+    inset 0 2px 5px rgba(255,255,255,.3),
+    0 8px 20px rgba(0,0,0,.25);
+
+}
+
+/* COPY BUTTON PREMIUM */
+
+.copy-btn {
+
+  background:
+    linear-gradient(
+      135deg,
+      #ef4444,
+      #dc2626
+    );
+
+  border: none;
+
+  color: white;
+
+  font-weight: 700;
+
+  letter-spacing: .3px;
+
+  box-shadow:
+    0 10px 25px rgba(220,38,38,.35);
+
+}
+
+.copy-btn:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 15px 35px rgba(220,38,38,.45);
+
+}

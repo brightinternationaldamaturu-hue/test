@@ -1,0 +1,105 @@
+/* =========================
+   LOADER OVERLAY
+========================= */
+
+.loader-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.96);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:999999999;
+}
+
+
+/* =========================
+   LOADER BOX
+========================= */
+
+.loader-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+
+/* =========================
+   LOGO WRAP
+========================= */
+
+.loader-logo-wrap{
+  width:90px;
+  height:90px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  animation:logoPulse 1.4s infinite ease-in-out;
+
+  will-change:transform;
+}
+
+
+/* =========================
+   LOGO IMAGE
+========================= */
+
+.loader-logo-img{
+  width:60%;
+  height:60%;
+  object-fit:contain;
+  display:block;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.loader-title{
+  margin-top:18px;
+  font-size:18px;
+  font-weight:700;
+  color:white;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.loader-message{
+  margin-top:8px;
+  font-size:14px;
+  opacity:.7;
+  color:white;
+}
+
+
+/* =========================
+   PULSE ANIMATION
+========================= */
+
+@keyframes logoPulse{
+
+  0%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+  50%{
+    transform:scale(1.12);
+    opacity:.75;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}

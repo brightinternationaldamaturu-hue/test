@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Create Account - BIVA</title>
+
+<link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/loader.css">
+<link rel="stylesheet" href="../css/auth.css">
+
+
+
+
+
+
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00d492">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+
+
+
+</head>
+
+<body class="auth-page">
+
+  <div class="auth-card">
+
+<!-- LOGO -->
+<div class="auth-logo">
+
+  <img
+    src="../assets/logo.png"
+    alt="BIVA Logo"
+    class="auth-logo-img">
+
+</div>
+
+
+    <!-- TITLE -->
+    <h1>Create Account</h1>
+
+    <p class="auth-subtitle">
+      Join BIVA and enjoy easy VTU ans more services
+    </p>
+
+    <!-- FULL NAME -->
+    <div class="input-group">
+
+      <input
+        type="text"
+        id="fullName"
+        placeholder="Full Name">
+
+      <span class="input-icon">
+        👤
+      </span>
+
+    </div>
+
+    <!-- EMAIL -->
+    <div class="input-group">
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Email address">
+
+      <span class="input-icon">
+        📧
+      </span>
+
+    </div>
+
+
+    <!-- REFERRAL CODE -->
+<div class="input-group">
+
+  <input
+    type="text"
+    id="referralCode"
+    placeholder="Referral Code (Optional)">
+
+  <span class="input-icon">
+    🎁
+  </span>
+
+</div>
+
+
+
+    <!-- PASSWORD -->
+    <div class="input-group">
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Create Password">
+
+      <span
+        class="input-icon"
+        id="togglePassword">
+
+        👁️
+
+      </span>
+
+    </div>
+
+    <!-- BUTTON -->
+    <button
+      id="signupBtn"
+      class="auth-btn">
+
+      Create Account
+
+    </button>
+
+    <!-- LINKS -->
+    <div class="auth-links">
+
+      Already have account?
+
+      <a href="login.html">
+
+        Login
+
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- PASSWORD TOGGLE -->
+  <script>
+
+    const toggle =
+    document.getElementById(
+      "togglePassword"
+    );
+
+    const password =
+    document.getElementById(
+      "password"
+    );
+
+    toggle.addEventListener(
+      "click",
+      ()=>{
+
+        password.type =
+
+          password.type === "password"
+
+          ? "text"
+
+          : "password";
+
+      }
+    );
+
+  </script>
+
+  <script type="module"
+          src="../js/pages/signup.js"></script>
+
+
+</body>
+</html>

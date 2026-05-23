@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Buy Data
+  </title>
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/profile.css">
+  <link rel="stylesheet" href="../css/pinModal.css">
+  <link rel="stylesheet" href="../css/loader.css">
+  <link rel="stylesheet" href="../css/bottomnav.css">
+  <link rel="stylesheet" href="../css/modal.css">
+  <link rel="stylesheet" href="../css/data.css">
+
+
+
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00d492">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+  <!-- PAGE FIX -->
+  <style>
+
+/* ===============================
+   PLANS GRID
+================================ */
+
+.plans-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:12px;
+
+  margin-top:20px;
+
+}
+
+
+/* ===============================
+   PLAN CARD
+================================ */
+
+.plan-card{
+
+  background:#111827;
+
+  border-radius:18px;
+
+  padding:14px;
+
+  min-height:180px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:space-between;
+
+  box-sizing:border-box;
+
+}
+
+
+/* PLAN NAME */
+.plan-card h3{
+
+  font-size:14px;
+
+  line-height:1.4;
+
+  margin:0;
+
+  margin-bottom:8px;
+
+  color:white;
+
+}
+
+
+/* VALIDITY */
+.plan-card p{
+
+  font-size:12px;
+
+  opacity:.7;
+
+  margin:0;
+
+  margin-bottom:10px;
+
+}
+
+
+/* PRICE */
+.plan-card h2{
+
+  font-size:20px;
+
+  margin:0;
+
+  margin-bottom:14px;
+
+  color:#00D492;
+
+}
+
+
+/* BUTTON */
+.plan-card button{
+
+  width:100%;
+
+  padding:11px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#00A884;
+
+  color:white;
+
+  font-size:13px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+}
+
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+
+@media(max-width:480px){
+
+  .plans-grid{
+
+    gap:10px;
+
+  }
+
+  .plan-card{
+
+    padding:12px;
+
+    min-height:170px;
+
+  }
+
+  .plan-card h3{
+
+    font-size:13px;
+
+  }
+
+  .plan-card h2{
+
+    font-size:18px;
+
+  }
+
+  .plan-card button{
+
+    padding:10px;
+
+    font-size:12px;
+
+  }
+
+}
+
+
+
+
+/* ===============================
+   PHONE INPUT
+================================ */
+
+#dataPhone{
+
+  width:100%;
+
+  height:55px;
+
+  background:#111827;
+
+  border:2px solid transparent;
+
+  border-radius:16px;
+
+  padding:0 16px;
+
+  font-size:15px;
+
+  color:white;
+
+  outline:none;
+
+  box-sizing:border-box;
+
+  margin-bottom:20px;
+
+  transition:.2s;
+
+}
+
+
+/* PLACEHOLDER */
+#dataPhone::placeholder{
+
+  color:#94A3B8;
+
+}
+
+
+/* FOCUS EFFECT */
+#dataPhone:focus{
+
+  border-color:#00A884;
+
+  background:#0F172A;
+
+}
+
+
+
+
+
+
+/* ===============================
+PLAN FILTERS
+=============================== */
+
+.plan-filters{
+
+  display:flex;
+
+  gap:10px;
+
+  overflow-x:auto;
+
+  margin:20px 0;
+
+  padding-bottom:5px;
+
+}
+
+
+.filter-btn{
+
+  border:none;
+
+  background:#1F2937;
+
+  color:white;
+
+  padding:10px 18px;
+
+  border-radius:30px;
+
+  font-size:14px;
+
+  font-weight:600;
+
+  white-space:nowrap;
+
+  cursor:pointer;
+
+}
+
+
+.active-filter{
+
+  background:#00A884;
+
+}
+
+
+
+
+
+.network-filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:nowrap;   /* 👈 IMPORTANT: forces single row */
+  overflow-x:auto;    /* 👈 allows scroll instead of wrap */
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:6px;
+}
+
+/* hide scrollbar (optional but clean UI) */
+.network-filters::-webkit-scrollbar{
+  display:none;
+}
+
+.network-btn{
+  flex:0 0 auto;      /* 👈 prevents shrinking/wrapping */
+  padding:10px 16px;
+  border-radius:25px;
+  border:1px solid #2d3748;
+  background:#111827;
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:0.2s;
+}
+
+.network-btn:hover{
+  transform:scale(1.05);
+}
+
+.active-network{
+  background:#00A884;
+  border-color:#00A884;
+}
+
+
+
+.sticky-filters{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #0f172a; /* match your page bg */
+  padding: 10px 0;
+}
+
+
+.sticky-filters{
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+
+  <!-- PAGE -->
+  <div class="data-page">
+
+    <div class="data-card">
+
+      <h1 class="data-title">
+        Buy Data
+      </h1>
+
+
+
+
+
+
+
+<!-- NETWORK SELECTOR -->
+<div class="network-filters">
+
+  <button
+    class="network-btn"
+    onclick="selectNetwork('mtn', this)"
+    data-network="mtn">
+
+    MTN
+
+  </button>
+
+
+  <button
+    class="network-btn"
+    onclick="selectNetwork('glo', this)"
+    data-network="glo">
+
+    GLO
+
+  </button>
+
+
+  <button
+    class="network-btn"
+    onclick="selectNetwork('airtel', this)"
+    data-network="airtel">
+
+    AIRTEL
+
+  </button>
+
+
+  <button
+    class="network-btn"
+    onclick="selectNetwork('9mobile', this)"
+    data-network="9mobile">
+
+    9MOBILE
+
+  </button>
+
+</div>
+
+
+
+      <!-- PHONE -->
+      <input
+        type="tel"
+        id="dataPhone"
+        placeholder="Enter phone number">
+
+
+
+
+
+
+<div class="sticky-filters">
+
+<!-- PLAN FILTERS -->
+<div class="plan-filters">
+
+  <button
+    class="filter-btn active-filter"
+
+    onclick="filterPlans('all', this)">
+
+    All
+
+  </button>
+
+
+  <button
+    class="filter-btn"
+
+    onclick="filterPlans('sme', this)">
+
+    SME
+
+  </button>
+
+
+  <button
+    class="filter-btn"
+
+    onclick="filterPlans('sme2', this)">
+
+    SME2
+
+  </button>
+
+
+  <button
+    class="filter-btn"
+
+    onclick="filterPlans('gifting', this)">
+
+    Gifting
+
+  </button>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+      <!-- PLANS -->
+      <div
+  id="dataPlans"
+  class="plans-grid">
+
+</div>
+
+    </div>
+
+  </div>
+
+
+  <!-- BOTTOM NAV -->
+  <div id="bottomNav"></div>
+
+
+  <!-- SCRIPT -->
+  <script
+    type="module"
+    src="../js/pages/data.js">
+
+  </script>
+
+</body>
+
+</html>

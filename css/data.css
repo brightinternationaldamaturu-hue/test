@@ -1,0 +1,482 @@
+/* ===============================
+   DATA PAGE BASE
+================================ */
+.data-page{
+  width:100%;
+  min-height:100vh;
+  background:#0b1220;
+
+  display:flex;
+  justify-content:center;
+
+  padding:0 14px;
+  box-sizing:border-box;
+}
+
+/* ===============================
+   MAIN CONTENT
+================================ */
+.data-card{
+  width:100%;
+  max-width:430px;
+
+  display:flex;
+  flex-direction:column;
+
+  align-items:center;
+
+  padding:20px 0 100px;
+  box-sizing:border-box;
+}
+
+/* ===============================
+   FULL WIDTH SECTIONS
+================================ */
+.data-title,
+.network-filters,
+#dataPhone,
+.sticky-filters,
+.plans-grid{
+  width:100%;
+}
+
+/* ===============================
+   PAGE TITLE
+================================ */
+.data-title{
+  text-align:center;
+  color:#ffffff;
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:18px;
+}
+
+/* ===============================
+   PHONE INPUT
+================================ */
+#dataPhone{
+  width:100%;
+  height:54px;
+
+  background:#0f172a;
+
+  border:1px solid #1f2937;
+
+  border-radius:14px;
+
+  padding:0 14px;
+
+  font-size:14px;
+
+  color:#ffffff;
+
+  outline:none;
+
+  margin-bottom:18px;
+
+  box-sizing:border-box;
+
+  transition:.2s;
+}
+
+#dataPhone::placeholder{
+  color:#94a3b8;
+}
+
+#dataPhone:focus{
+  border-color:#00a884;
+
+  box-shadow:
+  0 0 0 3px rgba(
+    0,
+    168,
+    132,
+    0.15
+  );
+}
+
+/* ===============================
+   NETWORK FILTERS
+================================ */
+.network-filters{
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:10px;
+
+  overflow-x:auto;
+
+  padding-bottom:6px;
+
+  margin-bottom:14px;
+
+  -webkit-overflow-scrolling:touch;
+
+  scrollbar-width:none;
+}
+
+.network-filters::-webkit-scrollbar{
+  display:none;
+}
+
+/* NETWORK BUTTON */
+.network-btn{
+  flex:0 0 auto;
+
+  padding:10px 15px;
+
+  border-radius:20px;
+
+  border:1px solid #1f2937;
+
+  background:#0f172a;
+
+  color:#cbd5e1;
+
+  font-size:13px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  white-space:nowrap;
+
+  transition:.2s;
+}
+
+.network-btn:hover{
+  transform:scale(1.04);
+}
+
+/* ACTIVE NETWORK */
+.active-network{
+  background:
+  linear-gradient(
+    135deg,
+    #00a884,
+    #00d492
+  );
+
+  color:white;
+
+  border:none;
+}
+
+/* ===============================
+   STICKY FILTER BAR
+================================ */
+.sticky-filters{
+  position:sticky;
+
+  top:0;
+
+  z-index:1000;
+
+  background:#0b1220;
+
+  padding:10px 0;
+
+  box-shadow:
+  0 4px 12px rgba(
+    0,
+    0,
+    0,
+    0.25
+  );
+}
+
+/* ===============================
+   PLAN FILTERS
+================================ */
+.plan-filters{
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:10px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+
+  -webkit-overflow-scrolling:touch;
+}
+
+.plan-filters::-webkit-scrollbar{
+  display:none;
+}
+
+/* FILTER BUTTON */
+.filter-btn{
+  flex:0 0 auto;
+
+  border:none;
+
+  background:#0f172a;
+
+  color:#cbd5e1;
+
+  padding:9px 16px;
+
+  border-radius:20px;
+
+  font-size:13px;
+
+  font-weight:600;
+
+  border:1px solid #1f2937;
+
+  cursor:pointer;
+
+  white-space:nowrap;
+
+  transition:.2s;
+}
+
+.filter-btn:hover{
+  transform:scale(1.04);
+}
+
+/* ACTIVE FILTER */
+.active-filter{
+  background:#00a884;
+
+  color:white;
+
+  border:none;
+}
+
+/* ===============================
+   PLANS GRID
+================================ */
+.plans-grid{
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,minmax(0,1fr));
+
+  gap:12px;
+
+  margin-top:18px;
+
+  align-items:stretch;
+
+  justify-items:stretch;
+}
+
+/* ===============================
+   PLAN CARD
+================================ */
+.plan-card{
+  width:100%;
+
+  min-height:220px;
+
+  background:
+  linear-gradient(
+    145deg,
+    #111827,
+    #0f172a
+  );
+
+  border:
+  1px solid rgba(
+    255,
+    255,
+    255,
+    0.05
+  );
+
+  border-radius:18px;
+
+  padding:14px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  text-align:center;
+
+  box-sizing:border-box;
+
+  box-shadow:
+  0 8px 20px rgba(
+    0,
+    0,
+    0,
+    0.35
+  );
+
+  transition:.2s;
+}
+
+/* CARD HOVER */
+.plan-card:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+  0 12px 28px rgba(
+    0,
+    0,
+    0,
+    0.45
+  );
+}
+
+/* ===============================
+   PLAN TEXT
+================================ */
+.plan-card h3{
+  width:100%;
+
+  font-size:18px;
+
+  font-weight:600;
+
+  line-height:1.4;
+
+  color:#ffffff;
+
+  margin:0;
+}
+
+.plan-card p{
+  width:100%;
+
+  font-size:12px;
+
+  color:#94a3b8;
+
+  margin:6px 0 10px;
+}
+
+.plan-card h2{
+  width:100%;
+
+  font-size:19px;
+
+  font-weight:700;
+
+  color:#00d492;
+
+  margin:0;
+}
+
+/* ===============================
+   CASHBACK
+================================ */
+.cashback-text{
+  width:100%;
+
+  font-size:14px;
+
+  color:#ffd166;
+
+  background:
+  rgba(
+    255,
+    209,
+    102,
+    0.08
+  );
+
+  padding:6px 10px;
+
+  border-radius:12px;
+
+  margin-top:10px;
+
+  text-align:center;
+
+  box-sizing:border-box;
+}
+
+.earn-text{
+  width:100%;
+
+  font-size:14px;
+
+  color:#00d492;
+
+  margin-top:8px;
+
+  font-weight:500;
+
+  text-align:center;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.plan-card button{
+  width:100%;
+
+  padding:11px;
+
+  margin-top:12px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #00a884,
+    #00d492
+  );
+
+  color:white;
+
+  font-size:13px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.plan-card button:active{
+  transform:scale(0.97);
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+@media(max-width:480px){
+
+  .plans-grid{
+    gap:10px;
+  }
+
+  .plan-card{
+    min-height:205px;
+
+    padding:16px;
+  }
+
+  .plan-card h3{
+    font-size:16px;
+  }
+
+  .plan-card h2{
+    font-size:17px;
+  }
+
+  .plan-card button{
+    padding:10px;
+
+    font-size:16px;
+  }
+
+}

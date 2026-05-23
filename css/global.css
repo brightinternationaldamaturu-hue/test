@@ -1,0 +1,32 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#0F172A;
+  color:white;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button{
+  font-family:inherit;
+}
+
+img{
+  max-width:100%;
+  height:auto;
+}
+
+
+
+
+

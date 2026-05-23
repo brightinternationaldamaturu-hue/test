@@ -1,0 +1,118 @@
+/* ===============================
+   PAGE
+================================ */
+.cashback-page{
+  background:#0b1220;
+  min-height:100vh;
+  font-family:Arial;
+}
+
+/* CONTAINER */
+.cashback-container{
+  max-width:430px;
+  margin:auto;
+  padding:20px 14px 100px;
+}
+
+/* HEADER */
+.cashback-header{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.cashback-header h1{
+  color:#fff;
+  font-size:22px;
+  margin:0;
+}
+
+.cashback-header p{
+  color:#94a3b8;
+  font-size:13px;
+}
+
+/* GRID */
+.cashback-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  margin-top:20px;
+}
+
+/* CARD */
+.cashback-card{
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,0.05);
+  padding:16px;
+  border-radius:16px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+.cashback-card h3{
+  color:#94a3b8;
+  font-size:13px;
+  margin:0;
+}
+
+.cashback-card h2{
+  color:#00d492;
+  font-size:20px;
+  margin-top:8px;
+}
+
+/* VARIANTS */
+.cashback-card.earned h2{
+  color:#00d492;
+}
+
+.cashback-card.withdrawn h2{
+  color:#ffb020;
+}
+
+.cashback-card.available h2{
+  color:#ffd166;
+}
+
+/* WITHDRAW BUTTON */
+.withdraw-btn{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#00a884,#00d492);
+  color:white;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* HISTORY */
+.history-box{
+  margin-top:25px;
+}
+
+.history-box h3{
+  color:#fff;
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+#cashbackHistory{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* ITEM */
+.history-item{
+  background:#0f172a;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.05);
+  display:flex;
+  justify-content:space-between;
+  color:#cbd5e1;
+  font-size:13px;
+}

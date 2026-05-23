@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wallet - BIVA</title>
+
+      <link rel="stylesheet" href="../css/walletaccount.css">
+      <link rel="stylesheet" href="../css/loader.css">
+      <link rel="stylesheet" href="../css/bottomnav.css">
+      <link rel="stylesheet" href="../css/pinModal.css">
+      <link rel="stylesheet" href="../css/modal.css">
+
+
+
+
+
+
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00d492">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<script type="module">
+  import { loadWallet } from "../js/pages/wallet.js";
+
+  const app = document.getElementById("app");
+  loadWallet(app);
+</script>
+
+
+
+  <!-- BOTTOM NAV -->
+  <div id="bottomNav"></div>
+
+
+
+</body>
+</html>

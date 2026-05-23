@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Buy Airtime</title>
+      <link rel="stylesheet" href="../css/airtime.css">
+      <link rel="stylesheet" href="../css/loader.css">
+      <link rel="stylesheet" href="../css/bottomnav.css">
+      <link rel="stylesheet" href="../css/pinModal.css">
+      <link rel="stylesheet" href="../css/modal.css">
+
+
+
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00d492">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+
+<div class="airtime-page">
+
+  <!-- HEADER -->
+  <div class="airtime-header">
+
+    <h1>
+      Buy Airtime
+    </h1>
+
+    <p>
+      Fast & secure recharge
+    </p>
+
+  </div>
+
+
+
+  <!-- NETWORK -->
+  <div class="section">
+
+    <label>
+      Select Network
+    </label>
+
+<div class="network-grid">
+
+  <div
+    class="network-card mtn"
+    data-network="MTN"
+  >
+    MTN
+  </div>
+
+  <div
+    class="network-card airtel"
+    data-network="AIRTEL"
+  >
+    Airtel
+  </div>
+
+  <div
+    class="network-card glo"
+    data-network="GLO"
+  >
+    GLO
+  </div>
+
+  <div
+    class="network-card ninemobile"
+    data-network="9MOBILE"
+  >
+    9Mobile
+  </div>
+
+</div>
+
+    <input
+      type="hidden"
+      id="airtimeNetwork"
+    >
+
+  </div>
+
+
+
+  <!-- PHONE -->
+  <div class="section">
+
+    <label>
+      Phone Number
+    </label>
+
+    <input
+      type="text"
+      id="airtimePhone"
+      class="form-input"
+      placeholder="08012345678"
+    >
+
+  </div>
+
+
+
+
+  <!-- AMOUNT -->
+  <div class="section">
+
+    <label>
+      Amount
+    </label>
+
+    <input
+      type="number"
+      id="airtimeAmount"
+      class="form-input"
+      placeholder="100"
+    >
+
+<!-- QUICK AMOUNTS -->
+
+<div class="quick-amounts">
+
+  <button
+    class="quick-amount"
+    data-amount="100"
+  >
+    ₦100
+  </button>
+
+  <button
+    class="quick-amount"
+    data-amount="200"
+  >
+    ₦200
+  </button>
+
+  <button
+    class="quick-amount"
+    data-amount="500"
+  >
+    ₦500
+  </button>
+
+  <button
+    class="quick-amount"
+    data-amount="1000"
+  >
+    ₦1000
+  </button>
+
+</div>
+
+
+<!-- INDICATOR CARD -->
+
+<div class="purchase-indicator">
+
+  <div>
+
+    <span>Network</span>
+
+    <h3 id="selectedNetworkText">
+
+      No Network
+
+    </h3>
+
+  </div>
+
+  <div>
+
+    <span>Amount</span>
+
+    <h3 id="selectedAmountText">
+
+      ₦0
+
+    </h3>
+
+  </div>
+
+</div>
+
+
+  <!-- BUTTON -->
+  <button
+    id="buyAirtimeBtn"
+    class="buy-btn"
+  >
+
+    Buy Airtime
+
+  </button>
+
+</div>
+
+
+<!-- NAV -->
+<div id="bottomNav"></div>
+
+
+<script
+  type="module"
+  src="../js/pages/airtime.js"
+></script>
+
+</body>
+</html>

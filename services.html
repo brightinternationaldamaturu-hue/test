@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
+
+<title>BIVA Services</title>
+
+<link rel="stylesheet"
+href="../css/services.css"/>
+
+<link rel="stylesheet"
+href="../css/bottomnav.css"/>
+
+
+
+
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00d492">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+
+</head>
+
+<body>
+
+<div class="services-page">
+
+  <!-- HEADER -->
+  <div class="services-header">
+
+    <h1>Buy Services</h1>
+
+    <p>
+      Fast digital purchases
+    </p>
+
+  </div>
+
+
+  <!-- SERVICES GRID -->
+  <div class="services-grid">
+
+    <!-- AIRTIME -->
+    <a href="airtime.html"
+       class="service-card airtime">
+
+      <div class="service-icon">
+        📞
+      </div>
+
+      <h3>Airtime</h3>
+
+      <p>
+        Recharge instantly
+      </p>
+
+    </a>
+
+
+    <!-- DATA -->
+    <a href="data.html"
+       class="service-card data">
+
+      <div class="service-icon">
+        📶
+      </div>
+
+      <h3>Data</h3>
+
+      <p>
+        Affordable bundles
+      </p>
+
+    </a>
+
+
+    <!-- VOUCHER -->
+    <a href="voucher.html"
+       class="service-card voucher">
+
+      <div class="service-icon">
+        🎟️
+      </div>
+
+      <h3>Voucher</h3>
+
+      <p>
+        Access our WiFi in seconds with ou Voucher.
+      </p>
+
+    </a>
+
+
+    <!-- ELECTRICITY -->
+    <a href="electricity.html"
+       class="service-card electricity">
+
+      <div class="service-icon">
+        💡
+      </div>
+
+      <h3>Electricity</h3>
+
+      <p>
+        Pay utility bills
+      </p>
+
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- NAV -->
+<div id="bottomNav"></div>
+
+
+<script type="module">
+
+import {
+renderBottomNav
+}
+from "../js/components/bottomNav.js";
+
+document.getElementById(
+"bottomNav"
+).innerHTML =
+renderBottomNav("buy");
+
+</script>
+
+</body>
+</html>

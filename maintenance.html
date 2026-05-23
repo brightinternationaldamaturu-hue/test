@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="../css/bottomnav.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00d492">
+
+
+
+
+
+
+  <title>Maintenance - BIVA</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0b1220;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .box {
+      max-width: 400px;
+      background: rgba(255,255,255,0.05);
+      padding: 25px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 10px 0;
+    }
+
+    p {
+      opacity: 0.7;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .loader {
+      margin-top: 15px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <div class="icon">🛠️</div>
+
+    <h1>We’ll be back soon</h1>
+
+    <p>
+      BIVA is currently undergoing maintenance to serve you better.
+      Please check back shortly.
+    </p>
+
+    <div class="loader">
+      System update in progress...
+    </div>
+  </div>
+
+  <!-- ✅ PUT NAV FIRST -->
+  <div id="bottomNav"></div>
+
+  <!-- ✅ SCRIPT LAST -->
+  <script type="module">
+
+    import { renderBottomNav }
+    from "../components/bottomNav.js";
+
+    const nav = document.getElementById("bottomNav");
+
+    if (nav) {
+      nav.innerHTML = renderBottomNav("home");
+    }
+
+  </script>
+
+</body>
+</html>

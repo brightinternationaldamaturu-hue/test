@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>BIVA Voucher</title>
+
+  <link rel="stylesheet" href="../css/voucher.css">
+      <link rel="stylesheet" href="../css/loader.css">
+      <link rel="stylesheet" href="../css/bottomnav.css">
+      <link rel="stylesheet" href="../css/pinModal.css">
+      <link rel="stylesheet" href="../css/modal.css">
+      <link rel="manifest" href="/manifest.json">
+
+
+
+
+      
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00d492">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+<div class="voucher-page">
+
+  <!-- TOP HEADER -->
+  <div class="voucher-top">
+
+    <div>
+
+      <h1>
+
+        Wi-Fi Voucher
+
+      </h1>
+
+      <p>
+
+        Fast • Secure • Instant Delivery
+
+      </p>
+
+    </div>
+
+    <div class="voucher-logo">
+
+      🎟️
+
+    </div>
+
+  </div>
+
+
+  <!-- HERO -->
+  <div class="voucher-hero">
+
+    <div class="hero-content">
+
+      <span class="hero-badge">
+
+        BIVA PREMIUM
+
+      </span>
+
+      <h2>
+
+        Buy Affordable
+        Data Vouchers
+
+      </h2>
+
+      <p>
+
+        Instant activation vouchers with automatic cashback rewards. 
+        But only work within some part of Damaturu of Yobe State Nigeria.
+
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- STATS -->
+  <div class="voucher-stats">
+
+    <div class="stat-card">
+
+      <h3>
+
+        ⚡ Instant
+
+      </h3>
+
+      <p>
+
+        Voucher Delivery
+
+      </p>
+
+    </div>
+
+    <div class="stat-card">
+
+      <h3>
+
+        🔒 Secure
+
+      </h3>
+
+      <p>
+
+        Protected Payments
+
+      </p>
+
+    </div>
+
+    <div class="stat-card">
+
+      <h3>
+
+        🎁 Cashback
+
+      </h3>
+
+      <p>
+
+        Earn Rewards
+
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- SECTION TITLE -->
+  <div class="section-header">
+
+    <h2>
+
+      Available Plans
+
+    </h2>
+
+    <span>
+
+      Select a voucher plan
+
+    </span>
+
+  </div>
+
+
+  <!-- PLANS -->
+  <div
+    id="voucherPlans"
+    class="voucher-grid"
+  ></div>
+
+
+  <!-- SUCCESS CARD -->
+  <div
+    id="successCard"
+    class="success-overlay"
+  >
+
+    <div class="success-card">
+
+      <div class="success-circle">
+
+        ✅
+
+      </div>
+
+      <h2>
+
+        Purchase Successful
+
+      </h2>
+
+      <p>
+
+        Your voucher has been generated successfully.
+
+      </p>
+
+      <button
+        onclick="closeSuccessCard()"
+      >
+
+        Continue
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- RECEIPT -->
+  <div
+    id="receiptModal"
+    class="receipt-overlay"
+    style="display:none;"
+  >
+
+    <div class="receipt-card">
+
+      <div class="receipt-header">
+
+        <h2>
+
+          Voucher Receipt
+
+        </h2>
+
+      </div>
+
+      <div
+        id="receiptContent"
+        class="receipt-content"
+      ></div>
+
+      <button
+        id="downloadReceiptBtn"
+        class="receipt-btn"
+      >
+
+        Download Receipt
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+  <!-- BOTTOM NAV -->
+  <div id="bottomNav"></div>
+
+
+<script
+  type="module"
+  src="../js/pages/voucher.js"
+></script>
+
+</body>
+</html>

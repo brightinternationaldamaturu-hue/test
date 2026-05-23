@@ -1,0 +1,439 @@
+body{
+
+  margin:0;
+  padding:0;
+
+  background:
+  linear-gradient(
+    180deg,
+    #07111F,
+    #0F172A
+  );
+
+  font-family:Arial,sans-serif;
+
+  color:white;
+
+  min-height:100vh;
+
+}
+
+
+.airtime-page{
+
+  width:100%;
+  max-width:430px;
+
+  margin:auto;
+
+  padding:20px 16px 120px;
+
+  box-sizing:border-box;
+
+}
+
+
+/* HEADER */
+
+.airtime-header h1{
+
+  margin:0;
+
+  font-size:30px;
+
+  font-weight:900;
+
+}
+
+.airtime-header p{
+
+  margin-top:8px;
+
+  opacity:.7;
+
+}
+
+
+/* WALLET */
+
+.wallet-card{
+
+  margin-top:22px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #00A884,
+    #075E54
+  );
+
+  border-radius:28px;
+
+  padding:22px;
+
+}
+
+.wallet-card span{
+
+  opacity:.8;
+
+  font-size:14px;
+
+}
+
+.wallet-card h2{
+
+  margin:10px 0 0;
+
+  font-size:34px;
+
+}
+
+
+/* SECTION */
+
+.section{
+
+  margin-top:24px;
+
+}
+
+label{
+
+  display:block;
+
+  margin-bottom:12px;
+
+  font-size:14px;
+
+  font-weight:700;
+
+}
+
+
+/* ===============================
+NETWORK GRID
+=============================== */
+
+.network-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:12px;
+}
+
+
+/* ===============================
+NETWORK CARD BASE
+=============================== */
+
+.network-card{
+
+  height:85px;
+
+  border-radius:20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:18px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:0.3s ease;
+
+  color:#fff;
+
+  border:2px solid transparent;
+
+  box-shadow:
+  0 4px 10px rgba(0,0,0,0.15);
+
+}
+
+
+
+/* ===============================
+MTN
+=============================== */
+
+.network-card.mtn{
+  background:#ffcc00;
+  color:#111;
+}
+
+/* ===============================
+AIRTEL
+=============================== */
+
+.network-card.airtel{
+  background:#d50000;
+}
+
+/* ===============================
+GLO
+=============================== */
+
+.network-card.glo{
+  background:#008751;
+}
+
+/* ===============================
+9MOBILE
+=============================== */
+
+.network-card.ninemobile{
+  background:#8dc63f;
+  color:#111;
+}
+
+
+
+/* ===============================
+HOVER
+=============================== */
+
+.network-card:hover{
+  transform:translateY(-2px);
+}
+
+
+/* ===============================
+ACTIVE
+=============================== */
+
+.network-card.active{
+
+  transform:scale(1.05);
+
+  border:3px solid #fff;
+
+  box-shadow:
+  0 0 0 4px rgba(255,255,255,0.15),
+  0 10px 20px rgba(0,0,0,0.25);
+
+}
+
+
+/* INPUT */
+
+.form-input{
+
+  width:100%;
+
+  height:58px;
+
+  border:none;
+
+  outline:none;
+
+  border-radius:22px;
+
+  background:
+  rgba(255,255,255,.05);
+
+  color:white;
+
+  padding:0 18px;
+
+  box-sizing:border-box;
+
+  font-size:16px;
+
+}
+
+
+.form-input::placeholder{
+
+  color:
+  rgba(255,255,255,.4);
+
+}
+
+
+/* QUICK BUTTONS */
+
+.quick-amounts{
+
+  display:flex;
+
+  gap:10px;
+
+  margin-top:14px;
+
+  flex-wrap:wrap;
+
+}
+
+
+.amount-btn{
+
+  border:none;
+
+  background:
+  rgba(255,255,255,.05);
+
+  color:white;
+
+  padding:10px 18px;
+
+  border-radius:999px;
+
+  cursor:pointer;
+
+}
+
+
+/* SUMMARY */
+
+.summary-card{
+
+  margin-top:24px;
+
+  background:
+  rgba(255,255,255,.05);
+
+  border-radius:24px;
+
+  padding:18px;
+
+}
+
+
+.summary-row{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  margin-bottom:14px;
+
+}
+
+.summary-row:last-child{
+
+  margin-bottom:0;
+
+}
+
+
+/* BUTTON */
+
+.buy-btn{
+
+  width:100%;
+
+  height:60px;
+
+  border:none;
+
+  border-radius:24px;
+
+  margin-top:28px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #00D492,
+    #00A884
+  );
+
+  color:white;
+
+  font-size:18px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+}
+
+
+
+/* =========================
+   QUICK AMOUNTS
+========================= */
+
+.quick-amounts{
+  display:grid;
+  grid-template-columns:
+  repeat(4,1fr);
+
+  gap:10px;
+
+  margin-top:14px;
+  margin-bottom:18px;
+}
+
+
+.quick-amount{
+  height:48px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:#1F2937;
+
+  color:white;
+
+  font-size:14px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+
+.quick-amount.active{
+  background:
+  linear-gradient(
+    135deg,
+    #00D492,
+    #00A884
+  );
+}
+
+
+/* =========================
+   INDICATOR CARD
+========================= */
+
+.purchase-indicator{
+  width:100%;
+
+  background:
+  rgba(255,255,255,.05);
+
+  border:
+  1px solid rgba(255,255,255,.06);
+
+  border-radius:22px;
+
+  padding:18px;
+
+  box-sizing:border-box;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:20px;
+}
+
+
+.purchase-indicator span{
+  opacity:.7;
+  font-size:12px;
+}
+
+
+.purchase-indicator h3{
+  margin-top:8px;
+  margin-bottom:0;
+
+  font-size:20px;
+}
